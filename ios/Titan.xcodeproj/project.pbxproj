@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* rn_splashscreen_tutorialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rn_splashscreen_tutorialTests.m */; };
+		00E356F31AD99517003FC87E /* TitanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TitanTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		20324AFF0C066A36CAD1FFD2 /* libPods-rn_splashscreen_tutorial.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C77F42CE7DE5D0D96960AD2 /* libPods-rn_splashscreen_tutorial.a */; };
+		20324AFF0C066A36CAD1FFD2 /* libPods-Titan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C77F42CE7DE5D0D96960AD2 /* libPods-Titan.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* rn_splashscreen_tutorialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rn_splashscreen_tutorialTests.m */; };
-		2E8878D24973126854D050F8 /* libPods-rn_splashscreen_tutorialTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE45E0B7C7B7B69D32FCC275 /* libPods-rn_splashscreen_tutorialTests.a */; };
-		7830FD02DDF34D6352700F1C /* libPods-rn_splashscreen_tutorial-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4045C1423E18C3659E67126 /* libPods-rn_splashscreen_tutorial-tvOSTests.a */; };
-		8AB53B15A9135AB8103D34F3 /* libPods-rn_splashscreen_tutorial-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4B5DD751FD7DB85878A27A /* libPods-rn_splashscreen_tutorial-tvOS.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* TitanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TitanTests.m */; };
+		2E8878D24973126854D050F8 /* libPods-TitanTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE45E0B7C7B7B69D32FCC275 /* libPods-TitanTests.a */; };
+		7830FD02DDF34D6352700F1C /* libPods-Titan-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4045C1423E18C3659E67126 /* libPods-Titan-tvOSTests.a */; };
+		8AB53B15A9135AB8103D34F3 /* libPods-Titan-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4B5DD751FD7DB85878A27A /* libPods-Titan-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,45 +28,45 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = rn_splashscreen_tutorial;
+			remoteInfo = Titan;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "rn_splashscreen_tutorial-tvOS";
+			remoteInfo = "Titan-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* rn_splashscreen_tutorialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rn_splashscreen_tutorialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* TitanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TitanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* rn_splashscreen_tutorialTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rn_splashscreen_tutorialTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* rn_splashscreen_tutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rn_splashscreen_tutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = rn_splashscreen_tutorial/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = rn_splashscreen_tutorial/AppDelegate.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* TitanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TitanTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Titan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Titan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Titan/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Titan/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = rn_splashscreen_tutorial/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = rn_splashscreen_tutorial/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = rn_splashscreen_tutorial/main.m; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rn_splashscreen_tutorial-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rn_splashscreen_tutorial-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E4B5DD751FD7DB85878A27A /* libPods-rn_splashscreen_tutorial-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_splashscreen_tutorial-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B339D22E80B2672718693DD /* Pods-rn_splashscreen_tutorialTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorialTests.debug.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorialTests/Pods-rn_splashscreen_tutorialTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6C77F42CE7DE5D0D96960AD2 /* libPods-rn_splashscreen_tutorial.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_splashscreen_tutorial.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89B37B85D580E75ADA38DC79 /* Pods-rn_splashscreen_tutorial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorial.debug.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorial/Pods-rn_splashscreen_tutorial.debug.xcconfig"; sourceTree = "<group>"; };
-		913AA4ACD933B17C83E3CE47 /* Pods-rn_splashscreen_tutorial-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorial-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorial-tvOSTests/Pods-rn_splashscreen_tutorial-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A66BC834592A0BEFD7A2F5EC /* Pods-rn_splashscreen_tutorial-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorial-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorial-tvOS/Pods-rn_splashscreen_tutorial-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		A848BB4E2D660589CFFFF36C /* Pods-rn_splashscreen_tutorial-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorial-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorial-tvOSTests/Pods-rn_splashscreen_tutorial-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		B194C67ED29DF06E878E4DEA /* Pods-rn_splashscreen_tutorial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorial.release.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorial/Pods-rn_splashscreen_tutorial.release.xcconfig"; sourceTree = "<group>"; };
-		E4045C1423E18C3659E67126 /* libPods-rn_splashscreen_tutorial-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_splashscreen_tutorial-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Titan/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Titan/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Titan/main.m; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* Titan-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Titan-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* Titan-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Titan-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4B5DD751FD7DB85878A27A /* libPods-Titan-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Titan-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B339D22E80B2672718693DD /* Pods-TitanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TitanTests.debug.xcconfig"; path = "Target Support Files/Pods-TitanTests/Pods-TitanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6C77F42CE7DE5D0D96960AD2 /* libPods-Titan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Titan.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89B37B85D580E75ADA38DC79 /* Pods-Titan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Titan.debug.xcconfig"; path = "Target Support Files/Pods-Titan/Pods-Titan.debug.xcconfig"; sourceTree = "<group>"; };
+		913AA4ACD933B17C83E3CE47 /* Pods-Titan-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Titan-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Titan-tvOSTests/Pods-Titan-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A66BC834592A0BEFD7A2F5EC /* Pods-Titan-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Titan-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Titan-tvOS/Pods-Titan-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A848BB4E2D660589CFFFF36C /* Pods-Titan-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Titan-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Titan-tvOSTests/Pods-Titan-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		B194C67ED29DF06E878E4DEA /* Pods-Titan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Titan.release.xcconfig"; path = "Target Support Files/Pods-Titan/Pods-Titan.release.xcconfig"; sourceTree = "<group>"; };
+		E4045C1423E18C3659E67126 /* libPods-Titan-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Titan-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EE2DD1EF247D5E9ECCA9DD27 /* Pods-rn_splashscreen_tutorialTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorialTests.release.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorialTests/Pods-rn_splashscreen_tutorialTests.release.xcconfig"; sourceTree = "<group>"; };
-		EE9341A000750F9DB47A562B /* Pods-rn_splashscreen_tutorial-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_splashscreen_tutorial-tvOS.release.xcconfig"; path = "Target Support Files/Pods-rn_splashscreen_tutorial-tvOS/Pods-rn_splashscreen_tutorial-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		FE45E0B7C7B7B69D32FCC275 /* libPods-rn_splashscreen_tutorialTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_splashscreen_tutorialTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE2DD1EF247D5E9ECCA9DD27 /* Pods-TitanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TitanTests.release.xcconfig"; path = "Target Support Files/Pods-TitanTests/Pods-TitanTests.release.xcconfig"; sourceTree = "<group>"; };
+		EE9341A000750F9DB47A562B /* Pods-Titan-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Titan-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Titan-tvOS/Pods-Titan-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		FE45E0B7C7B7B69D32FCC275 /* libPods-TitanTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TitanTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E8878D24973126854D050F8 /* libPods-rn_splashscreen_tutorialTests.a in Frameworks */,
+				2E8878D24973126854D050F8 /* libPods-TitanTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20324AFF0C066A36CAD1FFD2 /* libPods-rn_splashscreen_tutorial.a in Frameworks */,
+				20324AFF0C066A36CAD1FFD2 /* libPods-Titan.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AB53B15A9135AB8103D34F3 /* libPods-rn_splashscreen_tutorial-tvOS.a in Frameworks */,
+				8AB53B15A9135AB8103D34F3 /* libPods-Titan-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,20 +98,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7830FD02DDF34D6352700F1C /* libPods-rn_splashscreen_tutorial-tvOSTests.a in Frameworks */,
+				7830FD02DDF34D6352700F1C /* libPods-Titan-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* rn_splashscreen_tutorialTests */ = {
+		00E356EF1AD99517003FC87E /* TitanTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* rn_splashscreen_tutorialTests.m */,
+				00E356F21AD99517003FC87E /* TitanTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = rn_splashscreen_tutorialTests;
+			path = TitanTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -122,7 +122,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* rn_splashscreen_tutorial */ = {
+		13B07FAE1A68108700A75B9A /* Titan */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -133,7 +133,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = rn_splashscreen_tutorial;
+			name = Titan;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -141,10 +141,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				6C77F42CE7DE5D0D96960AD2 /* libPods-rn_splashscreen_tutorial.a */,
-				2E4B5DD751FD7DB85878A27A /* libPods-rn_splashscreen_tutorial-tvOS.a */,
-				E4045C1423E18C3659E67126 /* libPods-rn_splashscreen_tutorial-tvOSTests.a */,
-				FE45E0B7C7B7B69D32FCC275 /* libPods-rn_splashscreen_tutorialTests.a */,
+				6C77F42CE7DE5D0D96960AD2 /* libPods-Titan.a */,
+				2E4B5DD751FD7DB85878A27A /* libPods-Titan-tvOS.a */,
+				E4045C1423E18C3659E67126 /* libPods-Titan-tvOSTests.a */,
+				FE45E0B7C7B7B69D32FCC275 /* libPods-TitanTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -152,16 +152,15 @@
 		4EA3876740DC779012E6B5B0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				89B37B85D580E75ADA38DC79 /* Pods-rn_splashscreen_tutorial.debug.xcconfig */,
-				B194C67ED29DF06E878E4DEA /* Pods-rn_splashscreen_tutorial.release.xcconfig */,
-				A66BC834592A0BEFD7A2F5EC /* Pods-rn_splashscreen_tutorial-tvOS.debug.xcconfig */,
-				EE9341A000750F9DB47A562B /* Pods-rn_splashscreen_tutorial-tvOS.release.xcconfig */,
-				913AA4ACD933B17C83E3CE47 /* Pods-rn_splashscreen_tutorial-tvOSTests.debug.xcconfig */,
-				A848BB4E2D660589CFFFF36C /* Pods-rn_splashscreen_tutorial-tvOSTests.release.xcconfig */,
-				6B339D22E80B2672718693DD /* Pods-rn_splashscreen_tutorialTests.debug.xcconfig */,
-				EE2DD1EF247D5E9ECCA9DD27 /* Pods-rn_splashscreen_tutorialTests.release.xcconfig */,
+				89B37B85D580E75ADA38DC79 /* Pods-Titan.debug.xcconfig */,
+				B194C67ED29DF06E878E4DEA /* Pods-Titan.release.xcconfig */,
+				A66BC834592A0BEFD7A2F5EC /* Pods-Titan-tvOS.debug.xcconfig */,
+				EE9341A000750F9DB47A562B /* Pods-Titan-tvOS.release.xcconfig */,
+				913AA4ACD933B17C83E3CE47 /* Pods-Titan-tvOSTests.debug.xcconfig */,
+				A848BB4E2D660589CFFFF36C /* Pods-Titan-tvOSTests.release.xcconfig */,
+				6B339D22E80B2672718693DD /* Pods-TitanTests.debug.xcconfig */,
+				EE2DD1EF247D5E9ECCA9DD27 /* Pods-TitanTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,9 +174,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* rn_splashscreen_tutorial */,
+				13B07FAE1A68108700A75B9A /* Titan */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* rn_splashscreen_tutorialTests */,
+				00E356EF1AD99517003FC87E /* TitanTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				4EA3876740DC779012E6B5B0 /* Pods */,
@@ -190,10 +189,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* rn_splashscreen_tutorial.app */,
-				00E356EE1AD99517003FC87E /* rn_splashscreen_tutorialTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Titan.app */,
+				00E356EE1AD99517003FC87E /* TitanTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* Titan-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* Titan-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,9 +200,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* rn_splashscreen_tutorialTests */ = {
+		00E356ED1AD99517003FC87E /* TitanTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorialTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TitanTests" */;
 			buildPhases = (
 				FC09F6C5B56BF10FDB3701ED /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -215,14 +214,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = rn_splashscreen_tutorialTests;
-			productName = rn_splashscreen_tutorialTests;
-			productReference = 00E356EE1AD99517003FC87E /* rn_splashscreen_tutorialTests.xctest */;
+			name = TitanTests;
+			productName = TitanTests;
+			productReference = 00E356EE1AD99517003FC87E /* TitanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* rn_splashscreen_tutorial */ = {
+		13B07F861A680F5B00A75B9A /* Titan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorial" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Titan" */;
 			buildPhases = (
 				47D06E26D49E0E4BB7132F66 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -235,14 +234,14 @@
 			);
 			dependencies = (
 			);
-			name = rn_splashscreen_tutorial;
-			productName = rn_splashscreen_tutorial;
-			productReference = 13B07F961A680F5B00A75B9A /* rn_splashscreen_tutorial.app */;
+			name = Titan;
+			productName = Titan;
+			productReference = 13B07F961A680F5B00A75B9A /* Titan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* Titan-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorial-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Titan-tvOS" */;
 			buildPhases = (
 				2DB8A6AD1EB1C2791A94EBC1 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -255,14 +254,14 @@
 			);
 			dependencies = (
 			);
-			name = "rn_splashscreen_tutorial-tvOS";
-			productName = "rn_splashscreen_tutorial-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOS.app */;
+			name = "Titan-tvOS";
+			productName = "Titan-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* Titan-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* Titan-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorial-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Titan-tvOSTests" */;
 			buildPhases = (
 				61C6EA7750212DA686AAF0D0 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -274,9 +273,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "rn_splashscreen_tutorial-tvOSTests";
-			productName = "rn_splashscreen_tutorial-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOSTests.xctest */;
+			name = "Titan-tvOSTests";
+			productName = "Titan-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* Titan-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -290,7 +289,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 7MUD8ZBAPU;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 7MUD8ZBAPU;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -303,11 +306,12 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "rn_splashscreen_tutorial" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Titan" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -316,10 +320,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* rn_splashscreen_tutorial */,
-				00E356ED1AD99517003FC87E /* rn_splashscreen_tutorialTests */,
-				2D02E47A1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* Titan */,
+				00E356ED1AD99517003FC87E /* TitanTests */,
+				2D02E47A1E0B4A5D006451C7 /* Titan-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* Titan-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -371,7 +375,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -402,7 +406,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rn_splashscreen_tutorial-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Titan-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -424,7 +428,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rn_splashscreen_tutorial-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Titan-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -446,7 +450,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rn_splashscreen_tutorial-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Titan-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -468,7 +472,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-rn_splashscreen_tutorialTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TitanTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -520,7 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* rn_splashscreen_tutorialTests.m in Sources */,
+				00E356F31AD99517003FC87E /* TitanTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +550,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* rn_splashscreen_tutorialTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* TitanTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,12 +559,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* rn_splashscreen_tutorial */;
+			target = 13B07F861A680F5B00A75B9A /* Titan */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* rn_splashscreen_tutorial-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* Titan-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -572,7 +576,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = rn_splashscreen_tutorial;
+			path = Titan;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -580,14 +584,15 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B339D22E80B2672718693DD /* Pods-rn_splashscreen_tutorialTests.debug.xcconfig */;
+			baseConfigurationReference = 6B339D22E80B2672718693DD /* Pods-TitanTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7MUD8ZBAPU;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = rn_splashscreen_tutorialTests/Info.plist;
+				INFOPLIST_FILE = TitanTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -597,17 +602,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rn_splashscreen_tutorial.app/rn_splashscreen_tutorial";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Titan.app/Titan";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE2DD1EF247D5E9ECCA9DD27 /* Pods-rn_splashscreen_tutorialTests.release.xcconfig */;
+			baseConfigurationReference = EE2DD1EF247D5E9ECCA9DD27 /* Pods-TitanTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = rn_splashscreen_tutorialTests/Info.plist;
+				DEVELOPMENT_TEAM = 7MUD8ZBAPU;
+				INFOPLIST_FILE = TitanTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -617,52 +623,54 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rn_splashscreen_tutorial.app/rn_splashscreen_tutorial";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Titan.app/Titan";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89B37B85D580E75ADA38DC79 /* Pods-rn_splashscreen_tutorial.debug.xcconfig */;
+			baseConfigurationReference = 89B37B85D580E75ADA38DC79 /* Pods-Titan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				INFOPLIST_FILE = rn_splashscreen_tutorial/Info.plist;
+				DEVELOPMENT_TEAM = 7MUD8ZBAPU;
+				INFOPLIST_FILE = Titan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = rn_splashscreen_tutorial;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Titan1;
+				PRODUCT_NAME = Titan;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B194C67ED29DF06E878E4DEA /* Pods-rn_splashscreen_tutorial.release.xcconfig */;
+			baseConfigurationReference = B194C67ED29DF06E878E4DEA /* Pods-Titan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = rn_splashscreen_tutorial/Info.plist;
+				DEVELOPMENT_TEAM = 7MUD8ZBAPU;
+				INFOPLIST_FILE = Titan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = rn_splashscreen_tutorial;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Titan1;
+				PRODUCT_NAME = Titan;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A66BC834592A0BEFD7A2F5EC /* Pods-rn_splashscreen_tutorial-tvOS.debug.xcconfig */;
+			baseConfigurationReference = A66BC834592A0BEFD7A2F5EC /* Pods-Titan-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -673,14 +681,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "rn_splashscreen_tutorial-tvOS/Info.plist";
+				INFOPLIST_FILE = "Titan-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rn_splashscreen_tutorial-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Titan-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -690,7 +698,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE9341A000750F9DB47A562B /* Pods-rn_splashscreen_tutorial-tvOS.release.xcconfig */;
+			baseConfigurationReference = EE9341A000750F9DB47A562B /* Pods-Titan-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -701,14 +709,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "rn_splashscreen_tutorial-tvOS/Info.plist";
+				INFOPLIST_FILE = "Titan-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rn_splashscreen_tutorial-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Titan-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -718,7 +726,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 913AA4ACD933B17C83E3CE47 /* Pods-rn_splashscreen_tutorial-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 913AA4ACD933B17C83E3CE47 /* Pods-Titan-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -728,24 +736,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "rn_splashscreen_tutorial-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "Titan-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rn_splashscreen_tutorial-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Titan-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rn_splashscreen_tutorial-tvOS.app/rn_splashscreen_tutorial-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Titan-tvOS.app/Titan-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A848BB4E2D660589CFFFF36C /* Pods-rn_splashscreen_tutorial-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = A848BB4E2D660589CFFFF36C /* Pods-Titan-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -755,17 +763,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "rn_splashscreen_tutorial-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "Titan-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.rn_splashscreen_tutorial-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Titan-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rn_splashscreen_tutorial-tvOS.app/rn_splashscreen_tutorial-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Titan-tvOS.app/Titan-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -872,7 +880,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorialTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TitanTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -881,7 +889,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorial" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Titan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -890,7 +898,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorial-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Titan-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -899,7 +907,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "rn_splashscreen_tutorial-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Titan-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -908,7 +916,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "rn_splashscreen_tutorial" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Titan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

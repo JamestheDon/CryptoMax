@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'rn_splashscreen_tutorial' do
-  # Pods for rn_splashscreen_tutorial
+target 'Titan' do
+  # Pods for Titan
   pod 'React', :path => '../node_modules/react-native/'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -29,7 +29,7 @@ target 'rn_splashscreen_tutorial' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  target 'rn_splashscreen_tutorialTests' do
+  target 'TitanTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -37,10 +37,10 @@ target 'rn_splashscreen_tutorial' do
   use_native_modules!
 end
 
-target 'rn_splashscreen_tutorial-tvOS' do
-  # Pods for rn_splashscreen_tutorial-tvOS
+target 'Titan-tvOS' do
+  # Pods for Titan-tvOS
 
-  target 'rn_splashscreen_tutorial-tvOSTests' do
+  target 'Titan-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
