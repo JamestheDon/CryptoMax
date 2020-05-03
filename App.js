@@ -37,38 +37,30 @@ const App: () => React$Node = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
+
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
+                Choose small things to do.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionTitle}>Step Two</Text>
               <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
+                Smash the fire button.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
+              <Text style={styles.sectionTitle}>Step Three</Text>
+              <Text style={styles.sectionDescription}>Repeat.</Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
+              <Text style={styles.sectionTitle}>Whats next?</Text>
               <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
+                Monitor, review and analyze.
               </Text>
             </View>
-            <LearnMoreLinks />
           </View>
         </ScrollView>
       </SafeAreaView>

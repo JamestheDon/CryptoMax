@@ -8,6 +8,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@freakycoder/react-native-calendar-heatmap": "^0.2.1",
     "acorn": "5.7.4",
     "eslint-utils": "1.4.3",
     "handlebars": "4.7.6",
