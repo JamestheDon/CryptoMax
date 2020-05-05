@@ -12,6 +12,8 @@ Install dependencies
 yarn install
 ```
 
+# Ios
+
 ```
 cd ios && pod install && cd ..
 ```
@@ -22,7 +24,7 @@ Run the project
 react-native run-ios
 ```
 
-or
+# Android ( [5/5/2020]: not updated to RN 0.62.2)
 
 ```
 react-native run-android
