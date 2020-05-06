@@ -22,7 +22,7 @@ import {
   Colors,
   DebugInstructions,
   ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+} from './src/Components';
 
 const App: () => React$Node = () => {
   useEffect(() => {
@@ -33,12 +33,12 @@ const App: () => React$Node = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
+        <Header />
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
-
           <View style={styles.body}>
+            <Text style={styles.text}>Welcome to Titan</Text>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
@@ -78,6 +78,12 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
+  },
+  text: {
+    fontSize: 30,
+    fontWeight: '500',
+    textAlign: 'center',
+    color: Colors.black,
   },
   sectionContainer: {
     marginTop: 32,
