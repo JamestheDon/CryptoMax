@@ -10,7 +10,7 @@
 
 'use strict';
 import Colors from './Colors';
-import type {Node} from './node_modules/react';
+import type {Node} from '../../../node_modules/react';
 import {Text, StyleSheet, ImageBackground} from 'react-native';
 import React from '../../../node_modules/react';
 
@@ -19,20 +19,19 @@ const Header = (): Node => (
     accessibilityRole={'image'}
     source={require('./PrimoLogo2_500x500.png')}
     style={styles.background}
-    imageStyle={styles.logo}>
-    <Text style={styles.text}>Welcome to React</Text>
-  </ImageBackground>
+    imageStyle={styles.logo}
+  />
 );
 
 const styles = StyleSheet.create({
   background: {
-    paddingBottom: 40,
-    paddingTop: 96,
+    paddingBottom: 100,
+    paddingTop: 40,
     paddingHorizontal: 32,
     backgroundColor: Colors.lighter,
   },
   logo: {
-    opacity: 0.2,
+    opacity: 0.4,
     overflow: 'visible',
     resizeMode: 'cover',
     /*
@@ -41,12 +40,12 @@ const styles = StyleSheet.create({
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-    marginLeft: -128,
-    marginBottom: -192,
+    marginLeft: 0,
+    marginBottom: -100,
   },
   text: {
-    fontSize: 40,
-    fontWeight: '600',
+    fontSize: 30,
+    fontWeight: '500',
     textAlign: 'center',
     color: Colors.black,
   },
