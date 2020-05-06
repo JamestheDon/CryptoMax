@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="515" height="535"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="asG-Xr-lMP">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Titan-pixelated" translatesAutoresizingMaskIntoConstraints="NO" id="asG-Xr-lMP" userLabel="Titan-pixelated">
                     <rect key="frame" x="159" y="101" width="197" height="184"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="197" id="FYg-kr-9Xz"/>
@@ -40,6 +40,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Image" width="60" height="60"/>
+        <image name="Titan-pixelated" width="60" height="60"/>
     </resources>
 </document>
