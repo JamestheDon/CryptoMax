@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lighter,
   },
   logo: {
-    opacity: 0.4,
+    opacity: 0.1,
     overflow: 'visible',
     resizeMode: 'cover',
     /*
