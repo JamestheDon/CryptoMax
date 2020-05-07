@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "PrimoOriginalLogo_200x200.png",
+      "filename" : "ti-logo-60x60 copy.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "PrimoOriginalLogo_2x.png",
+      "filename" : "ti-logo-120x120 copy.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "PrimoOriginalLogo_3x.png",
+      "filename" : "ti-logo-180x180 copy.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
