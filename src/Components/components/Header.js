@@ -10,17 +10,18 @@
 
 'use strict';
 import Colors from './Colors';
-import type {Node} from '../../../node_modules/react';
+import type {Node} from 'react';
 import {Text, StyleSheet, ImageBackground} from 'react-native';
-import React from '../../../node_modules/react';
+import React from 'react';
 
 const Header = (): Node => (
   <ImageBackground
     accessibilityRole={'image'}
     source={require('./PrimoLogo2_500x500.png')}
     style={styles.background}
-    imageStyle={styles.logo}
-  />
+    imageStyle={styles.logo}>
+    <Text style={styles.text}>Welcome to Titan</Text>
+  </ImageBackground>
 );
 
 const styles = StyleSheet.create({

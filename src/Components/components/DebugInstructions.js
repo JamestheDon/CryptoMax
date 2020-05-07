@@ -8,9 +8,9 @@
  * @format
  */
 
-import type {Node} from './node_modules/react';
+import type {Node} from 'react';
 import {Platform, StyleSheet, Text} from 'react-native';
-import React from './node_modules/react';
+import React from 'react';
 
 const styles = StyleSheet.create({
   highlight: {
