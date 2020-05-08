@@ -15,14 +15,10 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import HomeScreen from './src/Screens/HomeScreen';
 import SplashScreen from 'react-native-splash-screen';
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from './src/Components';
+import {Colors} from './src/Components/';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App: () => React$Node = () => {
   useEffect(() => {
@@ -31,37 +27,10 @@ const App: () => React$Node = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor="#f5fcff" />
       <SafeAreaView>
-        <Header />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Choose small things to do.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step Two</Text>
-              <Text style={styles.sectionDescription}>
-                Check youself once a day.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step Three</Text>
-              <Text style={styles.sectionDescription}>Repeat.</Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Whats next?</Text>
-              <Text style={styles.sectionDescription}>
-                Monitor, review and analyze.
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
+        <HomeScreen />
+        <Text>root app view</Text>
       </SafeAreaView>
     </>
   );

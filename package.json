@@ -11,6 +11,7 @@
     "@freakycoder/react-native-calendar-heatmap": "^0.2.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.2.4",
+    "@react-navigation/stack": "^5.3.1",
     "acorn": "5.7.4",
     "handlebars": "4.7.6",
     "kind-of": "6.0.3",
