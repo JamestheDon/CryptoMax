@@ -16,9 +16,30 @@ import {
   StatusBar,
 } from 'react-native';
 import HomeScreen from './src/Screens/HomeScreen';
+import HomeScreenDetails from './src/Screens/HomeScreenDetails';
 import SplashScreen from 'react-native-splash-screen';
-import {Colors} from './src/Components/';
+import {Colors} from './src/Components';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HomeScreenDetails"
+        component={HomeScreenDetails}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const App: () => React$Node = () => {
   useEffect(() => {
@@ -28,10 +49,16 @@ const App: () => React$Node = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#f5fcff" />
-      <SafeAreaView>
-        <HomeScreen />
-        <Text>root app view</Text>
-      </SafeAreaView>
+
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeStack}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 };

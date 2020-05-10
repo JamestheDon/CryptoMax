@@ -15,7 +15,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from '../Components/';
-// import Header from '../Components/components/Header';
+
 // import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 // import Heatmap from '../Heatmap';
 
@@ -27,14 +27,10 @@ import {
 //
 // SOMEHITNG you did & SOMETHING you didnt do.
 
-const HomeScreen = (
-  {
-    /*navigation*/
-  },
-) => {
+const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaView>
-      <Header />
+      <Header title="Home Screen" isHome={true} navigation={navigation} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollView}>
@@ -63,6 +59,11 @@ const HomeScreen = (
           </View>
         </View>
       </ScrollView>
+      <TouchableOpacity
+        style={{marginTop: 20}}
+        onPress={() => navigation.navigate('HomeScreenDetails')}>
+        <Text>Goto Home details</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

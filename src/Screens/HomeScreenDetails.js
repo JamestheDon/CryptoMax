@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import Header from '../Header';
-import Heatmap from '../Heatmap';
+import {Header} from '../Components/';
 
-const HomeScreenDetail = ({navigation}) => {
+const HomeScreenDetails = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
@@ -17,7 +16,7 @@ const HomeScreenDetail = ({navigation}) => {
         // isHome={false}
         navigation={navigation}
       />
-      <Heatmap quarter={1} />
+
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Home Screen Details</Text>
       </View>
@@ -25,4 +24,4 @@ const HomeScreenDetail = ({navigation}) => {
   );
 };
 
-export default HomeScreenDetail;
+export default HomeScreenDetails;
