@@ -16,7 +16,7 @@ const Header = ({title, isHome, navigation}) => {
         <View>
           <ImageBackground
             accessibilityRole={'image'}
-            source={require('./PrimoLogo2_500x500.png')}
+            source={require('./ti-logo-2-120x120.png')}
             style={styles.background}
             imageStyle={styles.logo}>
             <Text style={styles.text}>Welcome to Titan</Text>
@@ -26,10 +26,10 @@ const Header = ({title, isHome, navigation}) => {
       ) : (
         <ImageBackground
           accessibilityRole={'image'}
-          source={require('./PrimoLogo2_500x500.png')}
+          source={require('./ti-logo-2-120x120.png')}
           style={styles.background}
           imageStyle={styles.logo}>
-          <Text style={styles.text}>Another Page!!</Text>
+          <Text style={styles.text}>{title}</Text>
           <View
             style={{
               flexDirection: 'row',
@@ -41,7 +41,7 @@ const Header = ({title, isHome, navigation}) => {
               onPress={() => navigation.goBack()}>
               <Text>back</Text>
             </TouchableOpacity>
-            <Text>{title}</Text>
+            <Text>{title} WHere is here?</Text>
           </View>
         </ImageBackground>
       )}
@@ -52,12 +52,12 @@ const Header = ({title, isHome, navigation}) => {
 const styles = StyleSheet.create({
   background: {
     paddingBottom: 100,
-    paddingTop: 40,
+    paddingTop: 100,
     paddingHorizontal: 32,
     backgroundColor: Colors.lighter,
   },
   logo: {
-    opacity: 0.1,
+    opacity: 0.2,
     overflow: 'visible',
     resizeMode: 'cover',
     /*
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
      * source image's size.
      */
     marginLeft: 0,
-    marginBottom: -100,
+    marginBottom: -150,
   },
   text: {
     fontSize: 30,
