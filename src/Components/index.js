@@ -13,7 +13,6 @@
 import Header from './components/Header';
 import LearnMoreLinks from './components/LearnMoreLinks';
 import Colors from './components/Colors';
-import DebugInstructions from './components/DebugInstructions';
-import ReloadInstructions from './components/ReloadInstructions';
+import CalendarHeatmap from './components/CalendarHeatmap';
 
-export {Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions};
+export {Header, LearnMoreLinks, Colors, CalendarHeatmap};
