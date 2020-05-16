@@ -8,13 +8,7 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from '../Components/';
+import {Header, Colors} from '../Components/';
 
 // import CalendarHeatmap from '@freakycoder/react-native-calendar-heatmap/lib/src/CalendarHeatmap'
 // import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
