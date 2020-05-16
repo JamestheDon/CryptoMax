@@ -175,7 +175,7 @@ const CalendarHeatmap = props => {
     <View>
       <Svg
         height={376}
-        width={176}
+        width={400}
         //  height={ getHeight(gutterSize, showMonthLabels, horizontal)}
         // width={ getWidth(numDays, endDate, gutterSize)}
       >

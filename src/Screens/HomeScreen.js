@@ -12,11 +12,9 @@ import {
   Header,
   LearnMoreLinks,
   Colors,
-  CalendarHeatmap,
   DebugInstructions,
   ReloadInstructions,
 } from '../Components/';
-import {staticData2} from './staticData';
 
 // import CalendarHeatmap from '@freakycoder/react-native-calendar-heatmap/lib/src/CalendarHeatmap'
 // import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -60,15 +58,6 @@ const HomeScreen = ({navigation}) => {
               Monitor, review and analyze.
             </Text>
           </View>
-        </View>
-        <View>
-          <Text>121 Days in quarter.</Text>
-          <CalendarHeatmap
-            endDate={new Date('2020-04-30')}
-            numDays={121} // 121 days for quater
-            colorArray={['#eee', '#bcd6f7', '#656ac6', '#393b99', '#191c5c']}
-            values={staticData2}
-          />
         </View>
       </ScrollView>
 

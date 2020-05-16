@@ -10,54 +10,53 @@ import {
 import React from 'react';
 
 const Header = ({title, isHome, navigation}) => {
+  const {background, logo, text} = homeHeader;
+
   return (
     <View>
       {isHome ? (
-        <View>
-          <ImageBackground
-            accessibilityRole={'image'}
-            source={require('./ti-logo-2-120x120.png')}
-            style={styles.background}
-            imageStyle={styles.logo}>
-            <Text style={styles.text}>Welcome to Titan</Text>
-          </ImageBackground>
-          <Text>{title}</Text>
-        </View>
-      ) : (
         <ImageBackground
           accessibilityRole={'image'}
-          source={require('./ti-logo-2-120x120.png')}
-          style={styles.background}
-          imageStyle={styles.logo}>
-          <Text style={styles.text}>{title}</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              alignContent: 'center',
-            }}>
-            <TouchableOpacity
-              style={{marginLeft: 5}}
-              onPress={() => navigation.goBack()}>
-              <Text>back</Text>
-            </TouchableOpacity>
-            <Text>{title} WHere is here?</Text>
-          </View>
+          source={require('./PrimoLogo2_500x500.png')}
+          style={background}
+          imageStyle={logo}>
+          <Text style={text}>{title}</Text>
         </ImageBackground>
+      ) : (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignContent: 'center',
+          }}>
+          <TouchableOpacity
+            style={{marginLeft: 5}}
+            onPress={() => navigation.goBack()}>
+            <Text>back</Text>
+          </TouchableOpacity>
+        </View>
       )}
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          textAlign: 'center',
+        }}>
+        <Text style={styles.text}> {title} </Text>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const homeHeader = StyleSheet.create({
   background: {
     paddingBottom: 100,
-    paddingTop: 100,
+    paddingTop: 40,
     paddingHorizontal: 32,
     backgroundColor: Colors.lighter,
   },
   logo: {
-    opacity: 0.2,
+    opacity: 0.1,
     overflow: 'visible',
     resizeMode: 'cover',
     /*
@@ -67,13 +66,26 @@ const styles = StyleSheet.create({
      * source image's size.
      */
     marginLeft: 0,
-    marginBottom: -150,
+    marginBottom: -100,
   },
   text: {
     fontSize: 30,
     fontWeight: '500',
     textAlign: 'center',
     color: Colors.black,
+  },
+});
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    height: 60,
+
+    backgroundColor: 'grey',
+  },
+  text: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
 
