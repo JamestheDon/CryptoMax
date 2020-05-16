@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
@@ -15,14 +7,31 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import HomeScreen from './src/Screens/HomeScreen';
+import HomeScreenDetails from './src/Screens/HomeScreenDetails';
 import SplashScreen from 'react-native-splash-screen';
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from './src/Components';
+import {Colors} from './src/Components';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HomeScreenDetails"
+        component={HomeScreenDetails}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const App: () => React$Node = () => {
   useEffect(() => {
@@ -31,38 +40,17 @@ const App: () => React$Node = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Header />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Choose small things to do.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step Two</Text>
-              <Text style={styles.sectionDescription}>
-                Check youself once a day.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step Three</Text>
-              <Text style={styles.sectionDescription}>Repeat.</Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Whats next?</Text>
-              <Text style={styles.sectionDescription}>
-                Monitor, review and analyze.
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <StatusBar barStyle="dark-content" backgroundColor="#f5fcff" />
+
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeStack}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 };

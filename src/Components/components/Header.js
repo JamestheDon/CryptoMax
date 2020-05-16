@@ -1,30 +1,54 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @flow strict-local
- * @format
- */
-
-'use strict';
 import Colors from './Colors';
-import type {Node} from 'react';
-import {Text, StyleSheet, ImageBackground} from 'react-native';
+// import type {Node} from 'react';
+import {
+  Text,
+  StyleSheet,
+  ImageBackground,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 
-const Header = (): Node => (
-  <ImageBackground
-    accessibilityRole={'image'}
-    source={require('./PrimoLogo2_500x500.png')}
-    style={styles.background}
-    imageStyle={styles.logo}>
-    <Text style={styles.text}>Welcome to Titan</Text>
-  </ImageBackground>
-);
+const Header = ({title, isHome, navigation}) => {
+  const {background, logo, text} = homeHeader;
 
-const styles = StyleSheet.create({
+  return (
+    <View>
+      {isHome ? (
+        <ImageBackground
+          accessibilityRole={'image'}
+          source={require('./PrimoLogo2_500x500.png')}
+          style={background}
+          imageStyle={logo}>
+          <Text style={text}>{title}</Text>
+        </ImageBackground>
+      ) : (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignContent: 'center',
+          }}>
+          <TouchableOpacity
+            style={{marginLeft: 5}}
+            onPress={() => navigation.goBack()}>
+            <Text>back</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          textAlign: 'center',
+        }}>
+        <Text style={styles.text}> {title} </Text>
+      </View>
+    </View>
+  );
+};
+
+const homeHeader = StyleSheet.create({
   background: {
     paddingBottom: 100,
     paddingTop: 40,
@@ -49,6 +73,19 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     color: Colors.black,
+  },
+});
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    height: 60,
+
+    backgroundColor: 'grey',
+  },
+  text: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
 
