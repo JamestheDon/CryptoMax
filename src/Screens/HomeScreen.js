@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
+import axios from 'axios';
 
 // import CalendarHeatmap from '@freakycoder/react-native-calendar-heatmap/lib/src/CalendarHeatmap'
 // import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -23,6 +24,29 @@ import {Header, Colors} from '../Components/';
 // SOMEHITNG you did & SOMETHING you didnt do.
 
 const HomeScreen = ({navigation}) => {
+  const [apiResults, setApiResults] = useState([]);
+
+  // Get current Bitcoin data.
+  const getBitconPrice = async () => {
+    try {
+      const resData = await axios.get(
+        'https://api.nomics.com/v1/currencies/ticker?key=demo-26240835858194712a4f8cc0dc635c7a&ids=BTC,ETH,XRP&convert=USD',
+      );
+      console.log(resData.data);
+      setApiResults(resData.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Hacky code, refactoring into hook.
+  // @desc calling function on first app render
+  // BAD: getBitconPrice();
+  // GOOD:
+  useEffect(() => {
+    getBitconPrice();
+  }, []);
+
   return (
     <SafeAreaView>
       <Header title="Home Screen" isHome={true} navigation={navigation} />
