@@ -58,23 +58,29 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Step One</Text>
             <Text style={styles.sectionDescription}>
-              Choose small things to do.
+              Add a 'New Position' to you accouts.
             </Text>
+            <TouchableOpacity onPress={() => alert('Heating up habbit!!!')}>
+              <View style={styles.heatButton}>
+                <Text>button</Text>
+                {/* <Icon name="bank" color="firebrick" size={50} /> */}
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Step Two</Text>
             <Text style={styles.sectionDescription}>
-              Check youself once a day.
+              Gain insights into your capital distributions.
             </Text>
           </View>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Step Three</Text>
-            <Text style={styles.sectionDescription}>Repeat.</Text>
+            <Text style={styles.sectionDescription}>Take action</Text>
           </View>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Whats next?</Text>
+            <Text style={styles.sectionTitle}>Finally</Text>
             <Text style={styles.sectionDescription}>
-              Monitor, review and analyze.
+              Checkout details page to adjust settings.
             </Text>
           </View>
         </View>
