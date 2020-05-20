@@ -70,7 +70,8 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Step Two</Text>
             <Text style={styles.sectionDescription}>
-              Gain insights into your capital distributions.
+              Gain insights into your capital distributions for every buy,sell
+              or hodl.
             </Text>
           </View>
           <View style={styles.sectionContainer}>
