@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   SafeAreaView,
   ImageBackground,
@@ -30,7 +31,7 @@ const HomeScreen = ({navigation}) => {
   const getBitconPrice = async () => {
     try {
       const resData = await axios.get(
-        'https://api.nomics.com/v1/currencies/ticker?key=demo-26240835858194712a4f8cc0dc635c7a&ids=BTC,ETH,XRP&convert=USD',
+        'https://api.nomics.com/v1/currencies/ticker?key=demo-26240835858194712a4f8cc0dc635c7a&ids=BTC&convert=USD',
       );
       console.log(resData.data);
       setApiResults(resData.data);
@@ -78,7 +79,13 @@ const HomeScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-
+      <FlatList
+        data={apiResults}
+        keyExtractor={apiResults => apiResults.id}
+        renderItem={({item}) => {
+          return <Text>{item.price}</Text>;
+        }}
+      />
       <TouchableOpacity
         style={{marginTop: 20}}
         onPress={() => navigation.navigate('HomeScreenDetails')}>
