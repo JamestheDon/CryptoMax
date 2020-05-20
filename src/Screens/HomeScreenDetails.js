@@ -7,6 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 const HomeScreenDetails = ({navigation}) => {
   return (
@@ -28,8 +29,7 @@ const HomeScreenDetails = ({navigation}) => {
           </Text>
           <TouchableOpacity onPress={() => alert('Heating up habbit!!!')}>
             <View style={styles.heatButton}>
-              <Text>button</Text>
-              {/* <Icon name="bank" color="firebrick" size={50} /> */}
+              <Icon name="shuffle" color="firebrick" size={50} />
             </View>
           </TouchableOpacity>
         </View>
