@@ -9,24 +9,51 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import {Header, Colors} from '../Components/';
+import {Header, Colors, ListPosition} from '../Components/';
 import axios from 'axios';
-
-// import CalendarHeatmap from '@freakycoder/react-native-calendar-heatmap/lib/src/CalendarHeatmap'
-// import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-// import Heatmap from '../Heatmap';
+import {TextInput} from 'react-native-gesture-handler';
 
 // The important things in your life are what you do
 // everyday... because you do them everyday. What can i do
 // everyday thats easy enough to do withought thought everyday,
 // and how can i build upon that in a sustainable way. Repeat, rest, repeat.
-// Play with habitual routeins untill you reffine them into presene shape.
+// Play with habitual routeins untill you reffine them into prestene shape.
 //
 // SOMEHITNG you did & SOMETHING you didnt do.
 
 const HomeScreen = ({navigation}) => {
   const [apiResults, setApiResults] = useState([]);
 
+  const [positions, setPosition] = useState([
+    {
+      name: 'BTC',
+      price: 8649.76,
+      cost: 99.91,
+      qty: 0.01155011,
+      currDate: Date.now(),
+      buyDate: 'May 10, 2020 at 11:49 AM ET',
+    },
+    {
+      name: 'BTC',
+      price: 8696.93,
+      cost: 99.83,
+      qty: 0.0114779,
+      currDate: Date.now(),
+      buyDate: 'May 10, 2020 at 12:08',
+    },
+  ]);
+  // const [account, setAccount] = useState([
+  //   {
+  //     id: Date.now(),
+  //     price: '',
+  //     cost: '',
+  //     qty: '0.01155011',
+  //     currDate: Date.now(),
+  //   },
+  // ]);
+
+  // @TODO add real api key
+  // @TODO create "hooks" dir and relocate hook
   // Get current Bitcoin data.
   const getBitconPrice = async () => {
     try {
@@ -40,13 +67,11 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  // Hacky code, refactoring into hook.
-  // @desc calling function on first app render
-  // BAD: getBitconPrice();
-  // GOOD:
   useEffect(() => {
     getBitconPrice();
   }, []);
+
+  const onChange = inputValue => setPosition(inputValue);
 
   return (
     <SafeAreaView>
@@ -57,9 +82,11 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Step One</Text>
+
             <Text style={styles.sectionDescription}>
               Add a 'New Position' to you accouts.
             </Text>
+            <TextInput placeholder="New Position" onChangeText={onChange} />
             <TouchableOpacity onPress={() => alert('Heating up habbit!!!')}>
               <View style={styles.heatButton}>
                 <Text>button</Text>
@@ -86,6 +113,7 @@ const HomeScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      {/* @TODO add ListPosition Component to return View. */}
       <FlatList
         data={apiResults}
         keyExtractor={apiResults => apiResults.id}
@@ -93,10 +121,21 @@ const HomeScreen = ({navigation}) => {
           return <Text>{item.price}</Text>;
         }}
       />
+
+      <View>
+        <FlatList
+          data={positions}
+          keyExtractor={position => position.qty.toString()}
+          renderItem={({item}) => {
+            return <ListPosition position={item} />;
+          }}
+        />
+      </View>
+
       <TouchableOpacity
         style={{marginTop: 20}}
         onPress={() => navigation.navigate('HomeScreenDetails')}>
-        <Text>Goto Home details</Text>
+        <Text>Account Details</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
