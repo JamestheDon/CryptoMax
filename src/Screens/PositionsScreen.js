@@ -7,11 +7,10 @@ import {
   FlatList,
   TouchableOpacity,
   SafeAreaView,
-  ImageBackground,
 } from 'react-native';
-import {Header, Colors, ListPosition} from '../Components/';
-import axios from 'axios';
-import {TextInput} from 'react-native-gesture-handler';
+import {Header, Colors, ListPosition, AddPosition} from '../Components/';
+
+import usePositions from '../hooks/usePositions';
 
 // The important things in your life are what you do
 // everyday... because you do them everyday. What can i do
@@ -21,25 +20,35 @@ import {TextInput} from 'react-native-gesture-handler';
 //
 // SOMEHITNG you did & SOMETHING you didnt do.
 
-const HomeScreen = ({navigation}) => {
-  const onChange = inputValue => setPosition(inputValue);
+const PositionsScreen = ({navigation}) => {
+  const [apiResults, errMsg] = usePositions([]);
 
   return (
     <SafeAreaView>
-      <Header title="Home Screen" isHome={true} navigation={navigation} />
+      <Header title="Positions Screen" isHome={false} navigation={navigation} />
 
-      {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
+      <AddPosition />
 
-      <TouchableOpacity
-        style={{marginTop: 20}}
-        onPress={() => navigation.navigate('HomeScreenDetails')}>
-        <Text>Account Details</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{marginTop: 20}}
-        onPress={() => navigation.navigate('PositionsScreen')}>
-        <Text>Position details</Text>
-      </TouchableOpacity>
+      {/* <View>
+        <FlatList
+          data={positions}
+          keyExtractor={position => position.qty.toString()}
+          renderItem={({item}) => {
+            return <ListPosition position={item} />;
+          }}
+        />
+      </View> */}
+      <FlatList
+        data={apiResults}
+        keyExtractor={apiResults => apiResults.id}
+        renderItem={({item}) => {
+          return (
+            <Text>
+              {item.name} - {item.price}
+            </Text>
+          );
+        }}
+      />
     </SafeAreaView>
   );
 };
@@ -89,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default PositionsScreen;

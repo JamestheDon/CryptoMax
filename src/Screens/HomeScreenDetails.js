@@ -19,7 +19,7 @@ const HomeScreenDetails = ({navigation}) => {
       />
 
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Account Details</Text>
+        <Text>Home Screen Details</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.sectionContainer}>

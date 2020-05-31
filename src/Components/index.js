@@ -13,5 +13,6 @@
 import Header from './components/Header';
 import ListPosition from './components/ListPosition';
 import Colors from './components/Colors';
+import AddPosition from './components/AddPosition';
 
-export {Header, Colors, ListPosition};
+export {Header, Colors, ListPosition, AddPosition};
