@@ -34,16 +34,9 @@ const Header = ({title, isHome, navigation}) => {
             onPress={() => navigation.goBack()}>
             <Text>back</Text>
           </TouchableOpacity>
+          <Text>{title}</Text>
         </View>
       )}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          textAlign: 'center',
-        }}>
-        <Text style={styles.text}> {title} </Text>
-      </View>
     </View>
   );
 };

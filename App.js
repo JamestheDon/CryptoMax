@@ -10,6 +10,7 @@ import {
 import HomeScreen from './src/Screens/HomeScreen';
 import HomeScreenDetails from './src/Screens/HomeScreenDetails';
 import SplashScreen from 'react-native-splash-screen';
+import PositionsScreen from './src/Screens/PositionsScreen';
 import {Colors} from './src/Components';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -27,6 +28,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="HomeScreenDetails"
         component={HomeScreenDetails}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PositionsScreen"
+        component={PositionsScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
