@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {ListPosition} from '../../Components/';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import usePositions from '../../hooks/usePositions';
 // import {addPositions} from '../../hooks/Positions';
@@ -55,20 +55,38 @@ const AddPosition = () => {
   const [buyDate, setBuyDate] = useState();
 
   const submitHandler = (price, cost, qty, buyDate) => {
-    setPositions(prevState => {
-      return [
-        {
-          price: price,
-          cost: cost,
-          qty: qty,
-          buyDate: buyDate,
-          key: Math.random().toString(),
-        },
-        ...prevState,
-      ];
-    });
+    let pos = {price, cost, qty, buyDate};
+    AsyncStorage.setItem('positions', JSON.stringify(pos));
+    // setPositions(prevState => {
+    //   return [
+    //     {
+    //       price: price,
+    //       cost: cost,
+    //       qty: qty,
+    //       buyDate: buyDate,
+    //       key: Math.random().toString(),
+    //     },
+    //     ...prevState,
+    //   ];
+    // });
   };
 
+  // useEffect(() => {
+  //   getPositions('positions')
+  // }, []);
+
+  const getPositions = async () => {
+    try {
+      let pos = await AsyncStorage.getItem('positions');
+      let parsedData = JSON.parse(pos);
+      setPositions(parsedData);
+      alert(parsedData.qty);
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  console.log(positions);
   //   useEffect(() => {
   //     addPosition()
   //   }, []);
@@ -76,12 +94,15 @@ const AddPosition = () => {
   return (
     <View>
       <Text>Price of BTC during purchas</Text>
-      <TextInput
-        placeholder="Purchase price of BTC?"
-        value={price}
-        style={styles.input}
-        onChangeText={data => setPrice(data)}
-      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Purchase price of BTC?"
+          value={price}
+          style={styles.input}
+          onChangeText={data => setPrice(data)}
+        />
+      </View>
+
       <Text>USD Cost in Dollars</Text>
       <TextInput
         placeholder="U$D Cost?"
@@ -111,6 +132,12 @@ const AddPosition = () => {
           Add Position
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.btn} onPress={() => getPositions()}>
+        <Text style={styles.btnText}>
+          <Icon name="search" size={20} color="green" />
+          Get Positions
+        </Text>
+      </TouchableOpacity>
       <View>
         <FlatList
           data={positions}
@@ -125,7 +152,11 @@ const AddPosition = () => {
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {},
   input: {
+    width: '80%',
+    borderColor: '#ccc',
+    borderWidth: 1,
     height: 60,
     padding: 8,
     fontSize: 16,
