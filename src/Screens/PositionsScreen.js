@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {Header, Colors, ListPosition, AddPosition} from '../Components/';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import usePositions from '../hooks/usePositions';
 
 // The important things in your life are what you do
@@ -20,9 +20,18 @@ import usePositions from '../hooks/usePositions';
 //
 // SOMEHITNG you did & SOMETHING you didnt do.
 
+/**
+ *
+ * @TODO
+ *  delete async data function.
+ *  navigate to position details screen from List position
+ *  clean basic component structure
+ *
+ */
+
 const PositionsScreen = ({navigation}) => {
   const [apiResults, errMsg] = usePositions([]);
-
+  // AsyncStorage.clear();
   return (
     <SafeAreaView>
       <Header title="Positions Screen" isHome={false} navigation={navigation} />
