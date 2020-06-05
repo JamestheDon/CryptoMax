@@ -12,6 +12,15 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import usePositions from '../../hooks/usePositions';
 // import {addPositions} from '../../hooks/Positions';
+/**
+ *
+ * @todo
+ * id solution
+ * [x] clear after submit.
+ * convert strings to numbers for processing gains/losses.
+ *
+ *
+ */
 
 const AddPosition = () => {
   const [errMsg, apiResults, addPositions] = usePositions([]);
@@ -21,81 +30,61 @@ const AddPosition = () => {
       name: 'BTC',
       price: 8649.76,
       cost: 99.91,
-      qty: 0.01155011,
+      qty: '0.01155011',
       currDate: Date.now(),
       buyDate: 'May 10, 2020 at 11:49 AM ET',
+      key: '1',
     },
     {
       name: 'BTC',
       price: 8696.93,
       cost: 99.83,
-      qty: 0.0114779,
+      qty: '0.0114779',
       currDate: Date.now(),
       buyDate: 'May 10, 2020 at 12:08',
+      key: '2',
     },
   ]);
 
-  //   //$$ Spent
-  //   const onChange = inputValue =>
-  //     setPosition(inputValue => {
-  //       return [
-  //         {
-  //           name: 'BTC',
-  //           price: '',
-  //           cost: null,
-  //           qty: null,
-  //           currDate: Date.now(),
-  //           buyDate: '',
-  //         },
-  //       ];
-  //     });
-  const [price, setPrice] = useState();
-  const [cost, setCost] = useState();
-  const [qty, setQty] = useState();
-  const [buyDate, setBuyDate] = useState();
+  const [price, setPrice] = useState('');
+  const [cost, setCost] = useState('');
+  const [qty, setQty] = useState('');
+  const [buyDate, setBuyDate] = useState('');
 
-  const submitHandler = (price, cost, qty, buyDate) => {
-    let pos = {price, cost, qty, buyDate};
-    AsyncStorage.setItem('positions', JSON.stringify(pos));
-    // setPositions(prevState => {
-    //   return [
-    //     {
-    //       price: price,
-    //       cost: cost,
-    //       qty: qty,
-    //       buyDate: buyDate,
-    //       key: Math.random().toString(),
-    //     },
-    //     ...prevState,
-    //   ];
-    // });
-  };
-
-  // useEffect(() => {
-  //   getPositions('positions')
-  // }, []);
-
-  const getPositions = async () => {
+  const submitHandler = async (price, cost, qty, buyDate) => {
     try {
-      let pos = await AsyncStorage.getItem('positions');
-      let parsedData = JSON.parse(pos);
-      setPositions(parsedData);
-      alert(parsedData.qty);
+      const pos = {
+        key: qty,
+        price: price,
+        cost: cost,
+        qty: qty,
+        buyDate: buyDate,
+      };
+      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
+      setPositions(prevState => {
+        return [pos, ...prevState];
+      });
     } catch (err) {
-      alert(err);
+      console.log(err);
     }
   };
 
-  console.log(positions);
-  //   useEffect(() => {
-  //     addPosition()
-  //   }, []);
+  // useEffect(() => {
+  //   getPositions();
+  // }, []);
+
+  /**
+   *
+   * AsyncStorage.clear();
+   *
+   */
 
   return (
     <View>
       <Text>Price of BTC during purchas</Text>
       <View style={styles.inputContainer}>
         <TextInput
+          clearButtonMode="always"
           placeholder="Purchase price of BTC?"
           value={price}
           style={styles.input}
@@ -105,6 +94,7 @@ const AddPosition = () => {
 
       <Text>USD Cost in Dollars</Text>
       <TextInput
+        clearButtonMode="always"
         placeholder="U$D Cost?"
         value={cost}
         style={styles.input}
@@ -112,6 +102,7 @@ const AddPosition = () => {
       />
       <Text>How many Satoshies did you receive</Text>
       <TextInput
+        clearButtonMode="always"
         placeholder="Quantity received?"
         value={qty}
         style={styles.input}
@@ -119,6 +110,7 @@ const AddPosition = () => {
       />
       <Text>Date of purchased BTC</Text>
       <TextInput
+        clearButtonMode="always"
         placeholder="Date purchased?"
         value={buyDate}
         style={styles.input}
@@ -132,16 +124,11 @@ const AddPosition = () => {
           Add Position
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btn} onPress={() => getPositions()}>
-        <Text style={styles.btnText}>
-          <Icon name="search" size={20} color="green" />
-          Get Positions
-        </Text>
-      </TouchableOpacity>
+
       <View>
         <FlatList
           data={positions}
-          keyExtractor={position => position.qty.toString()}
+          keyExtractor={position => position.key}
           renderItem={({item}) => {
             return <ListPosition position={item} />;
           }}
