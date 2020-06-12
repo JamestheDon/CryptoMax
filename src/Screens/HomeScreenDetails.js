@@ -7,6 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
+import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 const HomeScreenDetails = ({navigation}) => {
