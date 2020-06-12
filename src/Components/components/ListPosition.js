@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 /**
  * @TODO
@@ -9,8 +10,14 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
  *
  */
 
-const ListPosition = ({position}) => {
-  const getPositions = async key => {
+const ListPosition = ({positions, accounts}) => {
+  /**
+   * @description get single Obj's attributes.
+   * @param {
+   * } key
+   */
+  const getPosition = async key => {
+    // used for navigation to a positions details page
     if (!key) {
       console.log('something went wrong');
     } else {
@@ -20,9 +27,6 @@ const ListPosition = ({position}) => {
         let pos = await AsyncStorage.getItem(key);
         let parsedData = JSON.parse(pos);
 
-        // setPositions(prevState => {
-        //   return [parsedData, ...prevState];
-        // });
         alert('Take me to the details page!');
         console.log(pos);
       } catch (err) {
@@ -31,33 +35,81 @@ const ListPosition = ({position}) => {
     }
   };
 
-  AsyncStorage.getAllKeys((err, keys) => {
-    AsyncStorage.multiGet(keys, (error, stores) => {
-      stores.map((result, i, store) => {
-        console.log({[store[i][0]]: store[i][1]});
-        return true;
-      });
-    });
-  });
+  /**
+   * @description get all obj's for single account.
+   * @param {
+   * } key
+   */
+
+  const removePosition = async key => {
+    try {
+      await AsyncStorage.removeItem(accounts[0], key);
+      // setPositions(prevState => {
+      //   return [parsedData, ...prevState];
+      // });
+      console.log('Position deleted.');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // AsyncStorage.getAllKeys((err, keys) => {
+  //   AsyncStorage.multiGet(keys, (error, stores) => {
+  //     stores.map((result, i, store) => {
+  //       console.log({[store[i][0]]: store[i][1]});
+
+  //       return true;
+  //     });
+  //   });
+  // });
   return (
-    <View style={styles.listPosition}>
-      <TouchableOpacity
-        style={styles.positionBtn}
-        onPress={() => getPositions(position.key)}>
-        <Text style={styles.btnText}>
-          <Icon name="search" size={20} color="green" />
-          Inspect
-        </Text>
-      </TouchableOpacity>
-      <View style={styles.listPositionView}>
-        <Text style={styles.listPositionText}>posKey {position.key}</Text>
-        <Text style={styles.listPositionText}>BTC qty: {position.qty}</Text>
-        <Text style={styles.listPositionText}>
-          Buy date: {position.buyDate}
-        </Text>
-        <Text style={styles.listPositionText}>USD Cost:{position.cost}</Text>
-        <Text style={styles.listPositionText}>Buy Price{position.price}</Text>
-      </View>
+    <View>
+      <FlatList
+        data={positions}
+        keyExtractor={position => position.key}
+        renderItem={({item}) => {
+          return (
+            <SafeAreaView>
+              <View style={styles.listPosition}>
+                <TouchableOpacity
+                  style={styles.positionBtn}
+                  onPress={() => getPosition(item.key)}>
+                  <Text style={styles.btnText}>
+                    <Icon name="search" size={20} color="green" />
+                    Inspect
+                  </Text>
+                </TouchableOpacity>
+                <View style={styles.listPositionView}>
+                  <Text style={styles.listPositionText}>posKey {item.key}</Text>
+                  <Text style={styles.listPositionText}>
+                    BTC qty: {item.qty}
+                  </Text>
+                  <Text style={styles.listPositionText}>
+                    Buy date: {item.buyDate}
+                  </Text>
+                  <Text style={styles.listPositionText}>
+                    USD Cost:{item.cost}
+                  </Text>
+                  <Text style={styles.listPositionText}>
+                    Buy Price{item.price}
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.positionBtn}>
+                  <Text style={styles.btnText}>
+                    <Icon
+                      name="clear"
+                      size={20}
+                      color="red"
+                      onPress={() => removePosition(item.key)}
+                    />
+                    Delete
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </SafeAreaView>
+          );
+        }}
+      />
     </View>
   );
 };

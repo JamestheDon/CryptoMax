@@ -34,7 +34,7 @@ export default () => {
       const resData = await axios.get(
         'https://api.nomics.com/v1/currencies/ticker?key=demo-26240835858194712a4f8cc0dc635c7a&ids=BTC&convert=USD',
       );
-      console.log(resData.data);
+      // console.log(resData.data);
       setApiResults(resData.data);
     } catch (err) {
       console.log(err);
@@ -45,6 +45,31 @@ export default () => {
   useEffect(() => {
     getBitconPrice();
   }, []);
+
+  // const getPositions = () => {
+  // /**
+  //  *  @todo
+  //  *  getAllKeys all keys
+  //  *  keys = []
+  //  *  pass all keys to multiGet
+  //  *
+  //  */
+  //     try {
+  //       // ERROR --> 1:AsynceStorage was returning null becuase theres nothing in storage.
+  //       // ERROR --> 2: parsing pos was returning null.
+  //       let pos = await AsyncStorage.multiGet();
+  //       let parsedData = JSON.parse(pos);
+
+  //       // setPositions(prevState => {
+  //       //   return [parsedData, ...prevState];
+  //       // });
+  //       alert('Take me to the details page!');
+  //       console.log(pos);
+  //     } catch (err) {
+  //       alert(err);
+  //     }
+
+  // }
 
   const addPosition = (price, cost, qty) => {
     const newPos = [

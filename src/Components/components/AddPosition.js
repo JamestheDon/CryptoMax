@@ -22,45 +22,32 @@ import usePositions from '../../hooks/usePositions';
  *
  */
 
-const AddPosition = () => {
-  const [errMsg, apiResults, addPositions] = usePositions([]);
-
-  const [positions, setPositions] = useState([
-    {
-      name: 'BTC',
-      price: 8649.76,
-      cost: 99.91,
-      qty: '0.01155011',
-      currDate: Date.now(),
-      buyDate: 'May 10, 2020 at 11:49 AM ET',
-      key: '1',
-    },
-    {
-      name: 'BTC',
-      price: 8696.93,
-      cost: 99.83,
-      qty: '0.0114779',
-      currDate: Date.now(),
-      buyDate: 'May 10, 2020 at 12:08',
-      key: '2',
-    },
-  ]);
+const AddPosition = ({accounts, positions, setPositions}) => {
+  const [errMsg, apiResults] = usePositions([]);
 
   const [price, setPrice] = useState('');
   const [cost, setCost] = useState('');
   const [qty, setQty] = useState('');
   const [buyDate, setBuyDate] = useState('');
 
-  const submitHandler = async (price, cost, qty, buyDate) => {
+  const addPositions = async (price, cost, qty, buyDate) => {
+    /**
+     *
+     * @param string document name
+     *  [x] @todo refactor key string value
+     *  [ ] @todo Robust key solution
+     */
     try {
       const pos = {
-        key: qty,
+        // cross ref props with needed portfolio values.
+        key: Math.random().toString(),
         price: price,
         cost: cost,
-        qty: qty,
+        qty: qty, // bal
         buyDate: buyDate,
+        currDate: Date.now(),
       };
-      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
+      await AsyncStorage.setItem(accounts[3], JSON.stringify(pos));
       setPositions(prevState => {
         return [pos, ...prevState];
       });
@@ -68,10 +55,6 @@ const AddPosition = () => {
       console.log(err);
     }
   };
-
-  // useEffect(() => {
-  //   getPositions();
-  // }, []);
 
   /**
    *
@@ -118,14 +101,13 @@ const AddPosition = () => {
       />
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => submitHandler(price, cost, qty, buyDate)}>
+        onPress={() => addPositions(price, cost, qty, buyDate)}>
         <Text style={styles.btnText}>
           <Icon name="add" size={20} color="green" />
           Add Position
         </Text>
       </TouchableOpacity>
-
-      <View>
+      {/* <View>
         <FlatList
           data={positions}
           keyExtractor={position => position.key}
@@ -133,7 +115,7 @@ const AddPosition = () => {
             return <ListPosition position={item} />;
           }}
         />
-      </View>
+      </View> */}
     </View>
   );
 };
