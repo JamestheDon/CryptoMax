@@ -11,6 +11,7 @@ import {ListPosition} from '../../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../../hooks/usePositions';
+import {Button} from 'react-native-elements';
 // import {addPositions} from '../../hooks/Positions';
 /**
  *
@@ -121,12 +122,15 @@ const AddPosition = ({accounts, positions, setPositions}) => {
         />
       </View>
       <View style={styles.inputContainer}>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => addPositions(price, cost, qty, buyDate)}>
-          <Icon name="bank-plus" size={30} color="green" />
+        <TouchableOpacity style={styles.btn}>
+          <Button
+            title="Add Position"
+            icon={<Icon name="bank-plus" size={25} color="white" />}
+            onPress={() => addPositions(price, cost, qty, buyDate)}
+          />
         </TouchableOpacity>
       </View>
+
       {/* <View>
         <FlatList
           data={positions}

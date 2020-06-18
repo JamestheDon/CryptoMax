@@ -141,17 +141,6 @@ const PositionsScreen = ({navigation}) => {
         positions={positions}
         setPositions={setPositions}
       />
-      <ListPosition positions={positions} accounts={accounts} />
-
-      {/* <View>
-        <FlatList
-          data={positions}
-          keyExtractor={position => position.qty.toString()}
-          renderItem={({item}) => {
-            return <ListPosition position={item} />;
-          }}
-        />
-      </View> */}
       <FlatList
         data={apiResults}
         keyExtractor={apiResults => apiResults.id}
@@ -163,6 +152,19 @@ const PositionsScreen = ({navigation}) => {
           );
         }}
       />
+
+      <ListPosition positions={positions} accounts={accounts} />
+
+      {/* <View>
+        <FlatList
+          data={positions}
+          keyExtractor={position => position.qty.toString()}
+          renderItem={({item}) => {
+            return <ListPosition position={item} />;
+          }}
+        />
+      </View> */}
+
       {/* <View>
         <FlatList
           data={positions}

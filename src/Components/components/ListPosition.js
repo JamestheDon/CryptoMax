@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Card} from 'react-native-elements';
+import {Card, Button, ListItem} from 'react-native-elements';
 
 /**
  * @TODO
@@ -58,7 +58,7 @@ const ListPosition = ({positions, accounts}) => {
   // { if item.price > apiPrice (green) : (red)}
 
   return (
-    <View>
+    <SafeAreaView style={styles.viewContainer}>
       <FlatList
         data={positions}
         keyExtractor={position => position.key}
@@ -66,14 +66,25 @@ const ListPosition = ({positions, accounts}) => {
           return (
             <View style={styles.listPosition}>
               <Card title="Position">
-                <TouchableOpacity
-                  style={styles.positionBtn}
-                  onPress={() => getPosition(item.key)}>
-                  <Text style={styles.btnText}>
-                    <Icon name="bitcoin" size={20} color="green" />
-                    Inspect
-                  </Text>
-                </TouchableOpacity>
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity style={styles.btn}>
+                    <Button
+                      title="Inspect"
+                      type="outline"
+                      icon={<Icon name="bitcoin" size={20} color="green" />}
+                      onPress={() => getPosition(item.key)}
+                      onPress={() => navigation.navigate('PositionsScreen')}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.btn}>
+                    <Button
+                      title="Delete"
+                      type="outline"
+                      icon={<Icon name="bank-minus" size={20} color="red" />}
+                      onPress={() => removePosition(item.key)}
+                    />
+                  </TouchableOpacity>
+                </View>
                 <View style={styles.listPositionView}>
                   <Text style={styles.listPositionText}>posKey {item.key}</Text>
                   <Text style={styles.listPositionText}>
@@ -89,31 +100,32 @@ const ListPosition = ({positions, accounts}) => {
                     Buy Price{item.price}
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.positionBtn}>
-                  <Text style={styles.btnText}>
-                    <Icon
-                      name="delete"
-                      size={20}
-                      color="red"
-                      onPress={() => removePosition(item.key)}
-                    />
-                    Delete
-                  </Text>
-                </TouchableOpacity>
               </Card>
             </View>
           );
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  viewContainer: {
+    flexGrow: 1,
+    marginBottom: 10,
+    height: '50%',
+  },
+  btn: {
+    width: '50%',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+  },
   listPosition: {
+    height: 300,
     padding: 15,
     backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
+    borderBottomWidth: 10,
     borderColor: '#eee',
   },
   listPositionView: {
