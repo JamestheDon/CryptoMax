@@ -101,6 +101,7 @@ const PositionsScreen = ({navigation}) => {
   // };
 
   useEffect(() => {
+    // AsyncStorage.clear();
     getAllPositions();
   }, []);
 
@@ -131,7 +132,6 @@ const PositionsScreen = ({navigation}) => {
   //   // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
   // };
 
-  // AsyncStorage.clear();
   return (
     <SafeAreaView>
       <Header title="Positions Screen" isHome={false} navigation={navigation} />
