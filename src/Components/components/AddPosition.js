@@ -80,8 +80,8 @@ const AddPosition = ({accounts, positions, setPositions}) => {
 
   return (
     <View>
-      <Text>Price of BTC during purchas</Text>
       <View style={styles.inputContainer}>
+        <Text>Price of BTC during purchas</Text>
         <TextInput
           clearButtonMode="always"
           placeholder="Purchase price of BTC?"
@@ -90,36 +90,43 @@ const AddPosition = ({accounts, positions, setPositions}) => {
           onChangeText={data => setPrice(data)}
         />
       </View>
-
-      <Text>USD Cost in Dollars</Text>
-      <TextInput
-        clearButtonMode="always"
-        placeholder="U$D Cost?"
-        value={cost}
-        style={styles.input}
-        onChangeText={data => setCost(data)}
-      />
-      <Text>How many Satoshies did you receive</Text>
-      <TextInput
-        clearButtonMode="always"
-        placeholder="Quantity received?"
-        value={qty}
-        style={styles.input}
-        onChangeText={data => setQty(data)}
-      />
-      <Text>Date of purchased BTC</Text>
-      <TextInput
-        clearButtonMode="always"
-        placeholder="Date purchased?"
-        value={buyDate}
-        style={styles.input}
-        onChangeText={data => setBuyDate(data)}
-      />
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => addPositions(price, cost, qty, buyDate)}>
-        <Icon name="bank-plus" size={30} color="green" />
-      </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <Text>USD Cost in Dollars</Text>
+        <TextInput
+          clearButtonMode="always"
+          placeholder="U$D Cost?"
+          value={cost}
+          style={styles.input}
+          onChangeText={data => setCost(data)}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text>How many Satoshies did you receive</Text>
+        <TextInput
+          clearButtonMode="always"
+          placeholder="Quantity received?"
+          value={qty}
+          style={styles.input}
+          onChangeText={data => setQty(data)}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text>Date of purchased BTC</Text>
+        <TextInput
+          clearButtonMode="always"
+          placeholder="Date purchased?"
+          value={buyDate}
+          style={styles.input}
+          onChangeText={data => setBuyDate(data)}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => addPositions(price, cost, qty, buyDate)}>
+          <Icon name="bank-plus" size={30} color="green" />
+        </TouchableOpacity>
+      </View>
       {/* <View>
         <FlatList
           data={positions}
@@ -134,7 +141,10 @@ const AddPosition = ({accounts, positions, setPositions}) => {
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {},
+  inputContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
   input: {
     width: '80%',
     borderColor: '#ccc',
@@ -144,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   btn: {
+    width: '75%',
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
