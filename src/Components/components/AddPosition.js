@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {ListPosition} from '../../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../../hooks/usePositions';
 // import {addPositions} from '../../hooks/Positions';
 /**
@@ -118,10 +118,7 @@ const AddPosition = ({accounts, positions, setPositions}) => {
       <TouchableOpacity
         style={styles.btn}
         onPress={() => addPositions(price, cost, qty, buyDate)}>
-        <Text style={styles.btnText}>
-          <Icon name="add" size={20} color="green" />
-          Add Position
-        </Text>
+        <Icon name="bank-plus" size={30} color="green" />
       </TouchableOpacity>
       {/* <View>
         <FlatList
@@ -147,8 +144,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   btn: {
+    alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 9,
+    padding: 10,
     margin: 5,
   },
   btnText: {

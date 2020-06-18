@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
+import {Card} from 'react-native-elements';
 
 /**
  * @TODO
@@ -50,9 +51,10 @@ const ListPosition = ({positions, accounts}) => {
 
   /**
    * @description get all obj's for single account.
-   * @param {
-   * } key
+   * @param { key }
+   *
    */
+
   // { if item.price > apiPrice (green) : (red)}
 
   return (
@@ -63,38 +65,42 @@ const ListPosition = ({positions, accounts}) => {
         renderItem={({item}) => {
           return (
             <View style={styles.listPosition}>
-              <TouchableOpacity
-                style={styles.positionBtn}
-                onPress={() => getPosition(item.key)}>
-                <Text style={styles.btnText}>
-                  <Icon name="search" size={20} color="green" />
-                  Inspect
-                </Text>
-              </TouchableOpacity>
-              <View style={styles.listPositionView}>
-                <Text style={styles.listPositionText}>posKey {item.key}</Text>
-                <Text style={styles.listPositionText}>BTC qty: {item.qty}</Text>
-                <Text style={styles.listPositionText}>
-                  Buy date: {item.buyDate}
-                </Text>
-                <Text style={styles.listPositionText}>
-                  USD Cost:{item.cost}
-                </Text>
-                <Text style={styles.listPositionText}>
-                  Buy Price{item.price}
-                </Text>
-              </View>
-              <TouchableOpacity style={styles.positionBtn}>
-                <Text style={styles.btnText}>
-                  <Icon
-                    name="clear"
-                    size={20}
-                    color="red"
-                    onPress={() => removePosition(item.key)}
-                  />
-                  Delete
-                </Text>
-              </TouchableOpacity>
+              <Card title="Position">
+                <TouchableOpacity
+                  style={styles.positionBtn}
+                  onPress={() => getPosition(item.key)}>
+                  <Text style={styles.btnText}>
+                    <Icon name="bitcoin" size={20} color="green" />
+                    Inspect
+                  </Text>
+                </TouchableOpacity>
+                <View style={styles.listPositionView}>
+                  <Text style={styles.listPositionText}>posKey {item.key}</Text>
+                  <Text style={styles.listPositionText}>
+                    BTC qty: {item.qty}
+                  </Text>
+                  <Text style={styles.listPositionText}>
+                    Buy date: {item.buyDate}
+                  </Text>
+                  <Text style={styles.listPositionText}>
+                    USD Cost:{item.cost}
+                  </Text>
+                  <Text style={styles.listPositionText}>
+                    Buy Price{item.price}
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.positionBtn}>
+                  <Text style={styles.btnText}>
+                    <Icon
+                      name="delete"
+                      size={20}
+                      color="red"
+                      onPress={() => removePosition(item.key)}
+                    />
+                    Delete
+                  </Text>
+                </TouchableOpacity>
+              </Card>
             </View>
           );
         }}
