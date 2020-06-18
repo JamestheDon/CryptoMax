@@ -24,9 +24,6 @@ import usePositions from '../hooks/usePositions';
  *
  *  @TODOs
  * - make simple color selector.
- * - delete async data function.
- * - get asynceStorage positions
- * - navigate to position details screen from List position
  * - clean basic component structure
  * - Add production api credentials
  *
@@ -37,14 +34,14 @@ const PositionsScreen = ({navigation}) => {
   const [keys, setKeys] = useState();
 
   /**
+   *
+   * @TODO v2 add multi accout numbers.
    * @param string - account #'s for position types.
    * @description differnt accouts for different position types
    *
    *
    */
-  // which account ?
   const [accounts, setAccounts] = useState(['001', '002', '003']);
-
   const [positions, setPositions] = useState([
     // {
     //   name: 'BTC',

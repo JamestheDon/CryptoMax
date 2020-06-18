@@ -15,14 +15,13 @@ import usePositions from '../../hooks/usePositions';
 /**
  *
  * @todo
- * id solution
- * [x] clear after submit.
+ * PORTFOLIO screen
+ *  refactor for hooks
  * convert strings to numbers for processing gains/losses.
- *
- *
  */
 
 const AddPosition = ({accounts, positions, setPositions}) => {
+  //
   const [errMsg, apiResults] = usePositions([]);
 
   const [price, setPrice] = useState('');
@@ -30,13 +29,30 @@ const AddPosition = ({accounts, positions, setPositions}) => {
   const [qty, setQty] = useState('');
   const [buyDate, setBuyDate] = useState('');
 
+  const [index, setIndex] = useState(0);
+  // store in Async Storage
+  //   const AccountIndex = () => {
+  // const acct = {count: index[i]}
+  //     // set indexx in storage
+  // // get index from storage
+  // // if key is > 0; ++
+  // // update state with account # count.
+  // try {
+  //   await AsyncStorage.setItem(index, JSON.stringify(pos));
+  // } catch (err) {}
+  //      setIndex(prevState => {
+  //        return prevState + 1
+  //      })
+  //   }
+
   const addPositions = async (price, cost, qty, buyDate) => {
     /**
      *
-     * @param string document name
-     *  [x] @todo refactor key string value
+     *  @param string Position values
+     *
      *  [ ] @todo Robust key solution
      */
+
     try {
       const pos = {
         // cross ref props with needed portfolio values.
@@ -47,7 +63,7 @@ const AddPosition = ({accounts, positions, setPositions}) => {
         buyDate: buyDate,
         currDate: Date.now(),
       };
-      await AsyncStorage.setItem(accounts[3], JSON.stringify(pos));
+      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
       setPositions(prevState => {
         return [pos, ...prevState];
       });

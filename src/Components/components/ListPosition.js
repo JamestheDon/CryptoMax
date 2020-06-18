@@ -3,11 +3,12 @@ import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ScrollView} from 'react-native-gesture-handler';
 
 /**
  * @TODO
  * navigate to position details screen from List position
- *
+ * add conditional color rendering: red & green
  */
 
 const ListPosition = ({positions, accounts}) => {
@@ -35,15 +36,9 @@ const ListPosition = ({positions, accounts}) => {
     }
   };
 
-  /**
-   * @description get all obj's for single account.
-   * @param {
-   * } key
-   */
-
   const removePosition = async key => {
     try {
-      await AsyncStorage.removeItem(accounts[0], key);
+      await AsyncStorage.removeItem(key);
       // setPositions(prevState => {
       //   return [parsedData, ...prevState];
       // });
@@ -53,15 +48,13 @@ const ListPosition = ({positions, accounts}) => {
     }
   };
 
-  // AsyncStorage.getAllKeys((err, keys) => {
-  //   AsyncStorage.multiGet(keys, (error, stores) => {
-  //     stores.map((result, i, store) => {
-  //       console.log({[store[i][0]]: store[i][1]});
+  /**
+   * @description get all obj's for single account.
+   * @param {
+   * } key
+   */
+  // { if item.price > apiPrice (green) : (red)}
 
-  //       return true;
-  //     });
-  //   });
-  // });
   return (
     <View>
       <FlatList
@@ -69,44 +62,40 @@ const ListPosition = ({positions, accounts}) => {
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
-            <SafeAreaView>
-              <View style={styles.listPosition}>
-                <TouchableOpacity
-                  style={styles.positionBtn}
-                  onPress={() => getPosition(item.key)}>
-                  <Text style={styles.btnText}>
-                    <Icon name="search" size={20} color="green" />
-                    Inspect
-                  </Text>
-                </TouchableOpacity>
-                <View style={styles.listPositionView}>
-                  <Text style={styles.listPositionText}>posKey {item.key}</Text>
-                  <Text style={styles.listPositionText}>
-                    BTC qty: {item.qty}
-                  </Text>
-                  <Text style={styles.listPositionText}>
-                    Buy date: {item.buyDate}
-                  </Text>
-                  <Text style={styles.listPositionText}>
-                    USD Cost:{item.cost}
-                  </Text>
-                  <Text style={styles.listPositionText}>
-                    Buy Price{item.price}
-                  </Text>
-                </View>
-                <TouchableOpacity style={styles.positionBtn}>
-                  <Text style={styles.btnText}>
-                    <Icon
-                      name="clear"
-                      size={20}
-                      color="red"
-                      onPress={() => removePosition(item.key)}
-                    />
-                    Delete
-                  </Text>
-                </TouchableOpacity>
+            <View style={styles.listPosition}>
+              <TouchableOpacity
+                style={styles.positionBtn}
+                onPress={() => getPosition(item.key)}>
+                <Text style={styles.btnText}>
+                  <Icon name="search" size={20} color="green" />
+                  Inspect
+                </Text>
+              </TouchableOpacity>
+              <View style={styles.listPositionView}>
+                <Text style={styles.listPositionText}>posKey {item.key}</Text>
+                <Text style={styles.listPositionText}>BTC qty: {item.qty}</Text>
+                <Text style={styles.listPositionText}>
+                  Buy date: {item.buyDate}
+                </Text>
+                <Text style={styles.listPositionText}>
+                  USD Cost:{item.cost}
+                </Text>
+                <Text style={styles.listPositionText}>
+                  Buy Price{item.price}
+                </Text>
               </View>
-            </SafeAreaView>
+              <TouchableOpacity style={styles.positionBtn}>
+                <Text style={styles.btnText}>
+                  <Icon
+                    name="clear"
+                    size={20}
+                    color="red"
+                    onPress={() => removePosition(item.key)}
+                  />
+                  Delete
+                </Text>
+              </TouchableOpacity>
+            </View>
           );
         }}
       />
