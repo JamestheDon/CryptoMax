@@ -39,7 +39,7 @@ const HomeStack = () => {
   );
 };
 
-const App: () => React$Node = () => {
+const App = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
