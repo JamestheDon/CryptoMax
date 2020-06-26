@@ -15,7 +15,7 @@ const HomeScreenDetails = ({navigation}) => {
     <SafeAreaView style={{flex: 1}}>
       <Header
         title="Home Screen Detail"
-        // isHome={false}
+        isHome={false}
         navigation={navigation}
       />
 

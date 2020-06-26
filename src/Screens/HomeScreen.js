@@ -12,7 +12,9 @@ import {
 import {Header, Colors, ListPosition} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import {TextInput} from 'react-native-gesture-handler';
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import usePositions from '../hooks/usePositions';
 
 // The important things in your life are what you do
 // everyday... because you do them everyday. What can i do
@@ -23,7 +25,34 @@ import {TextInput} from 'react-native-gesture-handler';
 // SOMEHITNG you did & SOMETHING you didnt do.
 
 const HomeScreen = ({navigation}) => {
-  const onChange = inputValue => setPosition(inputValue);
+  const [positions, setPositions] = useState([]);
+  const [apiResults, errMsg] = usePositions([]);
+  const getAllPositions = async () => {
+    try {
+      await AsyncStorage.getAllKeys((err, keys) => {
+        AsyncStorage.multiGet(keys, (error, stores) => {
+          stores.map((result, i, store) => {
+            console.log({[store[i][0]]: store[i][1]});
+            let parsedData = JSON.parse(store[i][1]);
+            console.log(parsedData);
+            setPositions(prevState => {
+              return [parsedData, ...prevState];
+            });
+            return true;
+          });
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const sumQty = () => {};
+
+  useEffect(() => {
+    // AsyncStorage.clear();
+    // getAllPositions();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -31,16 +60,40 @@ const HomeScreen = ({navigation}) => {
 
       {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
 
-      <TouchableOpacity
-        style={{marginTop: 20}}
-        onPress={() => navigation.navigate('HomeScreenDetails')}>
-        <Text>Account Details</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{marginTop: 20}}
-        onPress={() => navigation.navigate('PositionsScreen')}>
-        <Text>Position details</Text>
-      </TouchableOpacity>
+      <View style={{marginTop: 100}}>
+        <FlatList
+          data={apiResults}
+          keyExtractor={apiResults => apiResults.id}
+          renderItem={({item}) => {
+            return (
+              <Text>
+                {item.name} - {item.price}
+              </Text>
+            );
+          }}
+        />
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity style={styles.btn}>
+            <Button
+              title="Position Details"
+              type="outline"
+              icon={<Icon name="bitcoin" size={20} color="green" />}
+              // onPress={() => getPosition(item.key)}
+              onPress={() => navigation.navigate('PositionsScreen')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn}>
+            <Button
+              title="Account Details"
+              icon={<Icon name="bitcoin" size={20} color="purple" />}
+              type="outline"
+              onPress={() => navigation.navigate('HomeScreenDetails')}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* <ListPosition positions={positions} navigation={navigation} /> */}
     </SafeAreaView>
   );
 };
@@ -52,6 +105,12 @@ const styles = StyleSheet.create({
   engine: {
     position: 'absolute',
     right: 0,
+  },
+  btn: {
+    width: '50%',
+    // alignItems: 'center',
+
+    padding: 10,
   },
   body: {
     backgroundColor: Colors.white,

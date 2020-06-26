@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  FlatList,
+  Text,
 } from 'react-native';
-import {ListPosition} from '../../Components/';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../../hooks/usePositions';
-import {Button} from 'react-native-elements';
+import {Button, Input} from 'react-native-elements';
 // import {addPositions} from '../../hooks/Positions';
 /**
  *
@@ -73,101 +72,103 @@ const AddPosition = ({accounts, positions, setPositions}) => {
     }
   };
 
-  /**
-   *
-   * AsyncStorage.clear();
-   *
-   */
-
   return (
-    <View>
+    <View style={styles.component}>
       <View style={styles.inputContainer}>
-        <Text>Price of BTC during purchas</Text>
-        <TextInput
+        <Text style={styles.btnTxt}>Bitcoin purchase price</Text>
+        <Input
           clearButtonMode="always"
-          placeholder="Purchase price of BTC?"
-          value={price}
+          placeholder="$ price of ₿"
           style={styles.input}
+          leftIcon={<Icon name="currency-btc" size={24} color="black" />}
+          value={price}
           onChangeText={data => setPrice(data)}
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text>USD Cost in Dollars</Text>
-        <TextInput
+        <Text style={styles.btnTxt}>Dollar amount spent</Text>
+        <Input
           clearButtonMode="always"
-          placeholder="U$D Cost?"
-          value={cost}
+          placeholder="Amount $ spent"
           style={styles.input}
+          leftIcon={<Icon name="currency-usd" size={24} color="black" />}
+          value={cost}
           onChangeText={data => setCost(data)}
         />
       </View>
+
       <View style={styles.inputContainer}>
-        <Text>How many Satoshies did you receive</Text>
-        <TextInput
+        <Text style={styles.btnTxt}>Quantity received</Text>
+        <Input
           clearButtonMode="always"
-          placeholder="Quantity received?"
-          value={qty}
+          placeholder="Quantity Received?"
           style={styles.input}
+          leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
+          value={qty}
           onChangeText={data => setQty(data)}
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text>Date of purchased BTC</Text>
-        <TextInput
+        <Text style={styles.btnTxt}>Date purchased</Text>
+        <Input
           clearButtonMode="always"
-          placeholder="Date purchased?"
-          value={buyDate}
+          placeholder="Date Purchased"
           style={styles.input}
+          leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
+          value={buyDate}
           onChangeText={data => setBuyDate(data)}
         />
       </View>
-      <View style={styles.inputContainer}>
-        <TouchableOpacity style={styles.btn}>
-          <Button
-            title="Add Position"
-            icon={<Icon name="bank-plus" size={25} color="white" />}
-            onPress={() => addPositions(price, cost, qty, buyDate)}
-          />
-        </TouchableOpacity>
-      </View>
+      <View style={styles.inputContainer} />
+      <TouchableOpacity style={styles.btn}>
+        <Button
+          title="Add Position"
+          type="outline"
+          titleStyle={{color: '#72b569'}}
+          buttonStyle={{
+            backgroundColor: '#596469',
+            borderColor: '#fff',
 
-      {/* <View>
-        <FlatList
-          data={positions}
-          keyExtractor={position => position.key}
-          renderItem={({item}) => {
-            return <ListPosition position={item} />;
+            borderWidth: 1,
           }}
+          icon={<Icon name="bank-plus" size={25} color="#72b569" />}
+          onPress={() => addPositions(price, cost, qty, buyDate)}
         />
-      </View> */}
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  component: {
     width: '100%',
     alignItems: 'center',
+    backgroundColor: '#eee',
   },
+  inputContainer: {
+    width: '75%',
+    alignItems: 'flex-start',
+  },
+
   input: {
     width: '80%',
     borderColor: '#ccc',
     borderWidth: 1,
-    height: 60,
+    height: 20,
     padding: 8,
     fontSize: 16,
   },
   btn: {
-    width: '75%',
+    width: '100%',
+    height: 75,
+    padding: 15,
     alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 10,
-    margin: 5,
+    backgroundColor: '#596469',
   },
-  btnText: {
+  btnTxt: {
     color: 'darkslateblue',
-    fontSize: 20,
-    textAlign: 'center',
+    fontSize: 15,
+    textAlign: 'left',
   },
 });
 

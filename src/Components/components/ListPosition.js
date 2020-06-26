@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView} from 'react-native-gesture-handler';
+
 import {Card, Button, ListItem} from 'react-native-elements';
 
 /**
@@ -12,7 +12,7 @@ import {Card, Button, ListItem} from 'react-native-elements';
  * add conditional color rendering: red & green
  */
 
-const ListPosition = ({positions, accounts}) => {
+const ListPosition = ({positions, navigation, setPositions}) => {
   /**
    * @description get single Obj's attributes.
    * @param {
@@ -40,9 +40,9 @@ const ListPosition = ({positions, accounts}) => {
   const removePosition = async key => {
     try {
       await AsyncStorage.removeItem(key);
-      // setPositions(prevState => {
-      //   return [parsedData, ...prevState];
-      // });
+      setPositions(prevState => {
+        return prevState.filter(i => i.key != key);
+      });
       console.log('Position deleted.');
     } catch (e) {
       console.log(e);
@@ -58,62 +58,59 @@ const ListPosition = ({positions, accounts}) => {
   // { if item.price > apiPrice (green) : (red)}
 
   return (
-    <SafeAreaView style={styles.viewContainer}>
+    <View style={styles.viewContainer}>
       <FlatList
         data={positions}
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
             <View style={styles.listPosition}>
-              <Card title="Position">
-                <View style={{flexDirection: 'row'}}>
+              <Card>
+                {/* <View style={{flexDirection: 'row'}}>
                   <TouchableOpacity style={styles.btn}>
                     <Button
                       title="Inspect"
                       type="outline"
                       icon={<Icon name="bitcoin" size={20} color="green" />}
-                      onPress={() => getPosition(item.key)}
+                      // onPress={() => getPosition(item.key)}
                       onPress={() => navigation.navigate('PositionsScreen')}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.btn}>
                     <Button
                       title="Delete"
-                      type="outline"
+                      titleStyle={{color: 'red'}}
+                      type="clear"
                       icon={<Icon name="bank-minus" size={20} color="red" />}
                       onPress={() => removePosition(item.key)}
                     />
                   </TouchableOpacity>
+                </View> */}
+                <View style={styles.listPositionView}>
+                  {/* <Text style={styles.listPositionText}>posKey {item.key}</Text> */}
+                  <Text style={styles.listPositionText}>sats: {item.qty}</Text>
+                  <Text style={styles.listPositionText}>
+                    Buy Date: {item.buyDate}
+                  </Text>
                 </View>
                 <View style={styles.listPositionView}>
-                  <Text style={styles.listPositionText}>posKey {item.key}</Text>
-                  <Text style={styles.listPositionText}>
-                    BTC qty: {item.qty}
-                  </Text>
-                  <Text style={styles.listPositionText}>
-                    Buy date: {item.buyDate}
-                  </Text>
-                  <Text style={styles.listPositionText}>
-                    USD Cost:{item.cost}
-                  </Text>
-                  <Text style={styles.listPositionText}>
-                    Buy Price{item.price}
-                  </Text>
+                  <Text style={styles.listPositionText}>Cost:{item.cost}</Text>
+                  <Text style={styles.listPositionText}>BTC ${item.price}</Text>
                 </View>
               </Card>
             </View>
           );
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   viewContainer: {
     flexGrow: 1,
-    marginBottom: 10,
-    height: '50%',
+    marginBottom: 100,
+    height: '40%',
   },
   btn: {
     width: '50%',
@@ -122,17 +119,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   listPosition: {
-    height: 300,
-    padding: 15,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 10,
-    borderColor: '#eee',
+    // backgroundColor: '#f8f8f8',
+    borderStyle: 'solid',
+    borderColor: '#000',
   },
   listPositionView: {
     justifyContent: 'space-between',
+    flexDirection: 'row',
+    height: 30,
   },
   listPositionText: {
-    fontSize: 18,
+    fontSize: 13,
   },
   btnText: {
     color: 'darkslateblue',
