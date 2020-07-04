@@ -9,8 +9,8 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import usePositions from '../../hooks/usePositions';
 import {Button, Input} from 'react-native-elements';
+import usePositions from '../../hooks/usePositions';
 // import {addPositions} from '../../hooks/Positions';
 /**
  *
@@ -20,9 +20,8 @@ import {Button, Input} from 'react-native-elements';
  * convert strings to numbers for processing gains/losses.
  */
 
-const AddPosition = ({accounts, positions, setPositions}) => {
+const AddPosition = ({addPosition}) => {
   //
-  const [errMsg, apiResults] = usePositions([]);
 
   const [price, setPrice] = useState('');
   const [cost, setCost] = useState('');
@@ -45,40 +44,13 @@ const AddPosition = ({accounts, positions, setPositions}) => {
   //      })
   //   }
 
-  const addPositions = async (price, cost, qty, buyDate) => {
-    /**
-     *
-     *  @param string Position values
-     *
-     *  [ ] @todo Robust key solution
-     */
-
-    try {
-      const pos = {
-        // cross ref props with needed portfolio values.
-        key: Math.random().toString(),
-        price: price,
-        cost: cost,
-        qty: qty, // bal
-        buyDate: buyDate,
-        currDate: Date.now(),
-      };
-      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
-      setPositions(prevState => {
-        return [pos, ...prevState];
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <View style={styles.component}>
       <View style={styles.inputContainer}>
-        <Text style={styles.btnTxt}>Bitcoin purchase price</Text>
+        {/* <Text style={styles.btnTxt}>Bitcoin purchase price</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="$ price of ₿"
+          placeholder="Purchase Price"
           style={styles.input}
           leftIcon={<Icon name="currency-btc" size={24} color="black" />}
           value={price}
@@ -86,10 +58,10 @@ const AddPosition = ({accounts, positions, setPositions}) => {
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.btnTxt}>Dollar amount spent</Text>
+        {/* <Text style={styles.btnTxt}>Dollar amount spent</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="Amount $ spent"
+          placeholder="Amount Invested"
           style={styles.input}
           leftIcon={<Icon name="currency-usd" size={24} color="black" />}
           value={cost}
@@ -98,10 +70,10 @@ const AddPosition = ({accounts, positions, setPositions}) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.btnTxt}>Quantity received</Text>
+        {/* <Text style={styles.btnTxt}>Quantity received</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="Quantity Received?"
+          placeholder="Satoshies Received"
           style={styles.input}
           leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
           value={qty}
@@ -109,7 +81,7 @@ const AddPosition = ({accounts, positions, setPositions}) => {
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.btnTxt}>Date purchased</Text>
+        {/* <Text style={styles.btnTxt}>Date purchased</Text> */}
         <Input
           clearButtonMode="always"
           placeholder="Date Purchased"
@@ -120,7 +92,7 @@ const AddPosition = ({accounts, positions, setPositions}) => {
         />
       </View>
       <View style={styles.inputContainer} />
-      <TouchableOpacity style={styles.btn}>
+      <View style={styles.btn}>
         <Button
           title="Add Position"
           type="outline"
@@ -132,9 +104,9 @@ const AddPosition = ({accounts, positions, setPositions}) => {
             borderWidth: 1,
           }}
           icon={<Icon name="bank-plus" size={25} color="#72b569" />}
-          onPress={() => addPositions(price, cost, qty, buyDate)}
+          onPress={() => addPosition(price, cost, qty, buyDate)}
         />
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };

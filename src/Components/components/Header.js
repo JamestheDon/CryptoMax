@@ -27,9 +27,9 @@ const Header = ({title, isHome, navigation}) => {
           <TouchableOpacity
             style={{marginLeft: 10}}
             onPress={() => navigation.goBack()}>
-            <Text>back</Text>
+            <Text style={{textAlign: 'left', color: 'white'}}>back</Text>
           </TouchableOpacity>
-          <Text>{title}</Text>
+          <Text style={styles.text}>{title}</Text>
         </View>
       )}
     </View>
@@ -42,7 +42,7 @@ const homeHeader = StyleSheet.create({
     paddingBottom: 100,
     paddingTop: 30,
     paddingHorizontal: 32,
-    backgroundColor: Colors.dark,
+    backgroundColor: Colors.light,
   },
   logo: {
     opacity: 0.1,
@@ -67,15 +67,12 @@ const homeHeader = StyleSheet.create({
 });
 const styles = StyleSheet.create({
   background: {
-    flexDirection: 'row',
-
+    alignContent: 'space-between',
+    height: 50,
     backgroundColor: Colors.dark,
   },
   header: {
-    flexDirection: 'row',
-    height: 60,
-
-    backgroundColor: 'grey',
+    backgroundColor: '#596469',
   },
   text: {
     color: 'white',

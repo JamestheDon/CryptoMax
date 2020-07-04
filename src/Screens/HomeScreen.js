@@ -25,34 +25,9 @@ import usePositions from '../hooks/usePositions';
 // SOMEHITNG you did & SOMETHING you didnt do.
 
 const HomeScreen = ({navigation}) => {
-  const [positions, setPositions] = useState([]);
-  const [apiResults, errMsg] = usePositions([]);
-  const getAllPositions = async () => {
-    try {
-      await AsyncStorage.getAllKeys((err, keys) => {
-        AsyncStorage.multiGet(keys, (error, stores) => {
-          stores.map((result, i, store) => {
-            console.log({[store[i][0]]: store[i][1]});
-            let parsedData = JSON.parse(store[i][1]);
-            console.log(parsedData);
-            setPositions(prevState => {
-              return [parsedData, ...prevState];
-            });
-            return true;
-          });
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const sumQty = () => {};
-
-  useEffect(() => {
-    // AsyncStorage.clear();
-    // getAllPositions();
-  }, []);
+  // useEffect(() => {
+  //   AsyncStorage.clear();
+  // }, []);
 
   return (
     <SafeAreaView>
@@ -61,17 +36,6 @@ const HomeScreen = ({navigation}) => {
       {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
 
       <View style={{marginTop: 100}}>
-        <FlatList
-          data={apiResults}
-          keyExtractor={apiResults => apiResults.id}
-          renderItem={({item}) => {
-            return (
-              <Text>
-                {item.name} - {item.price}
-              </Text>
-            );
-          }}
-        />
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={styles.btn}>
             <Button
