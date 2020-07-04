@@ -68,24 +68,7 @@ export const useNomicsApi = () => {
 };
 
 export const useAddPosition = (price, cost, qty,) => {
-  const [positions, setPositions] = useState([
-    {
-      name: 'BTC',
-      price: 8649.76,
-      cost: 99.91,
-      qty: 0.01155011,
-      currDate: Date.now(),
-      buyDate: 'May 10, 2020 at 11:49 AM ET',
-    },
-    {
-      name: 'BTC',
-      price: 8696.93,
-      cost: 99.83,
-      qty: 0.0114779,
-      currDate: Date.now(),
-      buyDate: 'May 10, 2020 at 12:08',
-    },
-  ]);
+  const [positions, setPosition] = useState([ ]);
 
   const addPosition = (price, cost, qty) => {
     try {
@@ -97,7 +80,7 @@ export const useAddPosition = (price, cost, qty,) => {
         buyDate: buyDate,
       };
       await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
-      setPositions(prevState => {
+      setPosition(prevState => {
         return [pos, ...prevState];
       });
     } catch (err) {

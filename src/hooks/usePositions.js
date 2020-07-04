@@ -1,35 +1,69 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Alert} from 'react-native';
-
-// @TODO build a data stream. MongoDB?
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default () => {
   const [errMsg, setErrMsg] = useState('');
   const [apiResults, setApiResults] = useState([]);
-  // const [position, setPositon] = useState({
-  //   name: 'BTC',
-  //   price: null,
-  //   cost: null,
-  //   qty: null,
-  //   currDate: Date.now(),
-  //   buyDate: '',
-  // });
+  const [positions, setPosition] = useState([]);
 
-  // @ Not sure how to use the SINGULAR position name.
+  // console.log(apiResults.map(i => i.price));
 
-  const [position, setPosition] = useState({
-    name: 'BTC',
-    price: null,
-    cost: null,
-    qty: null,
-    currDate: Date.now(),
-    buyDate: '',
-  });
+  /**
+   *
+   *  @param string Position values
+   *
+   *  [ ] @todo Robust key/account system solution
+   */
+  const addPosition = async (price, cost, qty, buyDate) => {
+    generateID = () => {
+      return Math.floor(Math.random() * 100000000).toString();
+    };
+
+    try {
+      const pos = {
+        // cross ref props with needed portfolio values.
+        key: generateID(),
+        price: price,
+        cost: cost,
+        qty: qty, // bal
+        buyDate: buyDate,
+        currDate: Date.now(),
+      };
+      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
+      setPosition(prevState => {
+        return [pos, ...prevState];
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAllPositions = async () => {
+    try {
+      await AsyncStorage.getAllKeys((err, keys) => {
+        AsyncStorage.multiGet(keys, (error, stores) => {
+          stores.map((result, i, store) => {
+            // console.log({[store[i][0]]: store[i][1]});
+            let parsedData = JSON.parse(store[i][1]);
+            // console.log(parsedData);
+            setPosition(prevState => {
+              return [parsedData, ...prevState];
+            });
+            return true;
+          });
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // @TODO add real api key
   // Get current Bitcoin data.
   const getBitconPrice = async () => {
+    // const currPrice = apiResults.map(i => i.price);
     try {
       const resData = await axios.get(
         'https://api.nomics.com/v1/currencies/ticker?key=demo-26240835858194712a4f8cc0dc635c7a&ids=BTC&convert=USD',
@@ -43,48 +77,9 @@ export default () => {
   };
 
   useEffect(() => {
+    getAllPositions();
     getBitconPrice();
   }, []);
 
-  // const getPositions = () => {
-  // /**
-  //  *  @todo
-  //  *  getAllKeys all keys
-  //  *  keys = []
-  //  *  pass all keys to multiGet
-  //  *
-  //  */
-  //     try {
-  //       // ERROR --> 1:AsynceStorage was returning null becuase theres nothing in storage.
-  //       // ERROR --> 2: parsing pos was returning null.
-  //       let pos = await AsyncStorage.multiGet();
-  //       let parsedData = JSON.parse(pos);
-
-  //       // setPositions(prevState => {
-  //       //   return [parsedData, ...prevState];
-  //       // });
-  //       alert('Take me to the details page!');
-  //       console.log(pos);
-  //     } catch (err) {
-  //       alert(err);
-  //     }
-
-  // }
-
-  const addPosition = (price, cost, qty) => {
-    const newPos = [
-      {
-        name: 'BTC',
-        price,
-        cost,
-
-        currDate: Date.now(),
-        buyDate: '',
-      },
-    ];
-    console.log(newPos);
-    setPositions(newPos);
-  };
-
-  return [apiResults, errMsg, addPosition];
+  return [apiResults, positions, setPosition, addPosition];
 };

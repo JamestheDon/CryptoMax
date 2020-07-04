@@ -1,16 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import usePositions from '../hooks/usePositions';
 
 const HomeScreenDetails = ({navigation}) => {
+  const [apiResults, positions] = usePositions();
+  const [returnRate, setReturnRate] = useState([]);
+
+  const currPrice = apiResults.map(i => i.price);
+
+  const rateOfReturn = positions.map((item, index) => {
+    const currPrice = apiResults.map(i => i.price);
+
+    return (
+      <Text key={index}>
+        + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
+      </Text>
+    );
+  });
+
+  updateTotals = () => {
+    const returnRate = sumInvest.filter(item => item > 0);
+    const rOr = ((currPrice[0] - sumInvest[0]) / sumInvest[0]) * 100;
+  };
+
+  useEffect(() => {
+    // AsyncStorage.clear();
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
@@ -24,20 +50,25 @@ const HomeScreenDetails = ({navigation}) => {
       </View>
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Purchased Price BTC</Text>
-          <Text style={styles.sectionDescription}>
-            Add a 'New Position' to you accout.
-          </Text>
-          <TouchableOpacity onPress={() => alert('Heating up habbit!!!')}>
-            <View style={styles.heatButton}>
-              <Icon name="shuffle" color="firebrick" size={50} />
-            </View>
-          </TouchableOpacity>
+          <Icon name="scale-balance" color="black" size={20} />
+          <Text style={styles.sectionTitle}>Rate of Return</Text>
         </View>
+        <FlatList
+          data={positions}
+          keyExtractor={item => item.key}
+          renderItem={({item}) => (
+            <View>
+              <Text key={item.key}>
+                + %{/** Rate of Return formula */}
+                {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
+              </Text>
+            </View>
+          )}
+        />
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Amount</Text>
+          <Text style={styles.sectionTitle}>Totals</Text>
           <Text style={styles.sectionDescription}>
-            How much Bitcoin did you buy
+            Bitcoin sats = initUSD = avgReturn =
           </Text>
         </View>
         <View style={styles.sectionContainer}>
@@ -75,6 +106,7 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+    flexDirection: 'row',
   },
   sectionTitle: {
     fontSize: 24,
@@ -83,8 +115,8 @@ const styles = StyleSheet.create({
   },
   sectionDescription: {
     marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+    fontSize: 15,
+    fontWeight: '600',
     color: Colors.dark,
   },
   highlight: {

@@ -3,6 +3,7 @@ import {Text, StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {Header, Colors, AddPosition, ListPosition} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import usePositions from '../hooks/usePositions';
+// import {addPositions} from '../../hooks/Positions';
 
 /**
  *
@@ -24,8 +25,9 @@ import usePositions from '../hooks/usePositions';
 
 const PositionsScreen = ({navigation}) => {
   // const [accounts, setAccounts] = useState(['001', '002', '003']);
-  const [positions, setPositions] = useState([]);
-  const [apiResults, errMsg] = usePositions([]);
+
+  // const [positions, setPosition] = useState([]);
+  const [apiResults, positions, setPosition, addPosition] = usePositions();
   const [totalQty, setTotalQty] = useState([]);
 
   const getTotalQty = async () => {
@@ -53,10 +55,10 @@ const PositionsScreen = ({navigation}) => {
 
   useEffect(() => {
     // AsyncStorage.clear();
+
     getTotalQty();
-    getAllPositions();
   }, []);
-  console.log(totalQty.reduce((a, b) => a + b, 0).toFixed(8));
+
   // getAllKeys = async () => {
   //   let keys = [];
   //   try {
@@ -70,40 +72,32 @@ const PositionsScreen = ({navigation}) => {
   //   // ['@MyApp_user', '@MyApp_key']
   // };
 
-  const getAllPositions = async () => {
-    try {
-      await AsyncStorage.getAllKeys((err, keys) => {
-        AsyncStorage.multiGet(keys, (error, stores) => {
-          stores.map((result, i, store) => {
-            console.log({[store[i][0]]: store[i][1]});
-            let parsedData = JSON.parse(store[i][1]);
-            // console.log(parsedData);
-            setPositions(prevState => {
-              return [parsedData, ...prevState];
-            });
-            return true;
-          });
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Positions Screen" isHome={false} navigation={navigation} />
 
+      {/* <FlatList
+        data={apiResults}
+        keyExtractor={apiResults => apiResults.id}
+        renderItem={({item}) => {
+          return (
+            <Text>
+              {item.name} - {item.price}
+            </Text>
+          );
+        }}
+      /> */}
       <AddPosition
         // accounts={accounts}
-        positions={positions}
-        setPositions={setPositions}
+        // positions={positions}
+
+        addPosition={addPosition}
       />
 
       <ListPosition
         positions={positions}
         navigation={navigation}
-        setPositions={setPositions}
+        setPosition={setPosition}
       />
     </SafeAreaView>
   );

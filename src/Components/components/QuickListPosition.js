@@ -1,64 +1,48 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Card, Button, ListItem} from 'react-native-elements';
-import usePositions from '../../hooks/usePositions';
+
+import {Card, Button} from 'react-native-elements';
 
 /**
- * @TODO
- * navigate to position details screen from List position
- * add conditional color rendering: red & green
+ * @description get single Obj's attributes.
+ * @param {
+ * } key
+ */
+/**
+ * @description get all obj's for single account.
+ * @param { key }
+ *
  */
 
-const ListPosition = ({navigation, positions, setPosition}) => {
-  const [apiResults] = usePositions([]);
-  const [valueChange, setValueChange] = useState('');
-  const currPrice = apiResults.map(i => i.price);
-  /**
-   * @description get single Obj's attributes.
-   * @param {
-   * } key
-   */
-  // updateTotals = () => {
-  //   //  console.log('Money invested', positions.map(i => i.cost));
-  //   // const currPrice = apiResults.map(i => i.price);
-  //   const currPrice = apiResults.map(i => i.price);
-  //   // const sats = positions.map(i => i.qty);
-  //   const sumInvest = positions.map(i => i.price);
-  //   const returnRate = sumInvest.filter(item => item > 0);
-  //   const rOr = ((currPrice[0] - sumInvest[0]) / sumInvest[0]) * 100;
-  //   console.log('OTHER STUFFFFFF#$#$# ', rOr);
-  //   // const sumSats = sats.reduce((a, b) => a + b, 0).toFixed(8);
+const QuickListPosition = ({positions, navigation}) => {
+  const {key, price, cost, qty} = positions;
 
-  //   //((currPrice - sumInvest) / sumInvest) * 100; = %change
-  // };
+  const getPosition = async key => {
+    // used for navigation to a positions details page
+    if (!key) {
+      console.log('something went wrong');
+    } else {
+      try {
+        // ERROR --> 1:AsynceStorage was returning null becuase theres nothing in storage.
+        // ERROR --> 2: parsing pos was returning null.
+        let pos = await AsyncStorage.getItem(key);
+        let parsedData = JSON.parse(pos);
 
-  // const getAllPositions = async () => {
-  //   try {
-  //     await AsyncStorage.getAllKeys((err, keys) => {
-  //       AsyncStorage.multiGet(keys, (error, stores) => {
-  //         stores.map((result, i, store) => {
-  //           console.log({[store[i][0]]: store[i][1]});
-  //           let parsedData = JSON.parse(store[i][1]);
-  //           // console.log(parsedData);
-  //           setPosition(prevState => {
-  //             return [parsedData, ...prevState];
-  //           });
-  //           return true;
-  //         });
-  //       });
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+        alert('Take me to the details page!');
+        console.log(pos);
+      } catch (err) {
+        alert(err);
+      }
+    }
+  };
 
   const removePosition = async key => {
     try {
       await AsyncStorage.removeItem(key);
-      setPosition(prevState => {
+      setPositions(prevState => {
         return prevState.filter(i => i.key != key);
       });
       console.log('Position deleted.');
@@ -66,9 +50,6 @@ const ListPosition = ({navigation, positions, setPosition}) => {
       console.log(e);
     }
   };
-  useEffect(() => {
-    // updateTotals();
-  }, []);
 
   // { if item.price > apiPrice (green) : (red)}
 
@@ -79,7 +60,7 @@ const ListPosition = ({navigation, positions, setPosition}) => {
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
-            <View style={styles.listPosition} key={item.key}>
+            <View style={styles.listPosition}>
               <Card
                 containerStyle={{
                   flexDirection: 'row',
@@ -87,21 +68,33 @@ const ListPosition = ({navigation, positions, setPosition}) => {
 
                   height: 75,
                 }}>
+                {/* <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity style={styles.btn}>
+                    <Button
+                      title="Inspect"
+                      type="outline"
+                      icon={<Icon name="bitcoin" size={20} color="green" />}
+                      // onPress={() => getPosition(item.key)}
+                      onPress={() => navigation.navigate('PositionsScreen')}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.btn}>
+                    <Button
+                      title="Delete"
+                      titleStyle={{color: 'red'}}
+                      type="clear"
+                      icon={<Icon name="bank-minus" size={20} color="red" />}
+                      onPress={() => removePosition(item.key)}
+                    />
+                  </TouchableOpacity>
+                </View> */}
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
                   <View style={styles.listPositionView}>
-                    <Text style={styles.listPositionText}>
-                      {' '}
-                      ROR: + %{' '}
-                      {(
-                        ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
-                        100
-                      ).toFixed(2)}
-                    </Text>
-
+                    {/* <Text style={styles.listPositionText}>posKey {item.key}</Text> */}
                     <Text style={styles.listPositionText}>
                       sats: {item.qty}
                     </Text>
@@ -125,7 +118,7 @@ const ListPosition = ({navigation, positions, setPosition}) => {
                       onPress={() => removePosition(item.key)}
                     />
                   </View>
-                  {/* <View style={styles.listPositionView}>
+                  <View style={styles.listPositionView}>
                     <Button
                       type="clear"
                       buttonStyle={{padding: 1, margin: 1}}
@@ -139,7 +132,7 @@ const ListPosition = ({navigation, positions, setPosition}) => {
                       // onPress={() => getPosition(item.key)}
                       onPress={() => navigation.navigate('HomeScreenDetails')}
                     />
-                  </View> */}
+                  </View>
                 </View>
               </Card>
             </View>
@@ -187,4 +180,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListPosition;
+export default QuickListPosition;
