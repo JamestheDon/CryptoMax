@@ -21,6 +21,10 @@ const ListPosition = ({navigation, positions, setPosition}) => {
    * @param {
    * } key
    */
+  useEffect(() => {
+    console.log(positions);
+    // updateTotals();
+  }, [positions]);
   // updateTotals = () => {
   //   //  console.log('Money invested', positions.map(i => i.cost));
   //   // const currPrice = apiResults.map(i => i.price);
@@ -66,9 +70,6 @@ const ListPosition = ({navigation, positions, setPosition}) => {
       console.log(e);
     }
   };
-  useEffect(() => {
-    // updateTotals();
-  }, []);
 
   // { if item.price > apiPrice (green) : (red)}
 
@@ -187,4 +188,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListPosition;
+export default React.memo(ListPosition);

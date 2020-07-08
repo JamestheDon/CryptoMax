@@ -11,8 +11,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {Button, Input} from 'react-native-elements';
 import usePositions from '../../hooks/usePositions';
-// import {addPositions} from '../../hooks/Positions';
-/**
+import {useAddPosition} from '../../hooks/positions';
+/*
  *
  * @todo
  * PORTFOLIO screen
@@ -21,14 +21,14 @@ import usePositions from '../../hooks/usePositions';
  */
 
 const AddPosition = ({addPosition}) => {
-  //
-
+  // const [positions, addPosition] = useAddPosition();
   const [price, setPrice] = useState('');
   const [cost, setCost] = useState('');
   const [qty, setQty] = useState('');
   const [buyDate, setBuyDate] = useState('');
 
   const [index, setIndex] = useState(0);
+
   // store in Async Storage
   //   const AccountIndex = () => {
   // const acct = {count: index[i]}
@@ -98,7 +98,7 @@ const AddPosition = ({addPosition}) => {
           type="outline"
           titleStyle={{color: '#72b569'}}
           buttonStyle={{
-            backgroundColor: '#596469',
+            // backgroundColor: '#596469',
             borderColor: '#fff',
 
             borderWidth: 1,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     height: 75,
     padding: 15,
     alignItems: 'center',
-    backgroundColor: '#596469',
+    // backgroundColor: '#596469',
   },
   btnTxt: {
     color: 'darkslateblue',

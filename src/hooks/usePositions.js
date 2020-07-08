@@ -33,8 +33,9 @@ export default () => {
       };
       await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
       setPosition(prevState => {
-        return [pos, ...prevState];
+        return [...prevState, pos];
       });
+      Alert(`Added new position: ${pos.currDate}`);
     } catch (err) {
       console.log(err);
     }
@@ -77,9 +78,18 @@ export default () => {
   };
 
   useEffect(() => {
-    getAllPositions();
     getBitconPrice();
+    return () => {
+      console.log('Cleaning up api call...');
+    };
   }, []);
 
-  return [apiResults, positions, setPosition, addPosition];
+  useEffect(() => {
+    getAllPositions();
+    return () => {
+      console.log('Cleaning up positions...');
+    };
+  }, []);
+
+  return [apiResults, positions, setPosition, addPosition, getAllPositions];
 };

@@ -87,12 +87,12 @@ const PositionsScreen = ({navigation}) => {
           );
         }}
       /> */}
-      <AddPosition
+      {/* <AddPosition
         // accounts={accounts}
         // positions={positions}
 
         addPosition={addPosition}
-      />
+      /> */}
 
       <ListPosition
         positions={positions}
@@ -149,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PositionsScreen;
+export default React.memo(PositionsScreen);
