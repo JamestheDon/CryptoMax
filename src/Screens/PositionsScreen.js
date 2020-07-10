@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, FlatList, SafeAreaView} from 'react-native';
-import {Header, Colors, AddPosition, ListPosition} from '../Components/';
+import {Text, StyleSheet, SafeAreaView, View} from 'react-native';
+import {Header, Colors, ListPosition} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import usePositions from '../hooks/usePositions';
-// import {addPositions} from '../../hooks/Positions';
+// import {addPositions} from '../../hooks/positions';
 
 /**
  *
  *  @TODOs
  * - make simple color selector.
- * - clean basic component structure
+ * -
  * - Add production api credentials
  *
  */
@@ -75,6 +75,14 @@ const PositionsScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Positions Screen" isHome={false} navigation={navigation} />
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '10%',
+        }}>
+        <Text>All current positions</Text>
+      </View>
 
       {/* <FlatList
         data={apiResults}

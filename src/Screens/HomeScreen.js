@@ -40,7 +40,7 @@ const HomeScreen = ({navigation}) => {
 
       {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
 
-      <View style={{marginTop: 20}}>
+      <View style={{marginTop: 1}}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={styles.btn}>
             <Button
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   btn: {
     width: '50%',
     // alignItems: 'center',
-
+    backgroundColor: Colors.dark,
     padding: 10,
   },
   body: {

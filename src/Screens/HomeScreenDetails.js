@@ -45,7 +45,12 @@ const HomeScreenDetails = ({navigation}) => {
         navigation={navigation}
       />
 
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '40%',
+        }}>
         <Text>Home Screen Details</Text>
       </View>
       <View style={styles.body}>
