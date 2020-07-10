@@ -7,28 +7,21 @@ import {
   Text,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {Button, Input} from 'react-native-elements';
-import usePositions from '../../hooks/usePositions';
-// import {addPositions} from '../../hooks/Positions';
-/**
- *
- * @todo
- * PORTFOLIO screen
- *  refactor for hooks
- * convert strings to numbers for processing gains/losses.
- */
+import {useAddPosition} from '../../hooks/positions';
+
+import {Colors} from '../';
 
 const AddPosition = ({addPosition}) => {
-  //
-
+  // const [positions, addPosition] = useAddPosition();
   const [price, setPrice] = useState('');
   const [cost, setCost] = useState('');
   const [qty, setQty] = useState('');
   const [buyDate, setBuyDate] = useState('');
 
   const [index, setIndex] = useState(0);
+
   // store in Async Storage
   //   const AccountIndex = () => {
   // const acct = {count: index[i]}
@@ -47,10 +40,14 @@ const AddPosition = ({addPosition}) => {
   return (
     <View style={styles.component}>
       <View style={styles.inputContainer}>
-        {/* <Text style={styles.btnTxt}>Bitcoin purchase price</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="Purchase Price"
+          placeholder="Price"
+          label="BTC Purchase Price"
+          labelStyle={{color: Colors.primary}}
+          placeholderTextColor={Colors.primary}
+          containerStyle={styles.containerStyle}
+          inputContainerStyle={styles.inputContainerStyle}
           style={styles.input}
           leftIcon={<Icon name="currency-btc" size={24} color="black" />}
           value={price}
@@ -58,10 +55,14 @@ const AddPosition = ({addPosition}) => {
         />
       </View>
       <View style={styles.inputContainer}>
-        {/* <Text style={styles.btnTxt}>Dollar amount spent</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="Amount Invested"
+          placeholder="0.00"
+          label="Amount Invested"
+          labelStyle={{color: Colors.primary}}
+          placeholderTextColor={Colors.primary}
+          containerStyle={styles.containerStyle}
+          inputContainerStyle={styles.inputContainerStyle}
           style={styles.input}
           leftIcon={<Icon name="currency-usd" size={24} color="black" />}
           value={cost}
@@ -70,22 +71,30 @@ const AddPosition = ({addPosition}) => {
       </View>
 
       <View style={styles.inputContainer}>
-        {/* <Text style={styles.btnTxt}>Quantity received</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="Satoshies Received"
-          style={styles.input}
+          placeholder="0.0000000"
+          label="Satoshies Received"
+          labelStyle={{color: Colors.primary}}
+          placeholderTextColor={Colors.primary}
+          containerStyle={styles.containerStyle}
+          inputContainerStyle={styles.inputContainerStyle}
+          //  style={styles.input}
           leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
           value={qty}
           onChangeText={data => setQty(data)}
         />
       </View>
       <View style={styles.inputContainer}>
-        {/* <Text style={styles.btnTxt}>Date purchased</Text> */}
         <Input
           clearButtonMode="always"
-          placeholder="Date Purchased"
-          style={styles.input}
+          placeholder="Date"
+          label="Date purchased"
+          labelStyle={{color: Colors.primary}}
+          placeholderTextColor={Colors.primary}
+          containerStyle={styles.containerStyle}
+          inputContainerStyle={styles.inputContainerStyle}
+          //style={styles.input}
           leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
           value={buyDate}
           onChangeText={data => setBuyDate(data)}
@@ -95,15 +104,15 @@ const AddPosition = ({addPosition}) => {
       <View style={styles.btn}>
         <Button
           title="Add Position"
-          type="outline"
-          titleStyle={{color: '#72b569'}}
+          type="solid"
+          titleStyle={{color: Colors.lighter}}
           buttonStyle={{
-            backgroundColor: '#596469',
-            borderColor: '#fff',
+            // backgroundColor: '#596469',
+            borderColor: Colors.dark,
 
             borderWidth: 1,
           }}
-          icon={<Icon name="bank-plus" size={25} color="#72b569" />}
+          icon={<Icon name="bank-plus" size={25} color={Colors.lighter} />}
           onPress={() => addPosition(price, cost, qty, buyDate)}
         />
       </View>
@@ -116,29 +125,37 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     backgroundColor: '#eee',
+    flex: 1,
+  },
+  containerStyle: {},
+  inputContainerStyle: {
+    borderWidth: 1,
   },
   inputContainer: {
     width: '75%',
     alignItems: 'flex-start',
+    marginTop: 50,
+    height: 20,
   },
 
   input: {
-    width: '80%',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    height: 20,
-    padding: 8,
-    fontSize: 16,
+    // width: '80%',
+    // borderColor: '#ccc',
+    // borderWidth: 1,
+    //  height: 10,
+    //  padding: 8,
+    // fontSize: 13,
   },
   btn: {
     width: '100%',
     height: 75,
-    padding: 15,
+
     alignItems: 'center',
-    backgroundColor: '#596469',
+    // backgroundColor: '#596469',
   },
   btnTxt: {
-    color: 'darkslateblue',
+    color: Colors.primary,
+    // color: 'darkslateblue',
     fontSize: 15,
     textAlign: 'left',
   },

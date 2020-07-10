@@ -40,7 +40,7 @@ const homeHeader = StyleSheet.create({
   background: {
     height: 275,
     paddingBottom: 100,
-    paddingTop: 30,
+    paddingTop: 25,
     paddingHorizontal: 32,
     backgroundColor: Colors.light,
   },
@@ -65,6 +65,7 @@ const homeHeader = StyleSheet.create({
     color: Colors.primary,
   },
 });
+
 const styles = StyleSheet.create({
   background: {
     alignContent: 'space-between',

@@ -9,12 +9,13 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import {Header, Colors, ListPosition} from '../Components/';
+import {Header, Colors, AddPosition} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../hooks/usePositions';
+import {useAddPosition} from '../hooks/positions';
 
 // The important things in your life are what you do
 // everyday... because you do them everyday. What can i do
@@ -25,8 +26,12 @@ import usePositions from '../hooks/usePositions';
 // SOMEHITNG you did & SOMETHING you didnt do.
 
 const HomeScreen = ({navigation}) => {
+  // const [apiResults, positions, addPosition] = usePositions();
+  const [positions, addPosition] = useAddPosition();
+
   // useEffect(() => {
-  //   AsyncStorage.clear();
+  //   //  console.log(positions);
+  //   //  AsyncStorage.clear();
   // }, []);
 
   return (
@@ -35,7 +40,7 @@ const HomeScreen = ({navigation}) => {
 
       {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
 
-      <View style={{marginTop: 100}}>
+      <View style={{marginTop: 1}}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={styles.btn}>
             <Button
@@ -55,6 +60,12 @@ const HomeScreen = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
+        <AddPosition
+          // accounts={accounts}
+          // positions={positions}
+
+          addPosition={addPosition}
+        />
       </View>
 
       {/* <ListPosition positions={positions} navigation={navigation} /> */}
@@ -73,7 +84,7 @@ const styles = StyleSheet.create({
   btn: {
     width: '50%',
     // alignItems: 'center',
-
+    backgroundColor: Colors.dark,
     padding: 10,
   },
   body: {

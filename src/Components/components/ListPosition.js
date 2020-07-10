@@ -21,6 +21,10 @@ const ListPosition = ({navigation, positions, setPosition}) => {
    * @param {
    * } key
    */
+  useEffect(() => {
+    console.log(positions);
+    // updateTotals();
+  }, [positions]);
   // updateTotals = () => {
   //   //  console.log('Money invested', positions.map(i => i.cost));
   //   // const currPrice = apiResults.map(i => i.price);
@@ -66,9 +70,6 @@ const ListPosition = ({navigation, positions, setPosition}) => {
       console.log(e);
     }
   };
-  useEffect(() => {
-    // updateTotals();
-  }, []);
 
   // { if item.price > apiPrice (green) : (red)}
 
@@ -85,7 +86,7 @@ const ListPosition = ({navigation, positions, setPosition}) => {
                   flexDirection: 'row',
                   padding: 5,
 
-                  height: 75,
+                  height: 90,
                 }}>
                 <View
                   style={{
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flexGrow: 1,
     margin: 20,
-    height: '40%',
+    height: '75%',
   },
   btn: {
     backgroundColor: '#fff',
@@ -162,12 +163,12 @@ const styles = StyleSheet.create({
   listPosition: {
     // backgroundColor: '#f8f8f8',
     borderStyle: 'solid',
-    borderColor: '#000',
+    borderColor: '#fff',
   },
   listPositionView: {
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    height: 40,
+    //   justifyContent: 'space-between',
+    // alignContent: 'center',
+    // height: 60,
     padding: 5,
   },
   listPositionText: {
