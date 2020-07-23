@@ -12,9 +12,34 @@ import usePositions from '../../hooks/usePositions';
  * add conditional color rendering: red & green
  */
 
-const ListPosition = ({navigation, positions, setPosition}) => {
+const ListPosition = ({positions, setPosition}) => {
   const [apiResults] = usePositions([]);
-  const [valueChange, setValueChange] = useState('');
+
+  const [calculations, setCalculations] = useState({
+    ror: null,
+    sumInvest: null,
+    sumSats: null,
+    singlePosGains: null,
+    totalGains: null,
+  });
+
+  const calcSums = () => {
+    const currPrice = apiResults.map(i => i.price);
+
+    //  positions.reduce()
+    positions.map((i, index) => {
+      // const rOr = ((currPrice - i.price) / i.price) * 100;
+      // const sign = ror.amount < 0 ? '-' : '+';
+      // sumInvest = i.price.reduce()
+      console.log(typeof i.price);
+    });
+
+    // setCalculations(prevState => {
+
+    //   return[...prevState, newCalculations]
+    // });
+  };
+
   const currPrice = apiResults.map(i => i.price);
   /**
    * @description get single Obj's attributes.
@@ -96,6 +121,15 @@ const ListPosition = ({navigation, positions, setPosition}) => {
                   <View style={styles.listPositionView}>
                     <Text style={styles.listPositionText}>
                       {' '}
+                      $Gain:{/**(cost) x (1 + ror) */}
+                      {(
+                        ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
+                        `${item.cost}`
+                      ).toFixed(2)}
+                    </Text>
+
+                    <Text style={styles.listPositionText}>
+                      {' '}
                       ROR: + %{' '}
                       {(
                         ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
@@ -166,7 +200,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
   },
   listPositionView: {
-    //   justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     // alignContent: 'center',
     // height: 60,
     padding: 5,
