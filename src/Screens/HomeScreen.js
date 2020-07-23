@@ -35,7 +35,7 @@ const HomeScreen = ({navigation}) => {
   // }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: Colors.light}}>
       <Header title="Home Screen" isHome={true} navigation={navigation} />
 
       {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
@@ -60,6 +60,7 @@ const HomeScreen = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
+
         <AddPosition
           // accounts={accounts}
           // positions={positions}

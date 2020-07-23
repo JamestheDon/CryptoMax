@@ -39,6 +39,10 @@ const AddPosition = ({addPosition}) => {
 
   return (
     <View style={styles.component}>
+      <View style={{flexDirection: 'row', backgroundColor: Colors.light}}>
+        <Text>Please enter new position details</Text>
+        <Icon name="transfer-down" color="black" size={20} />
+      </View>
       <View style={styles.inputContainer}>
         <Input
           clearButtonMode="always"
@@ -99,9 +103,6 @@ const AddPosition = ({addPosition}) => {
           value={buyDate}
           onChangeText={data => setBuyDate(data)}
         />
-      </View>
-      <View style={styles.inputContainer} />
-      <View style={styles.btn}>
         <Button
           title="Add Position"
           type="solid"
@@ -124,8 +125,8 @@ const styles = StyleSheet.create({
   component: {
     width: '100%',
     alignItems: 'center',
-    backgroundColor: '#eee',
-    flex: 1,
+    backgroundColor: Colors.light,
+    height: '100%',
   },
   containerStyle: {},
   inputContainerStyle: {
@@ -133,22 +134,21 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '75%',
-    alignItems: 'flex-start',
-    marginTop: 50,
-    height: 20,
+    alignItems: 'center',
+    marginTop: 15,
+    height: 55,
   },
 
   input: {
     // width: '80%',
     // borderColor: '#ccc',
     // borderWidth: 1,
-    //  height: 10,
+    height: 10,
     //  padding: 8,
     // fontSize: 13,
   },
   btn: {
     width: '100%',
-    height: 75,
 
     alignItems: 'center',
     // backgroundColor: '#596469',
