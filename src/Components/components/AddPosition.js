@@ -39,8 +39,14 @@ const AddPosition = ({addPosition}) => {
 
   return (
     <View style={styles.component}>
-      <View style={{flexDirection: 'row', backgroundColor: Colors.light}}>
-        <Text>Please enter new position details</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: Colors.light,
+          marginTop: 10,
+        }}>
+        <Icon name="transfer-down" color="black" size={20} />
+        <Text>Please enter new position details below</Text>
         <Icon name="transfer-down" color="black" size={20} />
       </View>
       <View style={styles.inputContainer}>
@@ -105,15 +111,15 @@ const AddPosition = ({addPosition}) => {
         />
         <Button
           title="Add Position"
-          type="solid"
-          titleStyle={{color: Colors.lighter}}
+          type="outline"
+          titleStyle={{color: Colors.dark}}
           buttonStyle={{
             // backgroundColor: '#596469',
             borderColor: Colors.dark,
-
+            borderRadius: 25,
             borderWidth: 1,
           }}
-          icon={<Icon name="bank-plus" size={25} color={Colors.lighter} />}
+          icon={<Icon name="bank-plus" size={25} color={'green'} />}
           onPress={() => addPosition(price, cost, qty, buyDate)}
         />
       </View>
@@ -123,10 +129,10 @@ const AddPosition = ({addPosition}) => {
 
 const styles = StyleSheet.create({
   component: {
+    flex: 1,
     width: '100%',
     alignItems: 'center',
     backgroundColor: Colors.light,
-    height: '100%',
   },
   containerStyle: {},
   inputContainerStyle: {
@@ -135,15 +141,16 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '75%',
     alignItems: 'center',
-    marginTop: 15,
-    height: 55,
+    margin: 15,
+    height: 60,
+    backgroundColor: Colors.light,
   },
 
   input: {
     // width: '80%',
     // borderColor: '#ccc',
     // borderWidth: 1,
-    height: 10,
+    height: 5,
     //  padding: 8,
     // fontSize: 13,
   },

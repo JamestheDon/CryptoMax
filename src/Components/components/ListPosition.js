@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {Card, Button, ListItem} from 'react-native-elements';
 import usePositions from '../../hooks/usePositions';
 
@@ -12,8 +13,8 @@ import usePositions from '../../hooks/usePositions';
  * add conditional color rendering: red & green
  */
 
-const ListPosition = ({positions, setPosition}) => {
-  const [apiResults] = usePositions([]);
+const ListPosition = ({positions, setPosition, navigation}) => {
+  const [apiResults] = usePositions([]); // Bug inside usePositions & positions
 
   const [calculations, setCalculations] = useState({
     ror: null,
@@ -47,7 +48,7 @@ const ListPosition = ({positions, setPosition}) => {
    * } key
    */
   useEffect(() => {
-    console.log(positions);
+    console.log('All positions loaded');
     // updateTotals();
   }, [positions]);
   // updateTotals = () => {
@@ -110,8 +111,8 @@ const ListPosition = ({positions, setPosition}) => {
                 containerStyle={{
                   flexDirection: 'row',
                   padding: 5,
-
-                  height: 90,
+                  borderRadius: 25,
+                  height: 70,
                 }}>
                 <View
                   style={{
@@ -121,11 +122,29 @@ const ListPosition = ({positions, setPosition}) => {
                   <View style={styles.listPositionView}>
                     <Text style={styles.listPositionText}>
                       {' '}
-                      $Gain:{/**(cost) x (1 + ror) */}
+                      {/**(cost) x (1 + ror) */}
                       {(
                         ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
                         `${item.cost}`
-                      ).toFixed(2)}
+                      ).toFixed(2) > 0 ? (
+                        <Text style={{color: 'green'}}>
+                          Gain: +$
+                          {(
+                            ((`${currPrice}` - `${item.price}`) /
+                              `${item.price}`) *
+                            `${item.cost}`
+                          ).toFixed(2)}
+                        </Text>
+                      ) : (
+                        <Text style={{color: 'red'}}>
+                          Gain: $
+                          {(
+                            ((`${currPrice}` - `${item.price}`) /
+                              `${item.price}`) *
+                            `${item.cost}`
+                          ).toFixed(2)}
+                        </Text>
+                      )}
                     </Text>
 
                     <Text style={styles.listPositionText}>
@@ -135,13 +154,6 @@ const ListPosition = ({positions, setPosition}) => {
                         ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
                         100
                       ).toFixed(2)}
-                    </Text>
-
-                    <Text style={styles.listPositionText}>
-                      sats: {item.qty}
-                    </Text>
-                    <Text style={styles.listPositionText}>
-                      Buy Date: {item.buyDate}
                     </Text>
                   </View>
                   <View style={styles.listPositionView}>
@@ -154,27 +166,25 @@ const ListPosition = ({positions, setPosition}) => {
                   </View>
                   <View style={styles.listPositionView}>
                     <Button
-                      buttonStyle={{padding: 1}}
                       type="clear"
-                      icon={<Icon name="bank-minus" size={30} color="red" />}
+                      buttonStyle={{padding: 0}}
+                      icon={<Icon name="menu-right" size={30} color="green" />}
+                      // onPress={() => getPosition(item.key)}
+                      onPress={() =>
+                        navigation.navigate('PositionsScreenDetails', {
+                          position: item,
+                        })
+                      }
+                    />
+                    <Button
+                      buttonStyle={{padding: 0, margin: 0}}
+                      titleStyle={{color: 'red', fontSize: 10}}
+                      title="delete"
+                      type="clear"
+                      // icon={<Icon name="delete" size={30} color="red" />}
                       onPress={() => removePosition(item.key)}
                     />
                   </View>
-                  {/* <View style={styles.listPositionView}>
-                    <Button
-                      type="clear"
-                      buttonStyle={{padding: 1, margin: 1}}
-                      icon={
-                        <Icon
-                          name="menu-right-outline"
-                          size={30}
-                          color="green"
-                        />
-                      }
-                      // onPress={() => getPosition(item.key)}
-                      onPress={() => navigation.navigate('HomeScreenDetails')}
-                    />
-                  </View> */}
                 </View>
               </Card>
             </View>

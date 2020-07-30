@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 const Header = ({title, isHome, navigation}) => {
   const {background, logo, text} = homeHeader;
@@ -21,6 +23,20 @@ const Header = ({title, isHome, navigation}) => {
           style={background}
           imageStyle={logo}>
           <Text style={text}>{title}</Text>
+          <Button
+            title="Account Details"
+            containerStyle={{alignItems: 'center', padding: 10}}
+            buttonStyle={{
+              borderColor: Colors.dark,
+              borderRadius: 20,
+              borderWidth: 1,
+              width: '50%',
+            }}
+            type="outline"
+            icon={<Icon name="bitcoin" size={20} color="green" />}
+            // onPress={() => getPosition(item.key)}
+            onPress={() => navigation.navigate('PositionsScreen')}
+          />
         </ImageBackground>
       ) : (
         <View style={styles.background}>

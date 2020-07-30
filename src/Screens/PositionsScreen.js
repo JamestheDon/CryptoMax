@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, SafeAreaView, View} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {Header, Colors, ListPosition} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import usePositions from '../hooks/usePositions';
@@ -27,7 +35,7 @@ const PositionsScreen = ({navigation}) => {
   // const [accounts, setAccounts] = useState(['001', '002', '003']);
 
   // const [positions, setPosition] = useState([]);
-  const [apiResults, positions, setPosition, addPosition] = usePositions();
+  const [apiResults, positions, setPosition] = usePositions();
   const [totalQty, setTotalQty] = useState([]);
 
   const getTotalQty = async () => {
@@ -53,11 +61,11 @@ const PositionsScreen = ({navigation}) => {
     }
   };
 
-  useEffect(() => {
-    // AsyncStorage.clear();
-
-    getTotalQty();
-  }, []);
+  /**
+   *
+   * Sum money invested
+   *
+   */
 
   // getAllKeys = async () => {
   //   let keys = [];
@@ -107,6 +115,17 @@ const PositionsScreen = ({navigation}) => {
         navigation={navigation}
         setPosition={setPosition}
       />
+
+      <TouchableOpacity style={styles.btn}>
+        <Button
+          title="Account Details"
+          icon={<Icon name="bitcoin" size={20} color="purple" />}
+          type="outline"
+          onPress={() =>
+            navigation.navigate('HomeScreenDetails', {data: positions})
+          }
+        />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -128,32 +147,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     color: Colors.black,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
   },
 });
 

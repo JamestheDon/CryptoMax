@@ -11,6 +11,7 @@ import HomeScreen from './src/Screens/HomeScreen';
 import HomeScreenDetails from './src/Screens/HomeScreenDetails';
 import SplashScreen from 'react-native-splash-screen';
 import PositionsScreen from './src/Screens/PositionsScreen';
+import PositionsScreenDetails from './src/Screens/PositionsScreenDetails';
 import {Colors} from './src/Components';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -33,6 +34,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="PositionsScreen"
         component={PositionsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PositionsScreenDetails"
+        component={PositionsScreenDetails}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -63,14 +69,14 @@ const App = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: Colors.light,
   },
   engine: {
     position: 'absolute',
     right: 0,
   },
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.light,
   },
   text: {
     fontSize: 30,

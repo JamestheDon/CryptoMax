@@ -14,24 +14,31 @@ import usePositions from '../hooks/usePositions';
 
 import {Alert} from 'react-native';
 
-const HomeScreenDetails = ({navigation}) => {
+const HomeScreenDetails = ({route, navigation}) => {
+  const {data} = route.params;
   const [apiResults, positions] = usePositions();
   const [returnRate, setReturnRate] = useState([]);
   const currPrice = apiResults.map(i => i.price);
 
   const [calculations, setCalculations] = useState({
-    performance: [{key: null, rOr: null}], // array of return rate percentages.
     sumInvest: null,
     sumSats: null,
     //  singlePosGains: ror / 100 * cost,
     totalGains: null,
   });
-
+  const {sumInvest, sumSats} = calculations;
   const [performance, setPerformance] = useState([]);
 
   useEffect(() => {
-    getRateOfReturn();
+    console.log(' OVER HERE', data);
+  });
+
+  useEffect(() => {
+    getCostSum();
+    getQtySum();
   }, []);
+
+  console.log(calculations);
   const getRateOfReturn = () => {
     try {
       // let results = [];
@@ -99,8 +106,8 @@ const HomeScreenDetails = ({navigation}) => {
    *
    */
   getQtySum = () => {
-    const qtyVals = positions.map(pos => parseFloat(pos.qty));
-    const qtySum = qtyVals.reduce((acc, item) => (acc += item), 0);
+    const qtyVals = data.map(pos => parseFloat(pos.qty));
+    const qtySum = qtyVals.reduce((acc, item) => (acc += item), 0).toFixed(8);
 
     setCalculations(prevState => {
       // Object.assign would also work
@@ -114,48 +121,19 @@ const HomeScreenDetails = ({navigation}) => {
    *
    */
   getCostSum = () => {
-    const costVals = positions.map(pos => parseFloat(pos.cost));
-    const costSum = costVals.reduce((acc, item) => (acc += item), 0);
+    try {
+      const costVals = data.map(pos => parseFloat(pos.cost));
+      const costSum = costVals
+        .reduce((acc, item) => (acc += item), 0)
+        .toFixed(2);
 
-    setCalculations(prevState => {
-      // Object.assign would also work
-      return {...prevState, sumInvest: costSum};
-    });
+      setCalculations({sumInvest: costSum});
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // console.log('OVERHERE', calculations);
-
-  const calcSums = () => {
-    const currPrice = apiResults.map(i => i.price);
-
-    try {
-      //  positions.reduce()
-
-      // const newCalcs = {
-      //  // ror: null,
-      //   sumInvest: () => {i.cost},
-      //   sumSats: null,
-      //  // singlePosGains: null,
-      //   totalGains: null
-      // }
-      const qtyVals = positions.map(pos => parseFloat(pos.qty));
-      const qtySum = qtyVals.reduce(
-        (acc, item) => (acc += item),
-        'didnt re-render',
-      );
-
-      const costVals = positions.map(pos => parseFloat(pos.cost));
-      const costSum = costVals.reduce((acc, item) => (acc += item), 0);
-      // newVal = val.reduce((a, b) => a + b, 0);
-      // const rOr = ((currPrice - i.price) / i.price) * 100;
-      // const sign = ror.amount < 0 ? '-' : '+';
-      // sumInvest = i.price.reduce()
-      console.log(costSum, qtySum);
-    } catch (err) {
-      console.log(err);
-      Alert.alert(`ERROR: ${err}`);
-    }
-  };
 
   // const rateOfReturn = positions.map((item, index) => {
 
@@ -191,19 +169,6 @@ const HomeScreenDetails = ({navigation}) => {
   //   // AsyncStorage.clear();
   // }, []);
 
-  //   <FlatList
-  //   data={positions}
-  //   keyExtractor={item => item.key}
-  //   renderItem={({item}) => (
-  //     <View>
-  //       <Text key={item.key}>
-  //         + %{/** Rate of Return formula */}
-  //         {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
-  //       </Text>
-  //     </View>
-  //   )}
-  // />
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
@@ -219,46 +184,22 @@ const HomeScreenDetails = ({navigation}) => {
           height: '40%',
         }}>
         <Text>Home Screen Details</Text>
+        <Text>
+          Sum Invested:
+          {sumInvest}
+        </Text>
+        <Text>
+          Sum Satoshies:
+          {sumSats}
+        </Text>
       </View>
       <View style={styles.body}>
-        <FlatList
-          data={performance}
-          keyExtractor={performance => performance.key}
-          renderItem={({item}) => {
-            return <Text>{item.gain}</Text>;
-          }}
-        />
         <View style={styles.sectionContainer}>
           <Icon name="scale-balance" color="black" size={20} />
           <Text style={styles.sectionTitle}>Totals</Text>
           {/* {ror > 0 ? (<Text>+ {ror}% green</Text>) : (<Text>{ror}% red</Text>)} */}
 
           {/* <Text>{rOr[0]}</Text> */}
-          <Text>
-            Sum Invested:
-            {/* {costSum} */}
-          </Text>
-          <Text>
-            Sum Satoshies:
-            {/* {qtySum} */}
-          </Text>
-        </View>
-
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Totals</Text>
-          <Text style={styles.sectionDescription}>
-            Bitcoin sats = initUSD = avgReturn =
-          </Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>How much USD$ cost?</Text>
-          <Text style={styles.sectionDescription}>Take action</Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>WHats the date stamp</Text>
-          <Text style={styles.sectionDescription}>
-            Checkout details page to adjust settings.
-          </Text>
         </View>
       </View>
     </SafeAreaView>
