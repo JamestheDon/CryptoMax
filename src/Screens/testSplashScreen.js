@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import {Header, Colors, ListPosition} from '../Components/';
+import {Header, Colors, ListPosition} from '../Components';
 
 import {TextInput} from 'react-native-gesture-handler';
 

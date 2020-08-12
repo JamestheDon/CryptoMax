@@ -8,34 +8,194 @@ import {
   FlatList,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
+import ListPosition from '../Components/ListPosition';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../hooks/usePositions';
 
-const HomeScreenDetails = ({navigation}) => {
-  const [apiResults, positions] = usePositions();
-  const [returnRate, setReturnRate] = useState([]);
+import {Alert} from 'react-native';
 
-  const currPrice = apiResults.map(i => i.price);
+const HomeScreenDetails = ({route, navigation}) => {
+  const {data} = route.params;
+  const [apiResults, positions, setPosition] = usePositions();
 
-  const rateOfReturn = positions.map((item, index) => {
-    const currPrice = apiResults.map(i => i.price);
-
-    return (
-      <Text key={index}>
-        + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
-      </Text>
-    );
+  const currPrice = apiResults.map(i => parseFloat(i.price));
+  const [performance, setPerformance] = useState([]);
+  const [calculations, setCalculations] = useState({
+    sumInvest: null,
+    sumSats: null,
+  });
+  const [gains, setGains] = useState();
+  const {sumInvest, sumSats} = calculations;
+  // const {$gain} = gains;
+  // const {rateOfReturn, singleGain} = performance;
+  useEffect(() => {
+    console.log(' OVER HERE', typeof gains);
   });
 
-  updateTotals = () => {
-    const returnRate = sumInvest.filter(item => item > 0);
-    const rOr = ((currPrice[0] - sumInvest[0]) / sumInvest[0]) * 100;
+  useEffect(() => {
+    getPerformance();
+    //  getCostSum();
+    //  getQtySum();
+    //  getSumGains();
+  });
+  useEffect(() => {
+    getCostSum();
+    getQtySum();
+  }, []);
+
+  // console.log(calculations);
+
+  getPerformance = () => {
+    // const price = data.map(i => i.price);
+
+    // const cost = data.map(i => i.cost);
+
+    // const rateOfReturn = parseFloat(
+    //   ((currPrice - price) / price) * 100,
+    // ).toFixed(2);
+
+    const $perf = positions.map((i, index) => {
+      const $gain = parseFloat(
+        ((currPrice - i.price) / i.price) * i.cost,
+      ).toFixed(2);
+
+      return {$gain};
+    });
+
+    const values = $perf.map(el => parseFloat(el.$gain));
+
+    const result = values.reduce((acc, item) => (acc += item), 0).toFixed(2);
+
+    setGains(result);
+
+    // results = calculations;
+    // setPerformance({$perf: $perf});
+
+    console.log('OVErherer#####: ', result);
+
+    // setPerformance(prevState => {
+    //   return {calculations};
+    // });
+    // setPerformance(prevState => {
+    //   return {...prevState, rateOfReturn: rateOfReturn, singleGain: singleGain};
+    // });
+
+    //  const rOr = parseFloat(((currPrice - pos.price) / pos.price) * 100);
+    // const singleGain = (rOr / 100) * pos.cost;
   };
 
-  useEffect(() => {
-    // AsyncStorage.clear();
-  }, []);
+  /**
+   * Rate of Return
+   * currP - purP / purP * 100 = ror%
+   * ECMAscript 5
+   *
+   */
+
+  // console.log('THis is what i want', performance);
+  // if (ror > 0 ) {
+  //   return (
+  //     <Text key={index}>
+  //        + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
+  //     </Text>)
+  // } else {}
+  /**
+   *
+   * Sum gains
+   *
+   */
+
+  getSumGains = () => {
+    // const gainVals = performance.map(val => parseFloat(val.$gain));
+    // const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
+    // values = [];
+    Object.keys(performance).forEach(i => {
+      console.log('testing ===>>', i, performance[i]);
+      const {$gain, rateOfReturn} = performance[i];
+      // const gain = performance[key];
+      // values.push($gain);
+      console.log('testing =++====>>', $gain);
+    });
+
+    console.log('testing ===###++##==>>', performance);
+
+    //  const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
+
+    // setCalculations(prevState => {
+    //   return {...prevState, totalGains: sumGain};
+    // });
+  };
+
+  /**
+   *
+   * Sum Satoshies held
+   *
+   */
+  getQtySum = () => {
+    const qtyVals = data.map(pos => parseFloat(pos.qty));
+    const qtySum = qtyVals.reduce((acc, item) => (acc += item), 0).toFixed(8);
+
+    setCalculations(prevState => {
+      // Object.assign would also work
+      return {...prevState, sumSats: qtySum};
+    });
+  };
+
+  /**
+   *
+   * Sum money invested
+   *
+   */
+  getCostSum = () => {
+    try {
+      const costVals = data.map(pos => parseFloat(pos.cost));
+      const costSum = costVals
+        .reduce((acc, item) => (acc += item), 0)
+        .toFixed(2);
+
+      setCalculations(prevState => {
+        return {...prevState, sumInvest: costSum};
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log('OVERHERE', calculations);
+
+  // const rateOfReturn = positions.map((item, index) => {
+
+  //   return (
+  //     <Text key={index}>
+  //       + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
+  //     </Text>
+  //   );
+  // });
+
+  // const [calculations, setCalculations] = useState({
+  //   ror: x,
+  //   sumInvest: x,
+  //   sumSats: x,
+  // });
+
+  // const calculations = () => {
+  //   const newCalcs = {};
+  //   try {
+  //     positions.map((i, index) => {});
+  //     const returnRate = sumInvest.filter(item => item > 0);
+  //     const rOr = ((currPrice[i] - sumInvest[i]) / sumInvest[i]) * 100;
+
+  //     setCalculations(prevState => {
+  //       return [...prevState, newCalculations];
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   // AsyncStorage.clear();
+  // }, []);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -49,43 +209,37 @@ const HomeScreenDetails = ({navigation}) => {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          height: '40%',
+          height: '30%',
         }}>
-        <Text>Home Screen Details</Text>
+        <Text style={styles.text}>Details</Text>
+        <Text>
+          Sum Gains:
+          {gains}
+        </Text>
+        <Text>
+          Sum Invested:
+          {sumInvest}
+        </Text>
+        <Text>
+          Sum Satoshies:
+          {sumSats}
+        </Text>
       </View>
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
           <Icon name="scale-balance" color="black" size={20} />
-          <Text style={styles.sectionTitle}>Rate of Return</Text>
+          <Text style={styles.sectionTitle}>All Positions</Text>
+
+          <Text style={styles.sectionDescription}>More info</Text>
+          {/* {ror > 0 ? (<Text>+ {ror}% green</Text>) : (<Text>{ror}% red</Text>)} */}
+
+          {/* <Text>{rOr[0]}</Text> */}
         </View>
-        <FlatList
-          data={positions}
-          keyExtractor={item => item.key}
-          renderItem={({item}) => (
-            <View>
-              <Text key={item.key}>
-                + %{/** Rate of Return formula */}
-                {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
-              </Text>
-            </View>
-          )}
+        <ListPosition
+          positions={positions}
+          navigation={navigation}
+          setPosition={setPosition}
         />
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Totals</Text>
-          <Text style={styles.sectionDescription}>
-            Bitcoin sats = initUSD = avgReturn =
-          </Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>How much USD$ cost?</Text>
-          <Text style={styles.sectionDescription}>Take action</Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>WHats the date stamp</Text>
-          <Text style={styles.sectionDescription}>
-            Checkout details page to adjust settings.
-          </Text>
-        </View>
       </View>
     </SafeAreaView>
   );
@@ -100,29 +254,31 @@ const styles = StyleSheet.create({
     right: 0,
   },
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.darkScheme.dark,
+    height: 500,
   },
   text: {
     fontSize: 30,
     fontWeight: '500',
     textAlign: 'center',
-    color: Colors.black,
+    color: Colors.darkScheme.primary,
   },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.black,
+    color: Colors.darkScheme.light,
   },
   sectionDescription: {
     marginTop: 8,
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.dark,
+    color: Colors.darkScheme.primary,
   },
   highlight: {
     fontWeight: '700',

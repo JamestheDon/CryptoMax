@@ -11,8 +11,9 @@
 'use strict';
 
 import Header from './components/Header';
-import ListPosition from './components/ListPosition';
+// import ListPosition from './components/ListPosition';
 import Colors from './components/Colors';
-import AddPosition from './components/AddPosition';
+// import AddPosition from './components/AddPosition';
+// import WelcomeMsg from './components/WelcomeMsg';
 
-export {Header, Colors, ListPosition, AddPosition};
+export {Header, Colors};

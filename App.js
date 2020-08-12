@@ -11,10 +11,11 @@ import HomeScreen from './src/Screens/HomeScreen';
 import HomeScreenDetails from './src/Screens/HomeScreenDetails';
 import SplashScreen from 'react-native-splash-screen';
 import PositionsScreen from './src/Screens/PositionsScreen';
+import PositionsScreenDetails from './src/Screens/PositionsScreenDetails';
 import {Colors} from './src/Components';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import usePositions from './src/hooks/usePositions';
 const Stack = createStackNavigator();
 
 const HomeStack = () => {
@@ -35,6 +36,11 @@ const HomeStack = () => {
         component={PositionsScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="PositionsScreenDetails"
+        component={PositionsScreenDetails}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
@@ -46,7 +52,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="#f5fcff" />
+      <StatusBar barStyle="dark-content" style={{color: 'red'}} />
 
       <NavigationContainer>
         <Stack.Navigator>
@@ -61,49 +67,6 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: '500',
-    textAlign: 'center',
-    color: Colors.black,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;

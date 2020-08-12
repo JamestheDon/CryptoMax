@@ -1,6 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, SafeAreaView, View} from 'react-native';
-import {Header, Colors, ListPosition} from '../Components/';
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import {Header, Colors} from '../Components/';
+import ListPosition from '../Components/ListPosition';
 import AsyncStorage from '@react-native-community/async-storage';
 import usePositions from '../hooks/usePositions';
 // import {addPositions} from '../../hooks/positions';
@@ -8,8 +17,8 @@ import usePositions from '../hooks/usePositions';
 /**
  *
  *  @TODOs
- * - make simple color selector.
- * -
+ *
+ * - add whole number fractional representation of btc owned i.e. 1/3
  * - Add production api credentials
  *
  */
@@ -19,7 +28,7 @@ import usePositions from '../hooks/usePositions';
  * @description differnt accouts for different position types
  *
  * @TODO v2 add multi accout numbers.
- * @TODO get all keys, push qty into new array, convert to number, sum totals.
+ *
  *
  */
 
@@ -27,7 +36,7 @@ const PositionsScreen = ({navigation}) => {
   // const [accounts, setAccounts] = useState(['001', '002', '003']);
 
   // const [positions, setPosition] = useState([]);
-  const [apiResults, positions, setPosition, addPosition] = usePositions();
+  const [apiResults, positions, setPosition] = usePositions();
   const [totalQty, setTotalQty] = useState([]);
 
   const getTotalQty = async () => {
@@ -53,11 +62,11 @@ const PositionsScreen = ({navigation}) => {
     }
   };
 
-  useEffect(() => {
-    // AsyncStorage.clear();
-
-    getTotalQty();
-  }, []);
+  /**
+   *
+   * Sum money invested
+   *
+   */
 
   // getAllKeys = async () => {
   //   let keys = [];
@@ -113,14 +122,12 @@ const PositionsScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: Colors.darkScheme.dark,
   },
   screen: {
     padding: 20,
-    marginBottom: 100,
-  },
-  body: {
-    backgroundColor: Colors.white,
+    height: '100%',
+    backgroundColor: Colors.darkScheme.dark,
   },
 
   text: {
@@ -129,32 +136,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.black,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
 });
 
-export default React.memo(PositionsScreen);
+export default PositionsScreen;

@@ -9,7 +9,10 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import {Header, Colors, AddPosition} from '../Components/';
+import {Alert} from 'react-native';
+import WelcomeMsg from '../Components/WelcomeMsg';
+import AddPosition from '../Components/AddPosition';
+import {Header, Colors} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {Button} from 'react-native-elements';
@@ -25,48 +28,70 @@ import {useAddPosition} from '../hooks/positions';
 //
 // SOMEHITNG you did & SOMETHING you didnt do.
 
+/**
+ * @TODO
+ *  Clean ../ directory structure
+ *
+ */
+
 const HomeScreen = ({navigation}) => {
   // const [apiResults, positions, addPosition] = usePositions();
-  const [positions, addPosition] = useAddPosition();
-
+  const [state, addPosition] = useAddPosition();
+  const [apiResults, positions] = usePositions([]);
+  // const [positions] = usePositions();
+  const [view, setView] = useState(false);
   // useEffect(() => {
   //   //  console.log(positions);
   //   //  AsyncStorage.clear();
   // }, []);
+  const btcPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
+
+  switchView = () => {
+    if (view === true) {
+      setView(false);
+    } else {
+      setView(true);
+    }
+  };
+
+  useEffect(() => {
+    console.log(typeof positions);
+  }, [positions]);
 
   return (
-    <SafeAreaView>
-      <Header title="Home Screen" isHome={true} navigation={navigation} />
+    <SafeAreaView style={styles.component}>
+      <Header
+        title="Crypto Max"
+        isHome={true}
+        navigation={navigation}
+        btcPrice={btcPrice}
+      />
 
-      {/* {!positions ? <Text>this</Text> : <Text>that</Text>} */}
-
-      <View style={{marginTop: 1}}>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity style={styles.btn}>
-            <Button
-              title="Position Details"
-              type="outline"
-              icon={<Icon name="bitcoin" size={20} color="green" />}
-              // onPress={() => getPosition(item.key)}
-              onPress={() => navigation.navigate('PositionsScreen')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btn}>
-            <Button
-              title="Account Details"
-              icon={<Icon name="bitcoin" size={20} color="purple" />}
-              type="outline"
-              onPress={() => navigation.navigate('HomeScreenDetails')}
-            />
-          </TouchableOpacity>
+      {positions > 0 || view == true ? (
+        <View style={styles.body}>
+          <AddPosition
+            // accounts={accounts}
+            positions={positions}
+            navigation={navigation}
+            addPosition={addPosition}
+            switchView={switchView}
+          />
         </View>
-        <AddPosition
-          // accounts={accounts}
-          // positions={positions}
-
-          addPosition={addPosition}
-        />
-      </View>
+      ) : (
+        <View
+          style={{
+            // marginBottom: 10,
+            height: 500,
+            alignItems: 'center',
+            // backgroundColor: Colors.darkScheme.darker,
+          }}>
+          <WelcomeMsg
+            view={view}
+            switchView={switchView}
+            navigation={navigation}
+          />
+        </View>
+      )}
 
       {/* <ListPosition positions={positions} navigation={navigation} /> */}
     </SafeAreaView>
@@ -74,13 +99,6 @@ const HomeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
   btn: {
     width: '50%',
     // alignItems: 'center',
@@ -88,7 +106,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   body: {
-    backgroundColor: Colors.white,
+    // marginTop: 1,
+    alignItems: 'center',
+    backgroundColor: Colors.darkScheme.dark,
+  },
+
+  component: {
+    backgroundColor: Colors.darkScheme.dark,
+    height: 250,
+    paddingTop: 60,
   },
   text: {
     fontSize: 30,
@@ -96,32 +122,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.black,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  // sectionContainer: {
+  //   marginTop: 32,
+  //   paddingHorizontal: 24,
+  // },
+  // sectionTitle: {
+  //   fontSize: 24,
+  //   fontWeight: '600',
+  //   color: Colors.black,
+  // },
+  // sectionDescription: {
+  //   marginTop: 8,
+  //   fontSize: 18,
+  //   fontWeight: '400',
+  //   color: Colors.dark,
+  // },
+  // highlight: {
+  //   fontWeight: '700',
+  // },
+  // footer: {
+  //   color: Colors.dark,
+  //   fontSize: 12,
+  //   fontWeight: '600',
+  //   padding: 4,
+  //   paddingRight: 12,
+  //   textAlign: 'right',
+  // },
 });
 
 export default HomeScreen;

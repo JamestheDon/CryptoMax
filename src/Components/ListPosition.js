@@ -1,20 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {Card, Button, ListItem} from 'react-native-elements';
-import usePositions from '../../hooks/usePositions';
+import usePositions from '../hooks/usePositions';
+import {Colors} from './';
 
-/**
- * @TODO
- * navigate to position details screen from List position
- * add conditional color rendering: red & green
- */
+const ListPosition = ({positions, setPosition, navigation}) => {
+  const [apiResults] = usePositions([]); // Bug inside usePositions & positions
 
-const ListPosition = ({navigation, positions, setPosition}) => {
-  const [apiResults] = usePositions([]);
-  const [valueChange, setValueChange] = useState('');
   const currPrice = apiResults.map(i => i.price);
   /**
    * @description get single Obj's attributes.
@@ -22,7 +18,7 @@ const ListPosition = ({navigation, positions, setPosition}) => {
    * } key
    */
   useEffect(() => {
-    console.log(positions);
+    console.log('All positions loaded');
     // updateTotals();
   }, [positions]);
   // updateTotals = () => {
@@ -81,13 +77,7 @@ const ListPosition = ({navigation, positions, setPosition}) => {
         renderItem={({item}) => {
           return (
             <View style={styles.listPosition} key={item.key}>
-              <Card
-                containerStyle={{
-                  flexDirection: 'row',
-                  padding: 5,
-
-                  height: 90,
-                }}>
+              <Card containerStyle={styles.containerStyle}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -96,18 +86,38 @@ const ListPosition = ({navigation, positions, setPosition}) => {
                   <View style={styles.listPositionView}>
                     <Text style={styles.listPositionText}>
                       {' '}
+                      {/**(cost) x (1 + ror) */}
+                      {(
+                        ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
+                        `${item.cost}`
+                      ).toFixed(2) > 0 ? (
+                        <Text style={styles.gainText}>
+                          Gain: +$
+                          {(
+                            ((`${currPrice}` - `${item.price}`) /
+                              `${item.price}`) *
+                            `${item.cost}`
+                          ).toFixed(2)}
+                        </Text>
+                      ) : (
+                        <Text style={{color: Colors.darkScheme.red}}>
+                          Gain: $
+                          {(
+                            ((`${currPrice}` - `${item.price}`) /
+                              `${item.price}`) *
+                            `${item.cost}`
+                          ).toFixed(2)}
+                        </Text>
+                      )}
+                    </Text>
+
+                    <Text style={styles.listPositionText}>
+                      {' '}
                       ROR: + %{' '}
                       {(
                         ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
                         100
                       ).toFixed(2)}
-                    </Text>
-
-                    <Text style={styles.listPositionText}>
-                      sats: {item.qty}
-                    </Text>
-                    <Text style={styles.listPositionText}>
-                      Buy Date: {item.buyDate}
                     </Text>
                   </View>
                   <View style={styles.listPositionView}>
@@ -120,27 +130,25 @@ const ListPosition = ({navigation, positions, setPosition}) => {
                   </View>
                   <View style={styles.listPositionView}>
                     <Button
-                      buttonStyle={{padding: 1}}
                       type="clear"
-                      icon={<Icon name="bank-minus" size={30} color="red" />}
+                      buttonStyle={{padding: 0}}
+                      icon={<Icon name="menu-right" size={30} color="green" />}
+                      // onPress={() => getPosition(item.key)}
+                      onPress={() =>
+                        navigation.navigate('PositionsScreenDetails', {
+                          position: item,
+                        })
+                      }
+                    />
+                    <Button
+                      buttonStyle={{padding: 0, margin: 0}}
+                      titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
+                      title="delete"
+                      type="clear"
+                      // icon={<Icon name="delete" size={30} color="red" />}
                       onPress={() => removePosition(item.key)}
                     />
                   </View>
-                  {/* <View style={styles.listPositionView}>
-                    <Button
-                      type="clear"
-                      buttonStyle={{padding: 1, margin: 1}}
-                      icon={
-                        <Icon
-                          name="menu-right-outline"
-                          size={30}
-                          color="green"
-                        />
-                      }
-                      // onPress={() => getPosition(item.key)}
-                      onPress={() => navigation.navigate('HomeScreenDetails')}
-                    />
-                  </View> */}
                 </View>
               </Card>
             </View>
@@ -153,9 +161,21 @@ const ListPosition = ({navigation, positions, setPosition}) => {
 
 const styles = StyleSheet.create({
   viewContainer: {
-    flexGrow: 1,
+    //  flexGrow: 1,
     margin: 20,
-    height: '75%',
+    height: 300,
+    backgroundColor: Colors.darkScheme.dark,
+    // borderWidth: 2,
+    // borderColor: Colors.darkScheme.darker,
+  },
+  containerStyle: {
+    flexDirection: 'row',
+    borderBottomWidth: 3,
+    borderColor: Colors.darkScheme.darkest,
+    padding: 1,
+    borderRadius: 10,
+    height: 60,
+    backgroundColor: Colors.darkScheme.darker,
   },
   btn: {
     backgroundColor: '#fff',
@@ -166,7 +186,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
   },
   listPositionView: {
-    //   justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     // alignContent: 'center',
     // height: 60,
     padding: 5,
@@ -174,8 +194,11 @@ const styles = StyleSheet.create({
   listPositionText: {
     fontSize: 13,
     padding: 5,
+    color: Colors.darkScheme.light,
   },
-
+  gainText: {
+    color: Colors.darkScheme.secondary,
+  },
   btnText: {
     color: 'darkslateblue',
     fontSize: 10,

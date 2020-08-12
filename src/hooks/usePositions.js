@@ -16,30 +16,6 @@ export default () => {
    *
    *  [ ] @todo Robust key/account system solution
    */
-  const addPosition = async (price, cost, qty, buyDate) => {
-    generateID = () => {
-      return Math.floor(Math.random() * 100000000).toString();
-    };
-
-    try {
-      const pos = {
-        // cross ref props with needed portfolio values.
-        key: generateID(),
-        price: price,
-        cost: cost,
-        qty: qty, // bal
-        buyDate: buyDate,
-        currDate: Date.now(),
-      };
-      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
-      setPosition(prevState => {
-        return [...prevState, pos];
-      });
-      Alert(`Added new position: ${pos.currDate}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const getAllPositions = async () => {
     try {
@@ -91,5 +67,5 @@ export default () => {
     };
   }, []);
 
-  return [apiResults, positions, setPosition, addPosition, getAllPositions];
+  return [apiResults, positions, setPosition, getAllPositions];
 };
