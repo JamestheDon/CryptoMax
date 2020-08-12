@@ -11,7 +11,7 @@ import React from 'react';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-const Header = ({title, isHome, navigation}) => {
+const Header = ({title, isHome, navigation, btcPrice}) => {
   const {background, logo, text} = homeHeader;
 
   return (
@@ -22,21 +22,12 @@ const Header = ({title, isHome, navigation}) => {
           source={require('./PrimoLogo2_500x500.png')}
           style={background}
           imageStyle={logo}>
-          <Text style={text}>{title}</Text>
-          <Button
-            title="Account Details"
-            containerStyle={{alignItems: 'center', padding: 10}}
-            buttonStyle={{
-              borderColor: Colors.dark,
-              borderRadius: 20,
-              borderWidth: 1,
-              width: '50%',
-            }}
-            type="outline"
-            icon={<Icon name="bitcoin" size={20} color="green" />}
-            // onPress={() => getPosition(item.key)}
-            onPress={() => navigation.navigate('PositionsScreen')}
-          />
+          <View>
+            <Text style={text}>{title}</Text>
+            <Text style={{fontSize: 20, color: Colors.darkScheme.light}}>
+              ${btcPrice}
+            </Text>
+          </View>
         </ImageBackground>
       ) : (
         <View style={styles.background}>
@@ -55,10 +46,10 @@ const Header = ({title, isHome, navigation}) => {
 const homeHeader = StyleSheet.create({
   background: {
     height: 275,
-    paddingBottom: 100,
+    // paddingBottom: 100,
     paddingTop: 25,
     paddingHorizontal: 32,
-    backgroundColor: Colors.light,
+    backgroundColor: Colors.darkScheme.dark,
   },
   logo: {
     opacity: 0.1,
@@ -78,15 +69,16 @@ const homeHeader = StyleSheet.create({
     fontSize: 30,
     fontWeight: '500',
     textAlign: 'center',
-    color: Colors.primary,
+    color: Colors.darkScheme.primary,
   },
 });
 
 const styles = StyleSheet.create({
   background: {
     alignContent: 'space-between',
-    height: 50,
-    backgroundColor: Colors.dark,
+    padding: 15,
+    height: 60,
+    backgroundColor: Colors.darkScheme.darker,
   },
   header: {
     backgroundColor: '#596469',

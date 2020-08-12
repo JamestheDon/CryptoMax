@@ -34,7 +34,8 @@ import usePositions from './usePositions';
 
 export const useAddPosition = () => {
   //
-  const [positions, setPosition] = useState([]);
+  const [state, setPosition] = useState([]);
+  const [apiResults, positions] = usePositions();
 
   const addPosition = async (price, cost, qty, buyDate) => {
     generateID = () => {

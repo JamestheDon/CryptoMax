@@ -10,7 +10,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import {Alert} from 'react-native';
-import {Header, Colors, AddPosition, WelcomeMsg} from '../Components/';
+import WelcomeMsg from '../Components/WelcomeMsg';
+import AddPosition from '../Components/AddPosition';
+import {Header, Colors} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {Button} from 'react-native-elements';
@@ -26,43 +28,67 @@ import {useAddPosition} from '../hooks/positions';
 //
 // SOMEHITNG you did & SOMETHING you didnt do.
 
+/**
+ * @TODO
+ *  Clean ../ directory structure
+ *
+ */
+
 const HomeScreen = ({navigation}) => {
   // const [apiResults, positions, addPosition] = usePositions();
-  const [addPosition] = useAddPosition();
-  const [positions] = usePositions();
+  const [state, addPosition] = useAddPosition();
+  const [apiResults, positions] = usePositions([]);
+  // const [positions] = usePositions();
   const [view, setView] = useState(false);
   // useEffect(() => {
   //   //  console.log(positions);
   //   //  AsyncStorage.clear();
   // }, []);
-  console.log('over herererererer', view);
+  const btcPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
+
+  switchView = () => {
+    if (view === true) {
+      setView(false);
+    } else {
+      setView(true);
+    }
+  };
+
+  useEffect(() => {
+    console.log(typeof positions);
+  }, [positions]);
+
   return (
     <SafeAreaView style={styles.component}>
-      <Header title="Crypto Max" isHome={true} navigation={navigation} />
+      <Header
+        title="Crypto Max"
+        isHome={true}
+        navigation={navigation}
+        btcPrice={btcPrice}
+      />
 
-      {view === true ? (
-        <View>
+      {positions > 0 || view == true ? (
+        <View style={styles.body}>
           <AddPosition
             // accounts={accounts}
-            // positions={positions}
-
+            positions={positions}
+            navigation={navigation}
             addPosition={addPosition}
+            switchView={switchView}
           />
         </View>
       ) : (
-        <View style={{marginBottom: 10}}>
-          <WelcomeMsg view={view} />
-          <Button
-            title="Add new entry"
-            buttonStyle={{
-              borderColor: Colors.dark,
-              borderRadius: 25,
-              borderWidth: 1,
-            }}
-            type="outline"
-            icon={<Icon name="plus" size={20} color="green" />}
-            // onPress={() => getPosition(item.key)}
-            onPress={() => setView(true)}
+        <View
+          style={{
+            // marginBottom: 10,
+            height: 500,
+            alignItems: 'center',
+            // backgroundColor: Colors.darkScheme.darker,
+          }}>
+          <WelcomeMsg
+            view={view}
+            switchView={switchView}
+            navigation={navigation}
           />
         </View>
       )}
@@ -80,13 +106,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   body: {
-    marginTop: 1,
+    // marginTop: 1,
     alignItems: 'center',
-    backgroundColor: Colors.light,
+    backgroundColor: Colors.darkScheme.dark,
   },
+
   component: {
-    backgroundColor: Colors.light,
+    backgroundColor: Colors.darkScheme.dark,
     height: 250,
+    paddingTop: 60,
   },
   text: {
     fontSize: 30,

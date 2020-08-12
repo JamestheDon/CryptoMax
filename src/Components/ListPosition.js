@@ -5,41 +5,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 import {Card, Button, ListItem} from 'react-native-elements';
-import usePositions from '../../hooks/usePositions';
-
-/**
- * @TODO
- * navigate to position details screen from List position
- * add conditional color rendering: red & green
- */
+import usePositions from '../hooks/usePositions';
+import {Colors} from './';
 
 const ListPosition = ({positions, setPosition, navigation}) => {
   const [apiResults] = usePositions([]); // Bug inside usePositions & positions
-
-  const [calculations, setCalculations] = useState({
-    ror: null,
-    sumInvest: null,
-    sumSats: null,
-    singlePosGains: null,
-    totalGains: null,
-  });
-
-  const calcSums = () => {
-    const currPrice = apiResults.map(i => i.price);
-
-    //  positions.reduce()
-    positions.map((i, index) => {
-      // const rOr = ((currPrice - i.price) / i.price) * 100;
-      // const sign = ror.amount < 0 ? '-' : '+';
-      // sumInvest = i.price.reduce()
-      console.log(typeof i.price);
-    });
-
-    // setCalculations(prevState => {
-
-    //   return[...prevState, newCalculations]
-    // });
-  };
 
   const currPrice = apiResults.map(i => i.price);
   /**
@@ -107,13 +77,7 @@ const ListPosition = ({positions, setPosition, navigation}) => {
         renderItem={({item}) => {
           return (
             <View style={styles.listPosition} key={item.key}>
-              <Card
-                containerStyle={{
-                  flexDirection: 'row',
-                  padding: 5,
-                  borderRadius: 25,
-                  height: 70,
-                }}>
+              <Card containerStyle={styles.containerStyle}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -127,7 +91,7 @@ const ListPosition = ({positions, setPosition, navigation}) => {
                         ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
                         `${item.cost}`
                       ).toFixed(2) > 0 ? (
-                        <Text style={{color: 'green'}}>
+                        <Text style={styles.gainText}>
                           Gain: +$
                           {(
                             ((`${currPrice}` - `${item.price}`) /
@@ -136,7 +100,7 @@ const ListPosition = ({positions, setPosition, navigation}) => {
                           ).toFixed(2)}
                         </Text>
                       ) : (
-                        <Text style={{color: 'red'}}>
+                        <Text style={{color: Colors.darkScheme.red}}>
                           Gain: $
                           {(
                             ((`${currPrice}` - `${item.price}`) /
@@ -178,7 +142,7 @@ const ListPosition = ({positions, setPosition, navigation}) => {
                     />
                     <Button
                       buttonStyle={{padding: 0, margin: 0}}
-                      titleStyle={{color: 'red', fontSize: 10}}
+                      titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
                       title="delete"
                       type="clear"
                       // icon={<Icon name="delete" size={30} color="red" />}
@@ -197,9 +161,21 @@ const ListPosition = ({positions, setPosition, navigation}) => {
 
 const styles = StyleSheet.create({
   viewContainer: {
-    flexGrow: 1,
+    //  flexGrow: 1,
     margin: 20,
-    height: '75%',
+    height: 300,
+    backgroundColor: Colors.darkScheme.dark,
+    // borderWidth: 2,
+    // borderColor: Colors.darkScheme.darker,
+  },
+  containerStyle: {
+    flexDirection: 'row',
+    borderBottomWidth: 3,
+    borderColor: Colors.darkScheme.darkest,
+    padding: 1,
+    borderRadius: 10,
+    height: 60,
+    backgroundColor: Colors.darkScheme.darker,
   },
   btn: {
     backgroundColor: '#fff',
@@ -218,8 +194,11 @@ const styles = StyleSheet.create({
   listPositionText: {
     fontSize: 13,
     padding: 5,
+    color: Colors.darkScheme.light,
   },
-
+  gainText: {
+    color: Colors.darkScheme.secondary,
+  },
   btnText: {
     color: 'darkslateblue',
     fontSize: 10,

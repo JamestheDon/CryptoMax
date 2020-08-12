@@ -8,6 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
+import ListPosition from '../Components/ListPosition';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../hooks/usePositions';
@@ -16,74 +17,72 @@ import {Alert} from 'react-native';
 
 const HomeScreenDetails = ({route, navigation}) => {
   const {data} = route.params;
-  const [apiResults, positions] = usePositions();
-  const [returnRate, setReturnRate] = useState([]);
-  const currPrice = apiResults.map(i => i.price);
+  const [apiResults, positions, setPosition] = usePositions();
 
+  const currPrice = apiResults.map(i => parseFloat(i.price));
+  const [performance, setPerformance] = useState([]);
   const [calculations, setCalculations] = useState({
     sumInvest: null,
     sumSats: null,
-    //  singlePosGains: ror / 100 * cost,
-    totalGains: null,
   });
+  const [gains, setGains] = useState();
   const {sumInvest, sumSats} = calculations;
-  const [performance, setPerformance] = useState([]);
+  // const {$gain} = gains;
+  // const {rateOfReturn, singleGain} = performance;
+  useEffect(() => {
+    console.log(' OVER HERE', typeof gains);
+  });
 
   useEffect(() => {
-    console.log(' OVER HERE', data);
+    getPerformance();
+    //  getCostSum();
+    //  getQtySum();
+    //  getSumGains();
   });
-
   useEffect(() => {
     getCostSum();
     getQtySum();
   }, []);
 
-  console.log(calculations);
-  const getRateOfReturn = () => {
-    try {
-      // let results = [];
-      //  results = {};
-      Object.keys(positions).forEach(key => {
-        // let results = {};
-        // console.log('@@@@@', key, positions[key]);
+  // console.log(calculations);
 
-        // ror calc
-        const rOr = parseFloat(
-          ((currPrice - positions[key].price) / positions[key].price) * 100,
-        ).toFixed(2);
+  getPerformance = () => {
+    // const price = data.map(i => i.price);
 
-        const gain = parseFloat((rOr / 100) * positions[key].cost).toFixed(2);
+    // const cost = data.map(i => i.cost);
 
-        const results = {
-          posKey: positions[key].key,
-          price: positions[key].price,
-          cost: positions[key].cost,
-          qty: positions[key].qty,
-          rOr: rOr,
-          gain: gain,
-        };
-        setPerformance(prevState => {
-          return [results, ...prevState];
-        });
+    // const rateOfReturn = parseFloat(
+    //   ((currPrice - price) / price) * 100,
+    // ).toFixed(2);
 
-        //  console.log('OVErherer: ', results);
-      });
+    const $perf = positions.map((i, index) => {
+      const $gain = parseFloat(
+        ((currPrice - i.price) / i.price) * i.cost,
+      ).toFixed(2);
 
-      // return results;
-      // setPerformance(prevState => {
+      return {$gain};
+    });
 
-      // })
-    } catch (error) {
-      console.log(error);
-    }
+    const values = $perf.map(el => parseFloat(el.$gain));
+
+    const result = values.reduce((acc, item) => (acc += item), 0).toFixed(2);
+
+    setGains(result);
+
+    // results = calculations;
+    // setPerformance({$perf: $perf});
+
+    console.log('OVErherer#####: ', result);
+
+    // setPerformance(prevState => {
+    //   return {calculations};
+    // });
+    // setPerformance(prevState => {
+    //   return {...prevState, rateOfReturn: rateOfReturn, singleGain: singleGain};
+    // });
 
     //  const rOr = parseFloat(((currPrice - pos.price) / pos.price) * 100);
     // const singleGain = (rOr / 100) * pos.cost;
-
-    // setCalculations(prevState => {
-    //   // Object.assign would also work
-    //   return {...prevState, performance: [{key: result[key].key, rOr: rOr}]};
-    // });
   };
 
   /**
@@ -93,13 +92,40 @@ const HomeScreenDetails = ({route, navigation}) => {
    *
    */
 
-  console.log('THis is what i want', performance);
+  // console.log('THis is what i want', performance);
   // if (ror > 0 ) {
   //   return (
   //     <Text key={index}>
   //        + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
   //     </Text>)
   // } else {}
+  /**
+   *
+   * Sum gains
+   *
+   */
+
+  getSumGains = () => {
+    // const gainVals = performance.map(val => parseFloat(val.$gain));
+    // const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
+    // values = [];
+    Object.keys(performance).forEach(i => {
+      console.log('testing ===>>', i, performance[i]);
+      const {$gain, rateOfReturn} = performance[i];
+      // const gain = performance[key];
+      // values.push($gain);
+      console.log('testing =++====>>', $gain);
+    });
+
+    console.log('testing ===###++##==>>', performance);
+
+    //  const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
+
+    // setCalculations(prevState => {
+    //   return {...prevState, totalGains: sumGain};
+    // });
+  };
+
   /**
    *
    * Sum Satoshies held
@@ -127,7 +153,9 @@ const HomeScreenDetails = ({route, navigation}) => {
         .reduce((acc, item) => (acc += item), 0)
         .toFixed(2);
 
-      setCalculations({sumInvest: costSum});
+      setCalculations(prevState => {
+        return {...prevState, sumInvest: costSum};
+      });
     } catch (err) {
       console.log(err);
     }
@@ -181,9 +209,13 @@ const HomeScreenDetails = ({route, navigation}) => {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          height: '40%',
+          height: '30%',
         }}>
-        <Text>Home Screen Details</Text>
+        <Text style={styles.text}>Details</Text>
+        <Text>
+          Sum Gains:
+          {gains}
+        </Text>
         <Text>
           Sum Invested:
           {sumInvest}
@@ -196,11 +228,18 @@ const HomeScreenDetails = ({route, navigation}) => {
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
           <Icon name="scale-balance" color="black" size={20} />
-          <Text style={styles.sectionTitle}>Totals</Text>
+          <Text style={styles.sectionTitle}>All Positions</Text>
+
+          <Text style={styles.sectionDescription}>More info</Text>
           {/* {ror > 0 ? (<Text>+ {ror}% green</Text>) : (<Text>{ror}% red</Text>)} */}
 
           {/* <Text>{rOr[0]}</Text> */}
         </View>
+        <ListPosition
+          positions={positions}
+          navigation={navigation}
+          setPosition={setPosition}
+        />
       </View>
     </SafeAreaView>
   );
@@ -215,28 +254,31 @@ const styles = StyleSheet.create({
     right: 0,
   },
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.darkScheme.dark,
+    height: 500,
   },
   text: {
     fontSize: 30,
     fontWeight: '500',
     textAlign: 'center',
-    color: Colors.black,
+    color: Colors.darkScheme.primary,
   },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.black,
+    color: Colors.darkScheme.light,
   },
   sectionDescription: {
     marginTop: 8,
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.dark,
+    color: Colors.darkScheme.primary,
   },
   highlight: {
     fontWeight: '700',

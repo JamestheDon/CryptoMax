@@ -11,8 +11,19 @@
 'use strict';
 
 export default {
+  darkScheme: {
+    primary: '#0F6F9B',
+    secondary: '#56D45B',
+    light: '#C9D5DC',
+    lighter: '#F3F5F8',
+    dark: '#223039',
+    darker: '#131F26',
+    darkest: '#000000',
+    red: '#C0392B',
+  },
+
   primary: '#1292B4',
-  secondary: 'darkslateblue',
+  secondary: '#00F482',
   white: '#FFF',
   lighter: '#F3F3F3',
   light: '#DAE1E7',
