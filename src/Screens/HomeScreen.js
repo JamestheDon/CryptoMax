@@ -19,7 +19,7 @@ import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../hooks/usePositions';
 import {useAddPosition} from '../hooks/positions';
-
+import Spinner from '../Components/components/Spinner';
 // The important things in your life are what you do
 // everyday... because you do them everyday. What can i do
 // everyday thats easy enough to do withought thought everyday,
@@ -59,7 +59,7 @@ const HomeScreen = ({navigation}) => {
   }, [positions]);
 
   return (
-    <SafeAreaView style={styles.component}>
+    <SafeAreaView style={styles.screen}>
       <Header
         title="Crypto Max"
         isHome={true}
@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
   body: {
     // marginTop: 1,
     alignItems: 'center',
-    backgroundColor: Colors.darkScheme.dark,
+    backgroundColor: Colors.darkScheme.lighter,
   },
 
-  component: {
-    backgroundColor: Colors.darkScheme.dark,
-    height: 250,
+  screen: {
+    backgroundColor: Colors.darkScheme.lighter,
+    height: '100%',
     paddingTop: 60,
   },
   text: {

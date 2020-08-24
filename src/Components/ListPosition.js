@@ -7,10 +7,11 @@ import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {Card, Button, ListItem} from 'react-native-elements';
 import usePositions from '../hooks/usePositions';
 import {Colors} from './';
+import PositionItem from './PositionItem';
 
 const ListPosition = ({positions, setPosition, navigation}) => {
   const [apiResults] = usePositions([]); // Bug inside usePositions & positions
-
+  const [sortedList, setList] = useState([]);
   const currPrice = apiResults.map(i => i.price);
   /**
    * @description get single Obj's attributes.
@@ -18,9 +19,41 @@ const ListPosition = ({positions, setPosition, navigation}) => {
    * } key
    */
   useEffect(() => {
-    console.log('All positions loaded');
-    // updateTotals();
+    console.log('8787&&&&&^^&^&&^^', sortedList);
+    sortPositions();
   }, [positions]);
+
+  sortPositions = () => {
+    const sortedPositions = positions.map((pos, i) => {
+      const position = {
+        key: pos.key,
+        price: pos.price,
+        cost: pos.cost,
+        qty: pos.qty,
+        buyDate: new Date(pos.buyDate),
+        currDate: pos.currDate,
+      };
+
+      return position;
+    });
+
+    const list = sortedPositions.sort((a, b) => {
+      return b.buyDate - a.buyDate;
+    });
+    // const list = sortedPositions.sort((a, b) =>
+    //   a.buyDate.localeCompare(b.buyDate),
+    // );
+
+    console.log('LOOOOOOOOOKHERER', list);
+
+    setList(list);
+  };
+  // { if item.price > apiPrice (green) : (red)}
+
+  // useEffect(() => {
+  //   console.log('All positions loaded');
+  //   // updateTotals();
+  // }, [positions]);
   // updateTotals = () => {
   //   //  console.log('Money invested', positions.map(i => i.cost));
   //   // const currPrice = apiResults.map(i => i.price);
@@ -67,91 +100,95 @@ const ListPosition = ({positions, setPosition, navigation}) => {
     }
   };
 
-  // { if item.price > apiPrice (green) : (red)}
-
   return (
     <View style={styles.viewContainer}>
       <FlatList
-        data={positions}
+        data={sortedList}
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
-            <View style={styles.listPosition} key={item.key}>
-              <Card containerStyle={styles.containerStyle}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View style={styles.listPositionView}>
-                    <Text style={styles.listPositionText}>
-                      {' '}
-                      {/**(cost) x (1 + ror) */}
-                      {(
-                        ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
-                        `${item.cost}`
-                      ).toFixed(2) > 0 ? (
-                        <Text style={styles.gainText}>
-                          Gain: +$
-                          {(
-                            ((`${currPrice}` - `${item.price}`) /
-                              `${item.price}`) *
-                            `${item.cost}`
-                          ).toFixed(2)}
-                        </Text>
-                      ) : (
-                        <Text style={{color: Colors.darkScheme.red}}>
-                          Gain: $
-                          {(
-                            ((`${currPrice}` - `${item.price}`) /
-                              `${item.price}`) *
-                            `${item.cost}`
-                          ).toFixed(2)}
-                        </Text>
-                      )}
-                    </Text>
+            // <Text key={item.key}>{item.buyDate.toLocaleDateString()}</Text>
+            <PositionItem
+              key={item.key}
+              positions={item}
+              navigation={navigation}
+              setPosition={setPosition}
+            />
+            // <View style={styles.listPosition} key={item.key}>
+            //   <Card containerStyle={styles.containerStyle}>
+            //     <View
+            //       style={{
+            //         flexDirection: 'row',
+            //         justifyContent: 'space-between',
+            //       }}>
+            //       <View style={styles.listPositionView}>
+            //         <Text style={styles.listPositionText}>
 
-                    <Text style={styles.listPositionText}>
-                      {' '}
-                      ROR: + %{' '}
-                      {(
-                        ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
-                        100
-                      ).toFixed(2)}
-                    </Text>
-                  </View>
-                  <View style={styles.listPositionView}>
-                    <Text style={styles.listPositionText}>
-                      Cost:{item.cost}
-                    </Text>
-                    <Text style={styles.listPositionText}>
-                      BTC ${item.price}
-                    </Text>
-                  </View>
-                  <View style={styles.listPositionView}>
-                    <Button
-                      type="clear"
-                      buttonStyle={{padding: 0}}
-                      icon={<Icon name="menu-right" size={30} color="green" />}
-                      // onPress={() => getPosition(item.key)}
-                      onPress={() =>
-                        navigation.navigate('PositionsScreenDetails', {
-                          position: item,
-                        })
-                      }
-                    />
-                    <Button
-                      buttonStyle={{padding: 0, margin: 0}}
-                      titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
-                      title="delete"
-                      type="clear"
-                      // icon={<Icon name="delete" size={30} color="red" />}
-                      onPress={() => removePosition(item.key)}
-                    />
-                  </View>
-                </View>
-              </Card>
-            </View>
+            //           {(
+            //             ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
+            //             `${item.cost}`
+            //           ).toFixed(2) > 0 ? (
+            //             <Text style={styles.gainText}>
+            //               Gain: +$
+            //               {(
+            //                 ((`${currPrice}` - `${item.price}`) /
+            //                   `${item.price}`) *
+            //                 `${item.cost}`
+            //               ).toFixed(2)}
+            //             </Text>
+            //           ) : (
+            //             <Text style={{color: Colors.darkScheme.red}}>
+            //               Gain: $
+            //               {(
+            //                 ((`${currPrice}` - `${item.price}`) /
+            //                   `${item.price}`) *
+            //                 `${item.cost}`
+            //               ).toFixed(2)}
+            //             </Text>
+            //           )}
+            //         </Text>
+
+            //         <Text style={styles.listPositionText}>
+            //           {' '}
+            //           ROR: + %{' '}
+            //           {(
+            //             ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
+            //             100
+            //           ).toFixed(2)}
+            //         </Text>
+            //       </View>
+            //       <View style={styles.listPositionView}>
+            //         <Text style={styles.listPositionText}>
+            //           Cost:{item.cost}
+            //         </Text>
+            //         <Text style={styles.listPositionText}>
+            //           BTC ${item.price}
+            //         </Text>
+            //       </View>
+            //       <View style={styles.listPositionView}>
+            //         <Button
+            //           type="clear"
+            //           buttonStyle={{padding: 0}}
+            //           icon={<Icon name="menu-right" size={30} color="green" />}
+            //           // onPress={() => getPosition(item.key)}
+            //           onPress={() =>
+            //             navigation.navigate('PositionsScreenDetails', {
+            //               position: item,
+            //             })
+            //           }
+            //         />
+            //         <Button
+            //           buttonStyle={{padding: 0, margin: 0}}
+            //           titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
+            //           title="delete"
+            //           type="clear"
+            //           // icon={<Icon name="delete" size={30} color="red" />}
+            //           onPress={() => removePosition(item.key)}
+            //         />
+            //       </View>
+            //     </View>
+            //   </Card>
+            // </View>
           );
         }}
       />
@@ -163,9 +200,9 @@ const styles = StyleSheet.create({
   viewContainer: {
     //  flexGrow: 1,
     margin: 20,
-    height: 300,
+    height: 325,
     backgroundColor: Colors.darkScheme.dark,
-    // borderWidth: 2,
+    borderRadius: 10,
     // borderColor: Colors.darkScheme.darker,
   },
   containerStyle: {

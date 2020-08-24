@@ -48,7 +48,7 @@ export const useAddPosition = () => {
         price: price,
         cost: cost,
         qty: qty,
-        buyDate: buyDate,
+        buyDate: new Date(buyDate),
         currDate: Date.now(),
       };
       await AsyncStorage.setItem(pos.key, JSON.stringify(pos));

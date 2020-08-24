@@ -97,28 +97,6 @@ const WelcomeMsg = ({switchView, navigation}) => {
               }
             />
           </View>
-          {/* <TouchableOpacity style={styles.btn}>
-            <Button
-              title="Account Details"
-              buttonStyle={{
-                borderColor: Colors.darkScheme.secondary,
-                // backgroundColor: Colors.darkScheme.secondary,
-                borderWidth: 1,
-              }}
-              type="outline"
-              icon={
-                <View style={{flexDirection: 'row'}}>
-                  <Icon
-                    name="bitcoin"
-                    size={20}
-                    color={Colors.darkScheme.primary}
-                  />
-                </View>
-              }
-              // onPress={() => getPosition(item.key)}
-              onPress={() => navigation.navigate('PositionsScreen')}
-            />
-          </TouchableOpacity> */}
         </View>
       </View>
     </View>
@@ -131,6 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.darkScheme.dark,
     height: '100%',
+    paddingTop: 100,
   },
 
   inputContainerStyle: {

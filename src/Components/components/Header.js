@@ -3,19 +3,21 @@ import Colors from './Colors';
 import {
   Text,
   StyleSheet,
+  SafeAreaView,
   ImageBackground,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-const Header = ({title, isHome, navigation, btcPrice}) => {
+const Header = ({title, isHome, navigation}) => {
   const {background, logo, text} = homeHeader;
 
   return (
-    <View>
+    <SafeAreaView>
       {isHome ? (
         <ImageBackground
           accessibilityRole={'image'}
@@ -24,32 +26,36 @@ const Header = ({title, isHome, navigation, btcPrice}) => {
           imageStyle={logo}>
           <View>
             <Text style={text}>{title}</Text>
-            <Text style={{fontSize: 20, color: Colors.darkScheme.light}}>
-              ${btcPrice}
-            </Text>
           </View>
         </ImageBackground>
       ) : (
         <View style={styles.background}>
-          <TouchableOpacity
-            style={{marginLeft: 10}}
-            onPress={() => navigation.goBack()}>
-            <Text style={{textAlign: 'left', color: 'white'}}>back</Text>
-          </TouchableOpacity>
-          <Text style={styles.text}>{title}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity
+              style={{marginLeft: 10}}
+              onPress={() => navigation.goBack()}>
+              <Icon
+                name="arrow-left-bold-circle-outline"
+                size={30}
+                color="white"
+              />
+            </TouchableOpacity>
+
+            <Text style={styles.text}>{title}</Text>
+          </View>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const homeHeader = StyleSheet.create({
   background: {
-    height: 275,
-    // paddingBottom: 100,
+    height: 300,
+    paddingBottom: 100,
     paddingTop: 25,
     paddingHorizontal: 32,
-    backgroundColor: Colors.darkScheme.dark,
+    backgroundColor: Colors.darkScheme.lighter,
   },
   logo: {
     opacity: 0.1,
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
     alignContent: 'space-between',
     padding: 15,
     height: 60,
-    backgroundColor: Colors.darkScheme.darker,
+    backgroundColor: Colors.darkScheme.dark,
   },
   header: {
     backgroundColor: '#596469',
