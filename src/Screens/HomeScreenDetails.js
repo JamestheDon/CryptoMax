@@ -39,10 +39,23 @@ const HomeScreenDetails = ({route, navigation}) => {
     //  getCostSum();
     //  getQtySum();
     //  getSumGains();
+    return () => {
+      console.log('Cleaning up performance');
+    };
   });
   useEffect(() => {
     getCostSum();
+
+    return () => {
+      console.log('Cleaning up Cost SUm');
+    };
+  }, []);
+  useEffect(() => {
     getQtySum();
+
+    return () => {
+      console.log('Cleaning up QTY SUm');
+    };
   }, []);
 
   // console.log(calculations);
@@ -162,8 +175,6 @@ const HomeScreenDetails = ({route, navigation}) => {
     }
   };
 
-  calculateRateOfReturn = (currPrice, posPrice, posCost) => {};
-
   // console.log('OVERHERE', calculations);
 
   // const rateOfReturn = positions.map((item, index) => {
@@ -201,7 +212,11 @@ const HomeScreenDetails = ({route, navigation}) => {
   // }, []);
 
   return (
-    <View style={{paddingTop: 10, backgroundColor: Colors.darkScheme.lighter}}>
+    <View
+      style={{
+        paddingTop: 10,
+        backgroundColor: Colors.darkScheme.lighter,
+      }}>
       <Header
         title="Home Screen Detail"
         isHome={false}
@@ -209,7 +224,7 @@ const HomeScreenDetails = ({route, navigation}) => {
       />
       <ImageBackground
         accessibilityRole={'image'}
-        source={require('../Components/components/PrimoLogo2_500x500.png')}
+        source={require('../Components/components/Icon-trans.png')}
         style={styles.background}
         imageStyle={styles.logo}>
         {/* <View>
@@ -232,7 +247,7 @@ const HomeScreenDetails = ({route, navigation}) => {
             <ActivityIndicator size="large" color={Colors.darkScheme.primary} />
           </View>
         ) : (
-          <View>
+          <View style={{padding: 10}}>
             <Text style={styles.text}>Sum Gains:{gains} </Text>
             <Text style={styles.text}>
               Sum Invested:
@@ -269,6 +284,7 @@ const HomeScreenDetails = ({route, navigation}) => {
             positions={positions}
             navigation={navigation}
             setPosition={setPosition}
+            currPrice={currPrice}
           />
         )}
       </View>
@@ -285,21 +301,24 @@ const styles = StyleSheet.create({
     right: 0,
   },
   logo: {
-    opacity: 0.1,
+    // opacity: 0.4,
     overflow: 'visible',
     resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-    marginLeft: 0,
+
+    marginTop: 40,
     marginBottom: -75,
   },
   body: {
     backgroundColor: Colors.darkScheme.darker,
-    height: 500,
+    height: 450,
   },
   highlight: {
     fontWeight: '700',
@@ -313,10 +332,11 @@ const styles = StyleSheet.create({
     color: Colors.darkScheme.primary,
   },
   background: {
-    height: 275,
+    height: 300,
+    width: '100%',
     // paddingBottom: 100,
     paddingTop: 25,
-    paddingHorizontal: 32,
+    // paddingHorizontal: 32,
     backgroundColor: Colors.darkScheme.lighter,
   },
   sectionContainer: {

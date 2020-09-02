@@ -63,30 +63,30 @@ export const useAddPosition = () => {
   return [positions, addPosition];
 };
 
-export const useCalculations = () => {
-  const [calculations, setCalculations] = useState([]);
-  const [apiResults, positions] = usePositions();
-  const currPrice = apiResults.map(i => i.price);
+// export const useCalculations = () => {
+//   const [calculations, setCalculations] = useState([]);
+//   const [apiResults, positions] = usePositions();
+//   const currPrice = apiResults.map(i => i.price);
 
-  // rateOfReturn = positions.map((val, i) => {
-  //   return ((currPrice - val[i].price) / val[i].price * 100 )
-  // })
+//   // rateOfReturn = positions.map((val, i) => {
+//   //   return ((currPrice - val[i].price) / val[i].price * 100 )
+//   // })
 
-  const calculate = () => {
-    const {cost, price, qty, key} = positions;
-    // Rate of return
-    // current price - purchase price / purchase price * 100 = ror%
-    rateOfReturn = () => {
-      return parseFloat(
-        ((currPrice - positions[key].price) / positions[key].price) * 100,
-      ).toFixed(2);
-    };
-  };
+//   const calculate = () => {
+//     const {cost, price, qty, key} = positions;
+//     // Rate of return
+//     // current price - purchase price / purchase price * 100 = ror%
+//     rateOfReturn = () => {
+//       return parseFloat(
+//         ((currPrice - positions[key].price) / positions[key].price) * 100,
+//       ).toFixed(2);
+//     };
+//   };
 
-  try {
-  } catch (error) {
-    console.log(error);
-  }
+//   try {
+//   } catch (error) {
+//     console.log(error);
+//   }
 
-  return [calculations];
-};
+//   return [calculations];
+// };

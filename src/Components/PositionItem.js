@@ -8,11 +8,7 @@ import {Card, Button, ListItem} from 'react-native-elements';
 import usePositions from '../hooks/usePositions';
 import {Colors} from './';
 
-const PositionItem = ({positions, navigation, setPosition}) => {
-  const [apiResults] = usePositions(); // Bug inside usePositions & positions
-
-  const currPrice = apiResults.map(i => i.price);
-
+const PositionItem = ({positions, navigation, setPosition, currPrice}) => {
   const removePosition = async key => {
     try {
       await AsyncStorage.removeItem(key);
@@ -27,7 +23,7 @@ const PositionItem = ({positions, navigation, setPosition}) => {
 
   return (
     <View>
-      {/* <Text>Position item{positions.buyDate.toLocaleDateString()}</Text> */}
+      <Text>{positions.buyDate.toLocaleDateString()}</Text>
       <View style={styles.listPosition} key={positions.key}>
         <Card containerStyle={styles.containerStyle}>
           <View

@@ -21,7 +21,7 @@ const Header = ({title, isHome, navigation}) => {
       {isHome ? (
         <ImageBackground
           accessibilityRole={'image'}
-          source={require('./PrimoLogo2_500x500.png')}
+          source={require('./Icon-trans.png')}
           style={background}
           imageStyle={logo}>
           <View>
@@ -51,23 +51,27 @@ const Header = ({title, isHome, navigation}) => {
 
 const homeHeader = StyleSheet.create({
   background: {
-    height: 300,
+    height: 350,
     paddingBottom: 100,
-    paddingTop: 25,
-    paddingHorizontal: 32,
+    paddingTop: 50,
+    // paddingHorizontal: 32,
     backgroundColor: Colors.darkScheme.lighter,
   },
   logo: {
-    opacity: 0.1,
+    // flex: 1,
+    //opacity: 0.5,
     overflow: 'visible',
     resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-    marginLeft: 0,
+
+    marginTop: 50,
     marginBottom: -75,
   },
   text: {

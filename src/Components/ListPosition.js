@@ -9,18 +9,22 @@ import usePositions from '../hooks/usePositions';
 import {Colors} from './';
 import PositionItem from './PositionItem';
 
-const ListPosition = ({positions, setPosition, navigation}) => {
-  const [apiResults] = usePositions([]); // Bug inside usePositions & positions
+const ListPosition = ({positions, setPosition, navigation, currPrice}) => {
+  // const [apiResults] = usePositions([]); // Bug inside usePositions & positions
+
   const [sortedList, setList] = useState([]);
-  const currPrice = apiResults.map(i => i.price);
+  // const currPrice = apiResults.map(i => i.price);
   /**
    * @description get single Obj's attributes.
    * @param {
    * } key
    */
   useEffect(() => {
-    console.log('8787&&&&&^^&^&&^^', sortedList);
+    // console.log('8787&&&&&^^&^&&^^', sortedList);
     sortPositions();
+    return () => {
+      console.log('Cleaning up sorted positions');
+    };
   }, [positions]);
 
   sortPositions = () => {
@@ -31,6 +35,7 @@ const ListPosition = ({positions, setPosition, navigation}) => {
         cost: pos.cost,
         qty: pos.qty,
         buyDate: new Date(pos.buyDate),
+
         currDate: pos.currDate,
       };
 
@@ -88,17 +93,17 @@ const ListPosition = ({positions, setPosition, navigation}) => {
   //   }
   // };
 
-  const removePosition = async key => {
-    try {
-      await AsyncStorage.removeItem(key);
-      setPosition(prevState => {
-        return prevState.filter(i => i.key != key);
-      });
-      console.log('Position deleted.');
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const removePosition = async key => {
+  //   try {
+  //     await AsyncStorage.removeItem(key);
+  //     setPosition(prevState => {
+  //       return prevState.filter(i => i.key != key);
+  //     });
+  //     console.log('Position deleted.');
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <View style={styles.viewContainer}>
@@ -113,6 +118,7 @@ const ListPosition = ({positions, setPosition, navigation}) => {
               positions={item}
               navigation={navigation}
               setPosition={setPosition}
+              currPrice={currPrice}
             />
             // <View style={styles.listPosition} key={item.key}>
             //   <Card containerStyle={styles.containerStyle}>

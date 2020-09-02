@@ -55,7 +55,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    console.log(typeof positions);
+    console.log(process.env.NODE_ENV);
   }, [positions]);
 
   return (
