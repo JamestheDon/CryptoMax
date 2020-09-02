@@ -3,65 +3,75 @@ import Colors from './Colors';
 import {
   Text,
   StyleSheet,
+  SafeAreaView,
   ImageBackground,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-const Header = ({title, isHome, navigation, btcPrice}) => {
+const Header = ({title, isHome, navigation}) => {
   const {background, logo, text} = homeHeader;
 
   return (
-    <View>
+    <SafeAreaView>
       {isHome ? (
         <ImageBackground
           accessibilityRole={'image'}
-          source={require('./PrimoLogo2_500x500.png')}
+          source={require('./Icon-trans.png')}
           style={background}
           imageStyle={logo}>
           <View>
             <Text style={text}>{title}</Text>
-            <Text style={{fontSize: 20, color: Colors.darkScheme.light}}>
-              ${btcPrice}
-            </Text>
           </View>
         </ImageBackground>
       ) : (
         <View style={styles.background}>
-          <TouchableOpacity
-            style={{marginLeft: 10}}
-            onPress={() => navigation.goBack()}>
-            <Text style={{textAlign: 'left', color: 'white'}}>back</Text>
-          </TouchableOpacity>
-          <Text style={styles.text}>{title}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity
+              style={{marginLeft: 10}}
+              onPress={() => navigation.goBack()}>
+              <Icon
+                name="arrow-left-bold-circle-outline"
+                size={30}
+                color="white"
+              />
+            </TouchableOpacity>
+
+            <Text style={styles.text}>{title}</Text>
+          </View>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const homeHeader = StyleSheet.create({
   background: {
-    height: 275,
-    // paddingBottom: 100,
-    paddingTop: 25,
-    paddingHorizontal: 32,
-    backgroundColor: Colors.darkScheme.dark,
+    height: 350,
+    paddingBottom: 100,
+    paddingTop: 50,
+    // paddingHorizontal: 32,
+    backgroundColor: Colors.darkScheme.lighter,
   },
   logo: {
-    opacity: 0.1,
+    // flex: 1,
+    //opacity: 0.5,
     overflow: 'visible',
     resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-    marginLeft: 0,
+
+    marginTop: 50,
     marginBottom: -75,
   },
   text: {
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
     alignContent: 'space-between',
     padding: 15,
     height: 60,
-    backgroundColor: Colors.darkScheme.darker,
+    backgroundColor: Colors.darkScheme.dark,
   },
   header: {
     backgroundColor: '#596469',

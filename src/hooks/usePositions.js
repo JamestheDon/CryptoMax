@@ -63,7 +63,7 @@ export default () => {
   useEffect(() => {
     getAllPositions();
     return () => {
-      console.log('Cleaning up positions...');
+      console.log('Cleaning up all positions...');
     };
   }, []);
 

@@ -17,6 +17,10 @@ import usePositions from '../hooks/usePositions';
 /**
  *
  *  @TODOs
+ *  VirtualizedList: You have a large list that is slow to update -
+ *  make sure your renderItem function renders components that follow
+ *  React performance best practices like PureComponent, shouldComponentUpdate, etc.
+ *  {"contentLength": 2175, "dt": 1917, "prevDt": 935} >>>>>>useMemo()
  *
  * - add whole number fractional representation of btc owned i.e. 1/3
  * - Add production api credentials
@@ -37,30 +41,6 @@ const PositionsScreen = ({navigation}) => {
 
   // const [positions, setPosition] = useState([]);
   const [apiResults, positions, setPosition] = usePositions();
-  const [totalQty, setTotalQty] = useState([]);
-
-  const getTotalQty = async () => {
-    try {
-      await AsyncStorage.getAllKeys((err, keys) => {
-        AsyncStorage.multiGet(keys, (error, stores) => {
-          stores.map((result, i, store) => {
-            // console.log({[store[i][0]]: store[i][1]});
-            let parsedData = JSON.parse(store[i][1]);
-
-            let storeData = parseFloat(parsedData.qty);
-            // console.log(parsedData.qty);
-            setTotalQty(prevState => {
-              return [storeData, ...prevState];
-            });
-
-            return true;
-          });
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   /**
    *

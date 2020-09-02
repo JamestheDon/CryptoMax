@@ -113,7 +113,7 @@ const AddPosition = ({addPosition, navigation, positions, switchView}) => {
           onChangeText={data => setBuyDate(data)}
         />
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{flexDirection: 'row'}}>
         <View style={styles.btn}>
           <Text style={{color: '#C0392B', padding: 5}}> add new!</Text>
           <Button
@@ -200,9 +200,10 @@ const AddPosition = ({addPosition, navigation, positions, switchView}) => {
 const styles = StyleSheet.create({
   component: {
     paddingTop: 10,
+
     alignItems: 'center',
-    height: 500,
-    backgroundColor: Colors.darkScheme.dark,
+    height: 400,
+    backgroundColor: Colors.light,
   },
   containerStyle: {},
   inputContainerStyle: {
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     padding: 20,
     // marginHorizontal: 10,
     alignItems: 'center',
-    backgroundColor: Colors.darkScheme.dark,
+    backgroundColor: Colors.darkScheme.darker,
   },
   btnTxt: {
     color: Colors.primary,

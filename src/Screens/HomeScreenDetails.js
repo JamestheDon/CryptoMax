@@ -3,9 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  ImageBackground,
   SafeAreaView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {Header, Colors} from '../Components/';
 import ListPosition from '../Components/ListPosition';
@@ -38,10 +39,23 @@ const HomeScreenDetails = ({route, navigation}) => {
     //  getCostSum();
     //  getQtySum();
     //  getSumGains();
+    return () => {
+      console.log('Cleaning up performance');
+    };
   });
   useEffect(() => {
     getCostSum();
+
+    return () => {
+      console.log('Cleaning up Cost SUm');
+    };
+  }, []);
+  useEffect(() => {
     getQtySum();
+
+    return () => {
+      console.log('Cleaning up QTY SUm');
+    };
   }, []);
 
   // console.log(calculations);
@@ -198,50 +212,83 @@ const HomeScreenDetails = ({route, navigation}) => {
   // }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View
+      style={{
+        paddingTop: 10,
+        backgroundColor: Colors.darkScheme.lighter,
+      }}>
       <Header
         title="Home Screen Detail"
         isHome={false}
         navigation={navigation}
       />
+      <ImageBackground
+        accessibilityRole={'image'}
+        source={require('../Components/components/Icon-trans.png')}
+        style={styles.background}
+        imageStyle={styles.logo}>
+        {/* <View>
+            <Text style={text}>{title}</Text>
+            <Text style={{fontSize: 20, color: Colors.darkScheme.light}}>
+              ${btcPrice}
+            </Text>
+          </View> */}
+        <View
+          style={{
+            alignItems: 'center',
+            // justifyContent: 'center',
+            height: '30%',
+          }}>
+          <Text style={styles.highlight}>Details</Text>
+        </View>
 
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '30%',
-        }}>
-        <Text style={styles.text}>Details</Text>
-        <Text>
-          Sum Gains:
-          {gains}
-        </Text>
-        <Text>
-          Sum Invested:
-          {sumInvest}
-        </Text>
-        <Text>
-          Sum Satoshies:
-          {sumSats}
-        </Text>
-      </View>
+        {gains == 0 || gains === null ? (
+          <View>
+            <ActivityIndicator size="large" color={Colors.darkScheme.primary} />
+          </View>
+        ) : (
+          <View style={{padding: 10}}>
+            <Text style={styles.text}>Sum Gains:{gains} </Text>
+            <Text style={styles.text}>
+              Sum Invested:
+              {sumInvest}
+            </Text>
+            <Text style={styles.text}>
+              Sum Satoshies:
+              {sumSats}
+            </Text>
+          </View>
+        )}
+      </ImageBackground>
+
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
-          <Icon name="scale-balance" color="black" size={20} />
+          <Icon
+            name="scale-balance"
+            color={Colors.darkScheme.light}
+            size={30}
+          />
           <Text style={styles.sectionTitle}>All Positions</Text>
 
-          <Text style={styles.sectionDescription}>More info</Text>
-          {/* {ror > 0 ? (<Text>+ {ror}% green</Text>) : (<Text>{ror}% red</Text>)} */}
+          {/* <Text style={styles.sectionDescription}>More info</Text> */}
 
           {/* <Text>{rOr[0]}</Text> */}
         </View>
-        <ListPosition
-          positions={positions}
-          navigation={navigation}
-          setPosition={setPosition}
-        />
+
+        {gains == 0 || gains === null ? (
+          <View>
+            <ActivityIndicator size="large" color={Colors.darkScheme.primary} />
+          </View>
+        ) : (
+          <ListPosition
+            positions={positions}
+            navigation={navigation}
+            setPosition={setPosition}
+            currPrice={currPrice}
+          />
+        )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -253,21 +300,52 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-  body: {
-    backgroundColor: Colors.darkScheme.dark,
-    height: 500,
+  logo: {
+    // opacity: 0.4,
+    overflow: 'visible',
+    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
+    /*
+     * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
+     *
+     * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
+     * source image's size.
+     */
+
+    marginTop: 40,
+    marginBottom: -75,
   },
-  text: {
+  body: {
+    backgroundColor: Colors.darkScheme.darker,
+    height: 450,
+  },
+  highlight: {
+    fontWeight: '700',
     fontSize: 30,
-    fontWeight: '500',
-    textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
+  text: {
+    fontSize: 15,
+    fontWeight: '500',
+    textAlign: 'left',
+    color: Colors.darkScheme.primary,
+  },
+  background: {
+    height: 300,
+    width: '100%',
+    // paddingBottom: 100,
+    paddingTop: 25,
+    // paddingHorizontal: 32,
+    backgroundColor: Colors.darkScheme.lighter,
+  },
   sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    //  marginTop: 32,
+    padding: 10,
+    // paddingHorizontal: 24,
+    backgroundColor: Colors.darkScheme.darker,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   sectionTitle: {
     fontSize: 24,
@@ -280,9 +358,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.darkScheme.primary,
   },
-  highlight: {
-    fontWeight: '700',
-  },
+
   footer: {
     color: Colors.dark,
     fontSize: 12,
