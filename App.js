@@ -51,7 +51,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <View style={{flex: 1}}>
       <StatusBar barStyle="dark-content" style={{color: 'red'}} />
 
       <NavigationContainer>
@@ -63,7 +63,7 @@ const App = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </View>
   );
 };
 

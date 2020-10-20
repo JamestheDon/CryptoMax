@@ -20,6 +20,7 @@ export default {
     darker: '#131F26',
     darkest: '#000000',
     red: '#C0392B',
+    gold: '#b58b17',
   },
 
   primary: '#1292B4',

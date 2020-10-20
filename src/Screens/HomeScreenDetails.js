@@ -16,29 +16,42 @@ import usePositions from '../hooks/usePositions';
 
 import {Alert} from 'react-native';
 
+/**
+ *
+ *
+ *
+ *
+ * @todo add Equity detail
+ *       @todo editPosition hook
+ *            @todo style component
+ *                @todo if pos === 0 ? "open new positions" : ListPositions
+ *            @todo sumPos currState === newState ? dont update : update state
+ */
+
 const HomeScreenDetails = ({route, navigation}) => {
-  const {data} = route.params;
+  const {data, btc$} = route.params;
+
   const [apiResults, positions, setPosition] = usePositions();
 
-  const currPrice = apiResults.map(i => parseFloat(i.price));
-  const [performance, setPerformance] = useState([]);
+  // const currPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
+  const currPrice = btc$;
+
   const [calculations, setCalculations] = useState({
     sumInvest: null,
     sumSats: null,
   });
-  const [gains, setGains] = useState();
   const {sumInvest, sumSats} = calculations;
-  // const {$gain} = gains;
-  // const {rateOfReturn, singleGain} = performance;
-  useEffect(() => {
-    console.log(' OVER HERE', typeof gains);
-  });
+
+  const [gains, setGains] = useState();
+
+  const [equity, setEquity] = useState();
+
+  // useEffect(() => {
+  //   console.log(' OVER HERE', btc);
+  // });
 
   useEffect(() => {
     getPerformance();
-    //  getCostSum();
-    //  getQtySum();
-    //  getSumGains();
     return () => {
       console.log('Cleaning up performance');
     };
@@ -47,7 +60,7 @@ const HomeScreenDetails = ({route, navigation}) => {
     getCostSum();
 
     return () => {
-      console.log('Cleaning up Cost SUm');
+      console.log('Cleaning up Cost Sum');
     };
   }, []);
   useEffect(() => {
@@ -57,6 +70,13 @@ const HomeScreenDetails = ({route, navigation}) => {
       console.log('Cleaning up QTY SUm');
     };
   }, []);
+  useEffect(() => {
+    // console.log('WEIRD', getEquity());
+    getEquity();
+    return () => {
+      console.log('cleaning up equity');
+    };
+  });
 
   // console.log(calculations);
 
@@ -119,26 +139,26 @@ const HomeScreenDetails = ({route, navigation}) => {
    *
    */
 
-  getSumGains = () => {
-    // const gainVals = performance.map(val => parseFloat(val.$gain));
-    // const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
-    // values = [];
-    Object.keys(performance).forEach(i => {
-      console.log('testing ===>>', i, performance[i]);
-      const {$gain, rateOfReturn} = performance[i];
-      // const gain = performance[key];
-      // values.push($gain);
-      console.log('testing =++====>>', $gain);
-    });
+  // getSumGains = () => {
+  //   // const gainVals = performance.map(val => parseFloat(val.$gain));
+  //   // const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
+  //   // values = [];
+  //   Object.keys(performance).forEach(i => {
+  //     console.log('testing ===>>', i, performance[i]);
+  //     const {$gain, rateOfReturn} = performance[i];
+  //     // const gain = performance[key];
+  //     // values.push($gain);
+  //     console.log('testing =++====>>', $gain);
+  //   });
 
-    console.log('testing ===###++##==>>', performance);
+  //   console.log('testing ===###++##==>>', performance);
 
-    //  const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
+  //   //  const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
 
-    // setCalculations(prevState => {
-    //   return {...prevState, totalGains: sumGain};
-    // });
-  };
+  //   // setCalculations(prevState => {
+  //   //   return {...prevState, totalGains: sumGain};
+  //   // });
+  // };
 
   /**
    *
@@ -175,104 +195,80 @@ const HomeScreenDetails = ({route, navigation}) => {
     }
   };
 
-  // console.log('OVERHERE', calculations);
-
-  // const rateOfReturn = positions.map((item, index) => {
-
-  //   return (
-  //     <Text key={index}>
-  //       + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
-  //     </Text>
-  //   );
-  // });
-
-  // const [calculations, setCalculations] = useState({
-  //   ror: x,
-  //   sumInvest: x,
-  //   sumSats: x,
-  // });
-
-  // const calculations = () => {
-  //   const newCalcs = {};
-  //   try {
-  //     positions.map((i, index) => {});
-  //     const returnRate = sumInvest.filter(item => item > 0);
-  //     const rOr = ((currPrice[i] - sumInvest[i]) / sumInvest[i]) * 100;
-
-  //     setCalculations(prevState => {
-  //       return [...prevState, newCalculations];
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   // useEffect(() => {
   //   // AsyncStorage.clear();
   // }, []);
+  getEquity = () => {
+    setEquity(() => {
+      return (parseFloat(gains) + parseFloat(sumInvest)).toFixed(2);
+    });
+
+    //  console.log('EQUITY HRERE', typeof gains, typeof sumInvest);
+  };
 
   return (
-    <View
-      style={{
-        paddingTop: 10,
-        backgroundColor: Colors.darkScheme.lighter,
-      }}>
-      <Header
-        title="Home Screen Detail"
-        isHome={false}
-        navigation={navigation}
-      />
+    <View style={styles.screen}>
+      <Header title="Details" isHome={false} navigation={navigation} />
       <ImageBackground
         accessibilityRole={'image'}
-        source={require('../Components/components/Icon-trans.png')}
+        source={require('../images/Icon-trans.png')}
         style={styles.background}
         imageStyle={styles.logo}>
-        {/* <View>
-            <Text style={text}>{title}</Text>
-            <Text style={{fontSize: 20, color: Colors.darkScheme.light}}>
-              ${btcPrice}
-            </Text>
-          </View> */}
-        <View
-          style={{
-            alignItems: 'center',
-            // justifyContent: 'center',
-            height: '30%',
-          }}>
-          <Text style={styles.highlight}>Details</Text>
-        </View>
-
+        {/**
+         *
+         *
+         */}
         {gains == 0 || gains === null ? (
-          <View>
+          <View style={{flexDirection: 'row'}}>
             <ActivityIndicator size="large" color={Colors.darkScheme.primary} />
+            <Text>Loading...</Text>
           </View>
         ) : (
-          <View style={{padding: 10}}>
-            <Text style={styles.text}>Sum Gains:{gains} </Text>
-            <Text style={styles.text}>
-              Sum Invested:
-              {sumInvest}
-            </Text>
-            <Text style={styles.text}>
-              Sum Satoshies:
-              {sumSats}
-            </Text>
+          <View style={styles.detailsStyle}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}> Open positions</Text>
+
+              {/* <Text>{rOr[0]}</Text> */}
+            </View>
+            <View style={styles.sectionContainer}>
+              <Icon
+                name="scale-balance"
+                color={Colors.darkScheme.gold}
+                size={40}
+              />
+
+              {/* <Text>{rOr[0]}</Text> */}
+            </View>
+
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>BTC Price:</Text>
+              <Text>${currPrice}</Text>
+            </View>
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>Equity:</Text>
+              <Text> ${equity}</Text>
+            </View>
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>Gains: </Text>
+              <Text>${gains}</Text>
+            </View>
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>Invested:</Text>
+              <Text> ${sumInvest}</Text>
+            </View>
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>Satoshies:</Text>
+              <Text> {sumSats}</Text>
+            </View>
           </View>
         )}
       </ImageBackground>
 
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
-          <Icon
-            name="scale-balance"
-            color={Colors.darkScheme.light}
-            size={30}
-          />
-          <Text style={styles.sectionTitle}>All Positions</Text>
-
-          {/* <Text style={styles.sectionDescription}>More info</Text> */}
-
-          {/* <Text>{rOr[0]}</Text> */}
+          <Text style={styles.sectionDescription}>
+            Click Position for full details
+          </Text>
         </View>
 
         {gains == 0 || gains === null ? (
@@ -284,7 +280,7 @@ const HomeScreenDetails = ({route, navigation}) => {
             positions={positions}
             navigation={navigation}
             setPosition={setPosition}
-            currPrice={currPrice}
+            btc$={btc$}
           />
         )}
       </View>
@@ -293,15 +289,22 @@ const HomeScreenDetails = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  screen: {
+    flex: 1,
+    // paddingTop: 10,
+    backgroundColor: Colors.darkScheme.lighter,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  background: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // height: 300,
+
+    backgroundColor: Colors.darkScheme.ligher,
   },
+
   logo: {
-    // opacity: 0.4,
+    opacity: 0.5,
     overflow: 'visible',
     resizeMode: 'cover',
     width: '100%',
@@ -313,17 +316,27 @@ const styles = StyleSheet.create({
      * source image's size.
      */
 
-    marginTop: 40,
-    marginBottom: -75,
+    marginTop: 20,
+    //  marginBottom: -75,
   },
   body: {
-    backgroundColor: Colors.darkScheme.darker,
-    height: 450,
+    flex: 4,
+    backgroundColor: Colors.darkScheme.lighter,
+    //  height: 450,
   },
   highlight: {
     fontWeight: '700',
-    fontSize: 30,
+    fontSize: 40,
     color: Colors.darkScheme.primary,
+  },
+
+  detailsStyle: {
+    width: '75%',
+  },
+  detailHighlight: {flexDirection: 'row', justifyContent: 'center'},
+  detailLines: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   text: {
     fontSize: 15,
@@ -331,31 +344,24 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.darkScheme.primary,
   },
-  background: {
-    height: 300,
-    width: '100%',
-    // paddingBottom: 100,
-    paddingTop: 25,
-    // paddingHorizontal: 32,
-    backgroundColor: Colors.darkScheme.lighter,
-  },
+
   sectionContainer: {
     //  marginTop: 32,
-    padding: 10,
+    padding: 1,
     // paddingHorizontal: 24,
-    backgroundColor: Colors.darkScheme.darker,
+    backgroundColor: Colors.darkScheme.lighter,
     flexDirection: 'row',
-    // justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.darkScheme.light,
+    color: Colors.darkScheme.primary,
   },
   sectionDescription: {
     marginTop: 8,
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: '500',
     color: Colors.darkScheme.primary,
   },
 

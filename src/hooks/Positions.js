@@ -55,7 +55,11 @@ export const useAddPosition = () => {
       setPosition(prevState => {
         return [pos, ...prevState];
       });
-      Alert.alert(`Position created: ${pos.currDate}`);
+      Alert.alert(
+        `Position created at: ${
+          pos.currDate
+        }. Head over to Details page for a list of open positions.`,
+      );
     } catch (err) {
       console.log('An ERROR has occured', err);
     }

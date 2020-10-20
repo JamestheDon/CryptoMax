@@ -1,10 +1,22 @@
-# Titan is a boilerplate "starter" app.
+# Ledger Max
 
 > React Native project
 
-## Setup
+## I
 
-Checkout the project
+- A Bitcoin Position
+
+- positions are individual records of each Bitcoin purchase you have made.
+
+- all records are stored unencrypted, inside local device storage (asynce storage).
+
+- The goal of ledger max is to give you a more complete perspective on the performance of your Bitcoin.
+
+- Ledger Max does not aim to store any Bitcoin it is purly a tool to help you manange it.
+
+-
+
+## Setup
 
 Install dependencies
 
