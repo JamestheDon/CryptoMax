@@ -4,11 +4,13 @@ import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-import {Card, Button, ListItem} from 'react-native-elements';
+import {Card, Divider} from 'react-native-elements';
 import usePositions from '../hooks/usePositions';
 import {Colors} from './';
 
-const PositionItem = ({positions, navigation, setPosition, currPrice}) => {
+const PositionItem = ({positions, navigation, setPosition, btc$}) => {
+  // console.log('right here biah', positions);
+
   const removePosition = async key => {
     try {
       await AsyncStorage.removeItem(key);
@@ -22,128 +24,161 @@ const PositionItem = ({positions, navigation, setPosition, currPrice}) => {
   };
 
   return (
-    <View>
-      <Text>{positions.buyDate.toLocaleDateString()}</Text>
-      <View style={styles.listPosition} key={positions.key}>
-        <Card containerStyle={styles.containerStyle}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View style={styles.listPositionView}>
-              <Text style={styles.listPositionText}>
-                {' '}
-                {/**(cost) x (1 + ror) */}
-                {(
-                  ((`${currPrice}` - `${positions.price}`) /
-                    `${positions.price}`) *
-                  `${positions.cost}`
-                ).toFixed(2) > 0 ? (
+    <View style={styles.listPosition} key={positions.key}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('PositionsScreenDetails', {
+            position: positions,
+            btc$: btc$,
+          })
+        }>
+        <View style={styles.containerStyle}>
+          <View style={styles.listPositionView}>
+            <Text style={styles.listPositionText}>
+              {/**(cost) x (1 + ror) */}
+              {(
+                ((`${btc$}` - `${positions.price}`) / `${positions.price}`) *
+                `${positions.cost}`
+              ).toFixed(2) > 0 ? (
+                <>
+                  <Icon
+                    name="scale-balance"
+                    color={Colors.darkScheme.primary}
+                    size={20}
+                  />{' '}
                   <Text style={styles.gainText}>
-                    Gain: +$
+                    $+
                     {(
-                      ((`${currPrice}` - `${positions.price}`) /
+                      ((`${btc$}` - `${positions.price}`) /
                         `${positions.price}`) *
                       `${positions.cost}`
                     ).toFixed(2)}
                   </Text>
-                ) : (
-                  <Text style={{color: Colors.darkScheme.red}}>
-                    Gain: $
+                </>
+              ) : (
+                <>
+                  <Icon
+                    name="scale-balance"
+                    color={Colors.darkScheme.primary}
+                    size={20}
+                  />
+                  {'  '}
+                  <Text style={styles.lossText}>
+                    ${''}
                     {(
-                      ((`${currPrice}` - `${positions.price}`) /
+                      ((`${btc$}` - `${positions.price}`) /
                         `${positions.price}`) *
                       `${positions.cost}`
                     ).toFixed(2)}
                   </Text>
-                )}
-              </Text>
-
-              <Text style={styles.listPositionText}>
-                {' '}
-                ROR: + %{' '}
-                {(
-                  ((`${currPrice}` - `${positions.price}`) /
-                    `${positions.price}`) *
-                  100
-                ).toFixed(2)}
-              </Text>
-            </View>
-            <View style={styles.listPositionView}>
-              <Text style={styles.listPositionText}>Cost:{positions.cost}</Text>
-              <Text style={styles.listPositionText}>
-                BTC ${positions.price}
-              </Text>
-            </View>
-            <View style={styles.listPositionView}>
-              <Button
-                type="clear"
-                buttonStyle={{padding: 0}}
-                icon={<Icon name="menu-right" size={30} color="green" />}
-                // onPress={() => getPosition(positions.key)}
-                onPress={() =>
-                  navigation.navigate('PositionsScreenDetails', {
-                    position: positions,
-                  })
-                }
-              />
-              <Button
-                buttonStyle={{padding: 0, margin: 0}}
-                titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
-                title="delete"
-                type="clear"
-                // icon={<Icon name="delete" size={30} color="red" />}
-                onPress={() => removePosition(positions.key)}
-              />
-            </View>
+                </>
+              )}
+            </Text>
           </View>
-        </Card>
-      </View>
+
+          <View style={styles.listPositionView}>
+            {/* <Button
+                  type="clear"
+                  buttonStyle={{padding: 0}}
+                  icon={<Icon name="menu-right" size={30} color="green" />}
+                  // onPress={() => getPosition(positions.key)}
+                  onPress={() =>
+                    navigation.navigate('PositionsScreenDetails', {
+                      position: positions,
+                    })
+                  }
+                  
+                /> */}
+
+            <Text style={styles.listPositionText}>
+              <Icon
+                name="calendar-star"
+                size={20}
+                color={Colors.darkScheme.primary}
+              />
+              {positions.buyDate.toLocaleDateString()}
+            </Text>
+          </View>
+
+          <View style={styles.listPositionView}>
+            <Text style={styles.listPositionText}>
+              {' '}
+              <Icon
+                name="currency-usd"
+                size={20}
+                color={Colors.darkScheme.primary}
+              />
+              {positions.cost}
+            </Text>
+          </View>
+
+          <View style={styles.listPositionView}>
+            <Text style={styles.listPositionText}>
+              {' '}
+              <Icon
+                name="currency-btc"
+                size={20}
+                color={Colors.darkScheme.primary}
+              />
+              {positions.price}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  viewContainer: {
-    //  flexGrow: 1,
-    margin: 20,
-    height: 325,
-    backgroundColor: Colors.darkScheme.dark,
-    borderRadius: 10,
-    // borderColor: Colors.darkScheme.darker,
+  listPosition: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+
+    // backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    //  borderColor: Colors.darkScheme.light,
   },
   containerStyle: {
+    flex: 1,
+    alignSelf: 'stretch',
     flexDirection: 'row',
-    borderBottomWidth: 3,
-    borderColor: Colors.darkScheme.darkest,
-    padding: 1,
-    borderRadius: 10,
-    height: 60,
-    backgroundColor: Colors.darkScheme.darker,
+
+    // alignContent: 'center',
+    //  shadowColor: 'rgba(0,0,0, .2)',
+    // shadowOffset: {height: 1, width: 1},
+    // shadowOpacity: 1, //default is 1
+    // shadowRadius: 0, //default is 1
+    width: '100%',
+    borderColor: Colors.darkScheme.dark,
+    // padding: 1,
+    //  borderRadius: 10,
+    // margin: 0,
+    backgroundColor: Colors.darkScheme.lighter,
   },
+
+  listPositionView: {
+    flex: 1,
+    alignSelf: 'stretch',
+  },
+
   btn: {
     backgroundColor: '#fff',
   },
-  listPosition: {
-    // backgroundColor: '#f8f8f8',
-    borderStyle: 'solid',
-    borderColor: '#fff',
-  },
-  listPositionView: {
-    // justifyContent: 'space-between',
-    // alignContent: 'center',
-    // height: 60,
-    padding: 5,
-  },
+
   listPositionText: {
-    fontSize: 13,
-    padding: 5,
-    color: Colors.darkScheme.light,
+    margin: 2,
+    fontSize: 12,
+    //padding: ,
+    color: Colors.darkScheme.dark,
   },
   gainText: {
     color: Colors.darkScheme.secondary,
   },
+  lossText: {
+    color: Colors.darkScheme.red,
+  },
+
   btnText: {
     color: 'darkslateblue',
     fontSize: 10,
@@ -152,7 +187,7 @@ const styles = StyleSheet.create({
   positionBtn: {
     backgroundColor: '#fff',
     padding: 9,
-    margin: 5,
+    // margin: 5,
   },
 });
 

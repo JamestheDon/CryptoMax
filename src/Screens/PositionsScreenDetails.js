@@ -16,16 +16,25 @@ import usePositions from '../hooks/usePositions';
 
 import {Alert} from 'react-native';
 
+/**
+ *
+ * @param {
+ *  route: position key } param0
+ *
+ * @todo add Equity detail
+ *       @todo editPosition hook
+ *            @todo style component
+ *                @todo if pos === 0 ? "open new positions" : ListPositions
+ *            @todo sumPos currState === newState ? dont update : update state
+ */
+
 const PositionsScreenDetails = ({route, navigation}) => {
   // Positions state
   const [apiResults, positions, setPosition] = usePositions();
   // Single Position details
-  const {position} = route.params;
-  const {price, cost, qty, buyDate} = position;
-  const key = position.key;
-  // Current Bitcoin price in $
-  // const [apiResults] = usePositions([]);
-  const currPrice = apiResults.map(i => i.price);
+  const {position, btc$} = route.params;
+  const {price, cost, qty, buyDate, currDate} = position;
+
   // Form fields
   const [newPrice, setPrice] = useState(position.price);
   const [newCost, setCost] = useState(position.cost);
@@ -34,23 +43,27 @@ const PositionsScreenDetails = ({route, navigation}) => {
     position.buyDate.toLocaleDateString(),
   );
 
-  console.log('%%%%%%%@%@%%#%#^#$^#$^', route);
+  useEffect(() => {
+    console.log('THESE ARE ADDINF UP', btc$);
+  });
 
-  const editPosition = async (key, newPrice, newCost, newQty, newBuyDate) => {
+  const editPosition = async (newPrice, newCost, newQty, newBuyDate) => {
     try {
       const pos = {
-        key: key,
+        key: position.key,
         price: newPrice,
         cost: newCost,
         qty: newQty,
         buyDate: newBuyDate,
+        currDate: position.currDate,
       };
-      await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
+      await AsyncStorage.setItem(position.key, JSON.stringify(pos));
 
+      //  console.log('what is wrong here??=>>', JSON.stringify(pos));
       setPosition(prevState => {
         return [pos, ...prevState];
       });
-      Alert.alert(`Position created: ${pos.currDate}`);
+      Alert.alert(`Position edited on: ${pos.buyDate}`);
     } catch (err) {
       console.log('An ERROR has occured', err);
     }
@@ -58,128 +71,159 @@ const PositionsScreenDetails = ({route, navigation}) => {
 
   // Portfolio calculations
   const dollarGain = (
-    ((`${currPrice}` - `${price}`) / `${price}`) *
+    ((`${btc$}` - `${price}`) / `${price}`) *
     `${cost}`
   ).toFixed(2);
 
-  const rateOfReturn = (((currPrice - price) / price) * 100).toFixed(2);
+  const rateOfReturn = (((btc$ - price) / price) * 100).toFixed(2);
+
+  const removePosition = async key => {
+    try {
+      await AsyncStorage.removeItem(key);
+      setPosition(prevState => {
+        return prevState.filter(i => i.key != key);
+      });
+      console.log('Position deleted.');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={styles.screen}>
       <Header
         title="Position Screen Details"
         isHome={false}
         navigation={navigation}
       />
+      <View style={styles.background}>
+        <View style={styles.detailsStyle}>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}> Full position details</Text>
 
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '20%',
-        }}>
-        <Text>Position details</Text>
-        <Text>
-          {' '}
-          {(((`${currPrice}` - `${price}`) / `${price}`) * `${cost}`).toFixed(
-            2,
-          )}
-        </Text>
+            {/* <Text>{rOr[0]}</Text> */}
+          </View>
+          <View style={styles.sectionContainer}>
+            <Icon
+              name="scale-balance"
+              color={Colors.darkScheme.gold}
+              size={40}
+            />
+
+            {/* <Text>{rOr[0]}</Text> */}
+          </View>
+
+          <View style={styles.detailLines}>
+            <Text style={styles.text}>Dollar gain:</Text>
+            <Text>${dollarGain}</Text>
+          </View>
+          <View style={styles.detailLines}>
+            <Text style={styles.text}>Satoshies:</Text>
+            <Text> ${qty}</Text>
+          </View>
+          <View style={styles.detailLines}>
+            <Text style={styles.text}>Dollar cost: </Text>
+            <Text>${cost}</Text>
+          </View>
+          <View style={styles.detailLines}>
+            <Text style={styles.text}>Btc purchase price:</Text>
+            <Text> ${price}</Text>
+          </View>
+          <View style={styles.detailLines}>
+            <Text style={styles.text}>Rate of Return</Text>
+            <Text> {rateOfReturn}</Text>
+          </View>
+        </View>
       </View>
       <View style={styles.body}>
-        <View style={styles.sectionContainer}>
-          <Icon name="scale-balance" color="black" size={20} />
-          <Text style={styles.sectionTitle}>{dollarGain}</Text>
-          <Text> {qty}</Text>
-          <Text style={styles.sectionTitle}>{rateOfReturn}</Text>
-          {/* {ror > 0 ? (<Text>+ {ror}% green</Text>) : (<Text>{ror}% red</Text>)} */}
-        </View>
-      </View>
-      <View style={styles.component}>
-        <View style={styles.inputContainer}>
-          <Icon
-            name="currency-btc"
-            size={24}
-            color={Colors.darkScheme.primary}
-          />
-          <Input
-            clearButtonMode="always"
-            placeholder={position.price}
-            label="BTC Purchase Price"
-            labelStyle={styles.inputLabel}
-            placeholderTextColor={Colors.darkScheme.light}
-            containerStyle={styles.containerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            // style={styles.input}
-            // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
-            value={newPrice}
-            onChangeText={data => setPrice(data)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Icon
-            name="currency-usd"
-            size={24}
-            color={Colors.darkScheme.primary}
-          />
-          <Input
-            clearButtonMode="always"
-            placeholder={position.cost}
-            label="Amount Invested"
-            labelStyle={styles.inputLabel}
-            placeholderTextColor={Colors.darkScheme.light}
-            containerStyle={styles.containerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            //  style={styles.input}
-            // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
-            value={newCost}
-            onChangeText={data => setCost(data)}
-          />
-        </View>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Icon
+              name="currency-btc"
+              size={24}
+              color={Colors.darkScheme.primary}
+            />
+            <Input
+              clearButtonMode="always"
+              placeholder={position.price}
+              label="BTC Purchase Price"
+              labelStyle={styles.inputLabel}
+              placeholderTextColor={Colors.darkScheme.light}
+              //  containerStyle={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              // style={styles.input}
+              // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
+              value={newPrice}
+              onChangeText={data => setPrice(data)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon
+              name="currency-usd"
+              size={24}
+              color={Colors.darkScheme.primary}
+            />
+            <Input
+              clearButtonMode="always"
+              placeholder={position.cost}
+              label="Amount Invested"
+              labelStyle={styles.inputLabel}
+              placeholderTextColor={Colors.darkScheme.light}
+              //  containerStyle={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              //  style={styles.input}
+              // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
+              value={newCost}
+              onChangeText={data => setCost(data)}
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Icon
-            name="chevron-triple-down"
-            size={24}
-            color={Colors.darkScheme.primary}
-          />
-          <Input
-            clearButtonMode="always"
-            placeholder={position.qty}
-            label="Satoshies Received"
-            labelStyle={styles.inputLabel}
-            placeholderTextColor={Colors.darkScheme.light}
-            containerStyle={styles.containerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            //  style={styles.input}
-            // leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
-            value={newQty}
-            onChangeText={data => setQty(data)}
-          />
+          <View style={styles.inputContainer}>
+            <Icon
+              name="chevron-triple-down"
+              size={24}
+              color={Colors.darkScheme.primary}
+            />
+            <Input
+              clearButtonMode="always"
+              placeholder={position.qty}
+              label="Satoshies Received"
+              labelStyle={styles.inputLabel}
+              placeholderTextColor={Colors.darkScheme.light}
+              //  containerStyle={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              //  style={styles.input}
+              // leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
+              value={newQty}
+              onChangeText={data => setQty(data)}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Icon
+              name="calendar-clock"
+              size={24}
+              color={Colors.darkScheme.primary}
+            />
+
+            <Input
+              clearButtonMode="always"
+              placeholder={position.buyDate.toLocaleDateString()}
+              label="Date purchased"
+              labelStyle={styles.inputLabel}
+              placeholderTextColor={Colors.darkScheme.light}
+              //  containerStyle={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              //style={styles.input}
+              leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
+              value={newBuyDate}
+              onChangeText={data => setBuyDate(data)}
+            />
+          </View>
         </View>
-        <View style={styles.inputContainer}>
-          <Icon
-            name="calendar-clock"
-            size={24}
-            color={Colors.darkScheme.primary}
-          />
-          <Input
-            clearButtonMode="always"
-            placeholder={position.buyDate.toLocaleDateString()}
-            // label="Date purchased"
-            labelStyle={styles.inputLabel}
-            placeholderTextColor={Colors.darkScheme.light}
-            // containerStyle={styles.containerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            //style={styles.input}
-            // leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
-            value={newBuyDate}
-            onChangeText={data => setBuyDate(data)}
-          />
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <View style={styles.btn}>
-            <Text style={{color: '#C0392B', padding: 5}}> add new!</Text>
+            <Text style={{color: '#C0392B', padding: 5}}> Update changes</Text>
             <Button
               // title="add new!"
               type="outline"
@@ -194,57 +238,107 @@ const PositionsScreenDetails = ({route, navigation}) => {
                 <Icon
                   name="bank-plus"
                   size={30}
-                  color={Colors.darkScheme.primary}
+                  color={Colors.darkScheme.gold}
                 />
               }
-              onPress={() => editPosition(price, cost, qty, buyDate)}
+              onPress={() =>
+                editPosition(newPrice, newCost, newQty, newBuyDate)
+              }
             />
           </View>
+          <Button
+            buttonStyle={{padding: 0, margin: 0}}
+            titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
+            title="delete"
+            type="clear"
+            // icon={<Icon name="delete" size={30} color="red" />}
+            onPress={() => removePosition(position.key)}
+          />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainerStyle: {
-    borderWidth: 1,
+  screen: {
+    flex: 1,
+  },
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // height: 300,
+
+    backgroundColor: Colors.darkScheme.lighter,
+  },
+  /////////////////////////////
+  body: {
+    backgroundColor: Colors.darkScheme.light,
+    flex: 2,
+    alignItems: 'center',
+    width: '100%',
+  },
+  container: {
+    flex: 0.9,
+    padding: 10,
+    //  justifyContent: 'space-evenly',
+    backgroundColor: Colors.darkScheme.light,
   },
   inputContainer: {
     flexDirection: 'row',
-    width: '75%',
+    //flex: 1,
+    width: '100%',
     alignItems: 'center',
-    margin: 15,
-    height: 50,
-    // backgroundColor: Colors.darkScheme.dark,
+    marginTop: 10,
+    margin: 1,
+    height: 40,
+    padding: 5,
+    backgroundColor: Colors.darkScheme.light,
   },
-
-  inputLabel: {
-    color: Colors.darkScheme.primary,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: '500',
-    textAlign: 'center',
-    color: Colors.black,
+  inputContainerStyle: {
+    borderWidth: 1,
+    backgroundColor: Colors.darkScheme.lighter,
+    height: 30,
   },
   sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    //  marginTop: 32,
+    padding: 1,
+    // paddingHorizontal: 24,
+    backgroundColor: Colors.darkScheme.lighter,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  ////////////////////
+  detailLines: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  detailsStyle: {
+    width: '75%',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.black,
+    color: Colors.darkScheme.primary,
   },
-  sectionDescription: {
-    marginTop: 8,
+  ////////////////////////////////
+
+  containerStyle: {
+    backgroundColor: Colors.darkScheme.lighter,
+    height: '80%',
+  },
+  //////////////////////////
+  inputLabel: {
+    color: Colors.darkScheme.primary,
+    fontSize: 12,
+  },
+
+  text: {
     fontSize: 15,
-    fontWeight: '600',
-    color: Colors.dark,
+    fontWeight: '500',
+    textAlign: 'left',
+    color: Colors.darkScheme.primary,
   },
 });
 

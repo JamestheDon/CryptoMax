@@ -105,8 +105,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkScheme.dark,
   },
   screen: {
+    flex: 1,
     padding: 20,
-    height: '100%',
+
     backgroundColor: Colors.darkScheme.dark,
   },
 

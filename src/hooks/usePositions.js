@@ -7,7 +7,7 @@ export default () => {
   const [errMsg, setErrMsg] = useState('');
   const [apiResults, setApiResults] = useState([]);
   const [positions, setPosition] = useState([]);
-
+  const [btcPrice, setBtcPrice] = useState();
   // console.log(apiResults.map(i => i.price));
 
   /**
@@ -24,7 +24,7 @@ export default () => {
           stores.map((result, i, store) => {
             // console.log({[store[i][0]]: store[i][1]});
             let parsedData = JSON.parse(store[i][1]);
-            // console.log(parsedData);
+            console.log('STILL SEARCHING', result);
             setPosition(prevState => {
               return [parsedData, ...prevState];
             });
@@ -35,6 +35,15 @@ export default () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  /**
+   * User set BTC price
+   */
+  const setBitcoinPrice = btc => {
+    setBtcPrice(() => {
+      return price;
+    });
   };
 
   // @TODO add real api key

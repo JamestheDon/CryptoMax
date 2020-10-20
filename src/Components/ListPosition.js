@@ -9,16 +9,12 @@ import usePositions from '../hooks/usePositions';
 import {Colors} from './';
 import PositionItem from './PositionItem';
 
-const ListPosition = ({positions, setPosition, navigation, currPrice}) => {
+const ListPosition = ({positions, setPosition, navigation, btc$}) => {
   // const [apiResults] = usePositions([]); // Bug inside usePositions & positions
 
   const [sortedList, setList] = useState([]);
   // const currPrice = apiResults.map(i => i.price);
-  /**
-   * @description get single Obj's attributes.
-   * @param {
-   * } key
-   */
+
   useEffect(() => {
     // console.log('8787&&&&&^^&^&&^^', sortedList);
     sortPositions();
@@ -107,150 +103,60 @@ const ListPosition = ({positions, setPosition, navigation, currPrice}) => {
 
   return (
     <View style={styles.viewContainer}>
+      <View
+        style={{
+          flexDirection: 'row',
+          //  alignSelf: 'stretch',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+        }}>
+        <Text style={styles.text}>Dollar gain</Text>
+        <Text style={styles.text}>Purchase Date</Text>
+        <Text style={styles.text}>Dollar Cost</Text>
+        <Text style={styles.text}>Btc Price</Text>
+      </View>
       <FlatList
         data={sortedList}
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
-            // <Text key={item.key}>{item.buyDate.toLocaleDateString()}</Text>
             <PositionItem
               key={item.key}
               positions={item}
               navigation={navigation}
               setPosition={setPosition}
-              currPrice={currPrice}
+              btc$={btc$}
             />
-            // <View style={styles.listPosition} key={item.key}>
-            //   <Card containerStyle={styles.containerStyle}>
-            //     <View
-            //       style={{
-            //         flexDirection: 'row',
-            //         justifyContent: 'space-between',
-            //       }}>
-            //       <View style={styles.listPositionView}>
-            //         <Text style={styles.listPositionText}>
-
-            //           {(
-            //             ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
-            //             `${item.cost}`
-            //           ).toFixed(2) > 0 ? (
-            //             <Text style={styles.gainText}>
-            //               Gain: +$
-            //               {(
-            //                 ((`${currPrice}` - `${item.price}`) /
-            //                   `${item.price}`) *
-            //                 `${item.cost}`
-            //               ).toFixed(2)}
-            //             </Text>
-            //           ) : (
-            //             <Text style={{color: Colors.darkScheme.red}}>
-            //               Gain: $
-            //               {(
-            //                 ((`${currPrice}` - `${item.price}`) /
-            //                   `${item.price}`) *
-            //                 `${item.cost}`
-            //               ).toFixed(2)}
-            //             </Text>
-            //           )}
-            //         </Text>
-
-            //         <Text style={styles.listPositionText}>
-            //           {' '}
-            //           ROR: + %{' '}
-            //           {(
-            //             ((`${currPrice}` - `${item.price}`) / `${item.price}`) *
-            //             100
-            //           ).toFixed(2)}
-            //         </Text>
-            //       </View>
-            //       <View style={styles.listPositionView}>
-            //         <Text style={styles.listPositionText}>
-            //           Cost:{item.cost}
-            //         </Text>
-            //         <Text style={styles.listPositionText}>
-            //           BTC ${item.price}
-            //         </Text>
-            //       </View>
-            //       <View style={styles.listPositionView}>
-            //         <Button
-            //           type="clear"
-            //           buttonStyle={{padding: 0}}
-            //           icon={<Icon name="menu-right" size={30} color="green" />}
-            //           // onPress={() => getPosition(item.key)}
-            //           onPress={() =>
-            //             navigation.navigate('PositionsScreenDetails', {
-            //               position: item,
-            //             })
-            //           }
-            //         />
-            //         <Button
-            //           buttonStyle={{padding: 0, margin: 0}}
-            //           titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
-            //           title="delete"
-            //           type="clear"
-            //           // icon={<Icon name="delete" size={30} color="red" />}
-            //           onPress={() => removePosition(item.key)}
-            //         />
-            //       </View>
-            //     </View>
-            //   </Card>
-            // </View>
           );
         }}
       />
+      {/* <Button
+                  buttonStyle={{padding: 0, margin: 0}}
+                  titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
+                  title="delete"
+                  type="clear"
+                  // icon={<Icon name="delete" size={30} color="red" />}
+                  onPress={() => removePosition(positions.key)}
+                /> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   viewContainer: {
-    //  flexGrow: 1,
-    margin: 20,
-    height: 325,
-    backgroundColor: Colors.darkScheme.dark,
-    borderRadius: 10,
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    backgroundColor: Colors.darkScheme.light,
+    // borderRadius: 10,
     // borderColor: Colors.darkScheme.darker,
   },
-  containerStyle: {
-    flexDirection: 'row',
-    borderBottomWidth: 3,
-    borderColor: Colors.darkScheme.darkest,
-    padding: 1,
-    borderRadius: 10,
-    height: 60,
-    backgroundColor: Colors.darkScheme.darker,
-  },
-  btn: {
-    backgroundColor: '#fff',
-  },
-  listPosition: {
-    // backgroundColor: '#f8f8f8',
-    borderStyle: 'solid',
-    borderColor: '#fff',
-  },
-  listPositionView: {
-    // justifyContent: 'space-between',
-    // alignContent: 'center',
-    // height: 60,
-    padding: 5,
-  },
-  listPositionText: {
-    fontSize: 13,
-    padding: 5,
-    color: Colors.darkScheme.light,
-  },
-  gainText: {
-    color: Colors.darkScheme.secondary,
-  },
-  btnText: {
-    color: 'darkslateblue',
-    fontSize: 10,
-    textAlign: 'center',
-  },
-  positionBtn: {
-    backgroundColor: '#fff',
-    padding: 9,
-    margin: 5,
+  text: {
+    padding: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    // margin: 2,
+    fontWeight: '200',
   },
 });
 

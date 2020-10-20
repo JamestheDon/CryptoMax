@@ -15,7 +15,7 @@ import AddPosition from '../Components/AddPosition';
 import {Header, Colors} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import {Button} from 'react-native-elements';
+import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../hooks/usePositions';
 import {useAddPosition} from '../hooks/positions';
@@ -40,11 +40,21 @@ const HomeScreen = ({navigation}) => {
   const [apiResults, positions] = usePositions([]);
   // const [positions] = usePositions();
   const [view, setView] = useState(false);
-  // useEffect(() => {
-  //   //  console.log(positions);
-  //   //  AsyncStorage.clear();
-  // }, []);
-  const btcPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
+  const [btc$, setBtcPrice] = useState();
+
+  //const btcPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
+
+  useEffect(() => {
+    console.log('START#', testNums());
+    //  AsyncStorage.clear();
+  });
+
+  const testNums = () => {
+    const nums = btc$;
+    const regex = /^[1-9]\d*(((,\d{3}){1})?((\.\d{0,2})?(\.\d{8})?))$/;
+
+    return regex.test(nums);
+  };
 
   switchView = () => {
     if (view === true) {
@@ -54,100 +64,141 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+  // removeFew = async () => {
+  //   const keys = ['17056520', '85145104', '52846882'];
+  //   try {
+  //     await AsyncStorage.multiRemove(keys);
+  //   } catch (e) {
+  //     // remove error
+  //     console.log(e);
+  //   }
+
+  //   console.log('Done');
+  // };
+
+  // getAllKeys = async () => {
+  //   let keys = [];
+  //   try {
+  //     keys = await AsyncStorage.getAllKeys();
+  //   } catch (e) {
+  //     // read key error
+  //   }
+
+  //   console.log('keys here::=>>', keys);
+  //   // example console.log result:
+  //   // ['@MyApp_user', '@MyApp_key']
+  // };
+
+  // removeValue = async () => {
+  //   try {
+  //     await AsyncStorage.removeItem('17056520');
+  //   } catch (e) {
+  //     // remove error
+  //   }
+
+  //   console.log('Done.');
+  // };
+
   useEffect(() => {
     console.log(process.env.NODE_ENV);
   }, [positions]);
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header
-        title="Crypto Max"
-        isHome={true}
-        navigation={navigation}
-        btcPrice={btcPrice}
-      />
+    <View style={styles.screen}>
+      <Header isHome={true} navigation={navigation} />
+      <View style={styles.introBody}>
+        <Text style={styles.introDescription}>
+          Welcome to Ledger Max, a Bitcoin portfolio analyzer.
+        </Text>
+        <Text style={styles.text}>Bare bones crypto ledger.</Text>
+        <Text style={styles.introDescription}>
+          The FIRST thing to do is set the current Bitcoin price.
+        </Text>
+        <View style={styles.introButton}>
+          <Input
+            placeholder="10,000.00"
+            label="Bitcoin price?"
+            labelStyle={
+              testNums() === true
+                ? styles.inputLabelSuccess
+                : styles.inputLabelError
+            }
+            containerStyle={styles.inputContainerStyle}
+            style={styles.input}
+            value={btc$}
+            onChangeText={data => setBtcPrice(data)}
+          />
+        </View>
+      </View>
 
-      {positions > 0 || view == true ? (
+      {view == true ? (
         <View style={styles.body}>
           <AddPosition
             // accounts={accounts}
-            positions={positions}
-            navigation={navigation}
+
             addPosition={addPosition}
             switchView={switchView}
           />
         </View>
       ) : (
-        <View
-          style={{
-            // marginBottom: 10,
-            height: 500,
-            alignItems: 'center',
-            // backgroundColor: Colors.darkScheme.darker,
-          }}>
+        <View style={styles.body}>
           <WelcomeMsg
             view={view}
             switchView={switchView}
             navigation={navigation}
+            btc$={btc$}
           />
         </View>
       )}
 
       {/* <ListPosition positions={positions} navigation={navigation} /> */}
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  btn: {
-    width: '50%',
-    // alignItems: 'center',
-    backgroundColor: Colors.dark,
-    padding: 10,
-  },
-  body: {
-    // marginTop: 1,
-    alignItems: 'center',
+  screen: {
+    flex: 1,
     backgroundColor: Colors.darkScheme.lighter,
+    //height: '100%',
+    width: '100%',
   },
 
-  screen: {
-    backgroundColor: Colors.darkScheme.lighter,
-    height: '100%',
-    paddingTop: 60,
+  body: {
+    flex: 2,
+    marginTop: '10%',
+    alignItems: 'center',
+    backgroundColor: Colors.darkScheme.light,
   },
-  text: {
-    fontSize: 30,
+  introBody: {
+    flex: 1,
+    marginTop: 30,
+    // height: '20%',
+  },
+  introDescription: {
+    margin: 10,
+    fontSize: 20,
     fontWeight: '500',
     textAlign: 'center',
-    color: Colors.black,
+    color: Colors.darkScheme.primary,
   },
-  // sectionContainer: {
-  //   marginTop: 32,
-  //   paddingHorizontal: 24,
-  // },
-  // sectionTitle: {
-  //   fontSize: 24,
-  //   fontWeight: '600',
-  //   color: Colors.black,
-  // },
-  // sectionDescription: {
-  //   marginTop: 8,
-  //   fontSize: 18,
-  //   fontWeight: '400',
-  //   color: Colors.dark,
-  // },
-  // highlight: {
-  //   fontWeight: '700',
-  // },
-  // footer: {
-  //   color: Colors.dark,
-  //   fontSize: 12,
-  //   fontWeight: '600',
-  //   padding: 4,
-  //   paddingRight: 12,
-  //   textAlign: 'right',
-  // },
+  introButton: {
+    marginBottom: 10,
+  },
+  inputLabelError: {
+    color: Colors.darkScheme.red,
+  },
+  inputLabelSuccess: {
+    color: Colors.darkScheme.secondary,
+  },
+
+  text: {
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: '100',
+    textAlign: 'center',
+    color: Colors.darkScheme.darkest,
+  },
 });
 
 export default HomeScreen;

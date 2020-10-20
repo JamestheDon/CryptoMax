@@ -12,10 +12,19 @@ import {Button, Input} from 'react-native-elements';
 import usePositions from '../hooks/usePositions';
 import {Colors} from './index';
 
-const WelcomeMsg = ({switchView, navigation}) => {
+const WelcomeMsg = ({switchView, navigation, btc$}) => {
   const [apiResults, positions, setPosition] = usePositions();
 
-  // const [view, setView] = useState(true);
+  // useEffect(() => {
+  //   console.log('BUILD SLow and steady=>', typeof btc, btc);
+  // }, [btc]);
+
+  // const setBitcoinPrice = (btc) => {
+
+  //   const btcPrice = [btc]
+
+  //   setCurrentBtcPrice(btcPrice)
+  // }
 
   // store in Async Storage
   //   const AccountIndex = () => {
@@ -35,25 +44,18 @@ const WelcomeMsg = ({switchView, navigation}) => {
   return (
     <View style={styles.component}>
       <View style={styles.sectionContainer}>
-        <Text style={styles.sectionDescription}>
-          Welcome to CryptoMax, a Bitcoin portfolio app. Get started by adding
-          you first Bitcoin purchase entry.
-        </Text>
-      </View>
-
-      <View style={styles.sectionContainer}>
-        <View style={styles.sectionButtons}>
+        <View style={styles.sectionButton}>
           <View style={styles.btn}>
             <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
               {' '}
-              add new position:
+              New position:
             </Text>
             <Button
               type="outline"
               // title="Add new postions"
               titleStyle={{color: Colors.darkScheme.primary}}
               buttonStyle={{
-                backgroundColor: Colors.darkScheme.darker,
+                backgroundColor: Colors.darkScheme.lighter,
                 borderColor: Colors.darkScheme.secondary,
                 borderRightWidth: 2,
                 borderBottomWidth: 3,
@@ -62,22 +64,29 @@ const WelcomeMsg = ({switchView, navigation}) => {
                 <Icon
                   name="bank-plus"
                   size={30}
-                  color={Colors.darkScheme.primary}
+                  color={Colors.darkScheme.gold}
                 />
               }
               // onPress={() => getPosition(item.key)}
               onPress={() => switchView()}
             />
-
+          </View>
+        </View>
+        <Text style={styles.sectionDescription}>
+          Then you can head over to the details page and get your first look at
+          portfolio performance.
+        </Text>
+        <View style={styles.sectionButton}>
+          <View style={styles.btn}>
             <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
               {' '}
-              details:
+              Bitcoin ledger:
             </Text>
             <Button
               //  title="Account Details"
               titleStyle={{color: Colors.darkScheme.primary}}
               buttonStyle={{
-                backgroundColor: Colors.darkScheme.darker,
+                backgroundColor: Colors.darkScheme.lighter,
                 borderColor: Colors.darkScheme.secondary,
                 borderRightWidth: 2,
                 borderBottomWidth: 3,
@@ -87,13 +96,16 @@ const WelcomeMsg = ({switchView, navigation}) => {
                   <Icon
                     name="bitcoin"
                     size={30}
-                    color={Colors.darkScheme.primary}
+                    color={Colors.darkScheme.gold}
                   />
                 </View>
               }
               type="outline"
               onPress={() =>
-                navigation.navigate('HomeScreenDetails', {data: positions})
+                navigation.navigate('HomeScreenDetails', {
+                  data: positions,
+                  btc$: btc$,
+                })
               }
             />
           </View>
@@ -105,11 +117,13 @@ const WelcomeMsg = ({switchView, navigation}) => {
 
 const styles = StyleSheet.create({
   component: {
-    width: '100%',
+    //flex: 1,
+    //  width: '100%',
     alignItems: 'center',
-    backgroundColor: Colors.darkScheme.dark,
-    height: '100%',
-    paddingTop: 100,
+
+    //backgroundColor: Colors.darkScheme.light,
+    // height: '50%',
+    // paddingTop: 5,
   },
 
   inputContainerStyle: {
@@ -121,17 +135,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
-  sectionButtons: {
+  sectionButton: {
     //  flexDirection: 'row',
   },
   sectionContainer: {
-    width: '100%',
-    marginTop: 20,
+    flex: 1,
+    //  marginTop: 20,
     // flexDirection: 'row',
-    backgroundColor: Colors.darkScheme.dark,
-    // padding: 5,
+    backgroundColor: Colors.darkScheme.light,
+    //paddingTop: 5,
 
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   input: {
     // width: '80%',
@@ -146,9 +160,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     marginHorizontal: 0,
-    padding: 20,
+    padding: 10,
     alignItems: 'center',
-    backgroundColor: Colors.darkScheme.darker,
+    backgroundColor: Colors.darkScheme.light,
   },
   btnTxt: {
     color: Colors.primary,

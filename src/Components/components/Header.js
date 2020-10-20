@@ -14,23 +14,30 @@ import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 const Header = ({title, isHome, navigation}) => {
-  const {background, logo, text} = homeHeader;
+  const {background, logo, text, headline} = homeHeader;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 0.5}}>
       {isHome ? (
-        <ImageBackground
-          accessibilityRole={'image'}
-          source={require('./Icon-trans.png')}
-          style={background}
-          imageStyle={logo}>
-          <View>
-            <Text style={text}>{title}</Text>
-          </View>
-        </ImageBackground>
+        <View style={{flex: 0}}>
+          <ImageBackground
+            accessibilityRole={'image'}
+            source={require('../../images/Icon-trans.png')}
+            style={background}
+            imageStyle={logo}>
+            <View>
+              <Text style={headline}>{title}</Text>
+            </View>
+          </ImageBackground>
+        </View>
       ) : (
         <View style={styles.background}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              //   padding: 1,
+              justifyContent: 'space-between',
+            }}>
             <TouchableOpacity
               style={{marginLeft: 10}}
               onPress={() => navigation.goBack()}>
@@ -51,19 +58,21 @@ const Header = ({title, isHome, navigation}) => {
 
 const homeHeader = StyleSheet.create({
   background: {
-    height: 350,
-    paddingBottom: 100,
-    paddingTop: 50,
+    flex: 1,
+    // height: '50%',
+    // paddingBottom: 5,
+    // paddingTop: 10,
     // paddingHorizontal: 32,
     backgroundColor: Colors.darkScheme.lighter,
   },
   logo: {
-    // flex: 1,
+    //flex: 1,
     //opacity: 0.5,
     overflow: 'visible',
     resizeMode: 'cover',
     width: '100%',
     height: '100%',
+
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
@@ -71,23 +80,31 @@ const homeHeader = StyleSheet.create({
      * source image's size.
      */
 
-    marginTop: 50,
-    marginBottom: -75,
+    // marginTop: 50,
+    // marginBottom: -75,
   },
-  text: {
-    marginTop: 100,
+  headline: {
+    marginTop: 50,
     fontSize: 30,
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'center',
     color: Colors.darkScheme.primary,
+  },
+  text: {
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: '100',
+    textAlign: 'center',
+    color: Colors.darkScheme.darkest,
   },
 });
 
 const styles = StyleSheet.create({
   background: {
     alignContent: 'space-between',
-    padding: 15,
-    height: 60,
+    padding: 10,
+    height: '80%',
+    // flex: 0.9,
     backgroundColor: Colors.darkScheme.dark,
   },
   header: {
