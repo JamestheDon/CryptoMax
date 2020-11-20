@@ -1,5 +1,6 @@
+'use strict';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
+
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import usePositions from './usePositions';
@@ -34,11 +35,11 @@ import usePositions from './usePositions';
 
 export const useAddPosition = () => {
   //
-  const [state, setPosition] = useState([]);
-  const [apiResults, positions] = usePositions();
+  const [state, setState] = useState([]);
+  const [apiResults, positions, setPosition] = usePositions([]);
 
   const addPosition = async (price, cost, qty, buyDate) => {
-    generateID = () => {
+   const generateID = () => {
       return Math.floor(Math.random() * 100000000).toString();
     };
 
@@ -53,12 +54,10 @@ export const useAddPosition = () => {
       };
       await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
       setPosition(prevState => {
-        return [pos, ...prevState];
-      });
+        return [pos, ...prevState]
+      })
       Alert.alert(
-        `Position created at: ${
-          pos.currDate
-        }. Head over to Details page for a list of open positions.`,
+        `Position created at: ${pos.currDate}. The Ledger has now been activated.`,
       );
     } catch (err) {
       console.log('An ERROR has occured', err);

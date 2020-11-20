@@ -1,19 +1,23 @@
+'use strict';
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {View, StyleSheet, Image, Text, Alert} from 'react-native';
 
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {Button, Input} from 'react-native-elements';
 import usePositions from '../hooks/usePositions';
 import {Colors} from './index';
 
-const WelcomeMsg = ({switchView, navigation, btc$}) => {
-  const [apiResults, positions, setPosition] = usePositions();
+const WelcomeMsg = ({switchView, navigation, btc$, testNums}) => {
+  const [apiResults, positions, setPosition] = usePositions([]);
+
+  useEffect(() => {
+ 
+console.log('ALWAYS ANOTHER CONSOLE LOg', positions)
+  })
+
+
+
+
 
   // useEffect(() => {
   //   console.log('BUILD SLow and steady=>', typeof btc, btc);
@@ -44,82 +48,138 @@ const WelcomeMsg = ({switchView, navigation, btc$}) => {
   return (
     <View style={styles.component}>
       <View style={styles.sectionContainer}>
-        <View style={styles.sectionButton}>
-          <View style={styles.btn}>
-            <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
-              {' '}
-              New position:
-            </Text>
-            <Button
-              type="outline"
-              // title="Add new postions"
-              titleStyle={{color: Colors.darkScheme.primary}}
-              buttonStyle={{
-                backgroundColor: Colors.darkScheme.lighter,
-                borderColor: Colors.darkScheme.secondary,
-                borderRightWidth: 2,
-                borderBottomWidth: 3,
-              }}
-              icon={
-                <Icon
-                  name="bank-plus"
-                  size={30}
-                  color={Colors.darkScheme.gold}
+        
+        <View style={styles.addPositionBtn}>
+        { testNums() === true ? (    
+                <View style={styles.activated}>
+        
+            
+                {/* <Text style={styles.sectionDescription}>
+                #2  Activated 
+                </Text> */}
+                <Button
+                  type="outline"
+                  // title="Add new postions"
+                 // titleStyle={{borderColor: Colors.darkScheme.dark,  borderRightWidth: 2, borderBottomWidth: 2, borderColor: Colors.darkScheme.primary}}
+                  buttonStyle={styles.buttonSuccess}
+                  containerStyle={styles.btnContainerSuccess}
+                  icon={
+                    <Icon
+                      name="bank-plus"
+                      size={30}
+                      color={Colors.darkScheme.secondary}
+                    />
+                  }
+                  // onPress={() => getPosition(item.key)}
+                  onPress={() => switchView()}
                 />
-              }
-              // onPress={() => getPosition(item.key)}
-              onPress={() => switchView()}
-            />
-          </View>
-        </View>
-        <Text style={styles.sectionDescription}>
-          Then you can head over to the details page and get your first look at
-          portfolio performance.
-        </Text>
-        <View style={styles.sectionButton}>
-          <View style={styles.btn}>
-            <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
-              {' '}
-              Bitcoin ledger:
-            </Text>
-            <Button
-              //  title="Account Details"
-              titleStyle={{color: Colors.darkScheme.primary}}
-              buttonStyle={{
-                backgroundColor: Colors.darkScheme.lighter,
-                borderColor: Colors.darkScheme.secondary,
-                borderRightWidth: 2,
-                borderBottomWidth: 3,
-              }}
-              icon={
-                <View style={{flexDirection: 'row'}}>
-                  <Icon
-                    name="bitcoin"
+              </View>
+            ) : ( 
+              <View style={styles.deactivated}>
+                
+                  
+                    
+                    {/* <Text style={styles.sectionDescription}>
+                   Deactivated
+                    </Text> */}
+                  <Button
+                  type="outline"
+                  // title="Add new postions"
+                 // titleStyle={{color: Colors.darkScheme.primary}}
+                  buttonStyle={styles.buttonFail}
+                  containerStyle={styles.btnContainerFail}
+                  icon={
+                    <Icon
+                      name="alert-circle-outline"
+                      size={30}
+                      color={Colors.darkScheme.red}
+                    />
+                  }
+                  // onPress={() => getPosition(item.key)}
+                
+                  onPress={() => Alert.alert("Please enter a valid Bitcoin price.")}
+                
+                />
+            
+            </View>
+            )}
+            </View>
+ 
+        
+          <View style={styles.ledgerBtn}>
+            { testNums() === true && positions.length > 0 ? (    
+              <View>
+                <View>
+      
+                {/* <Text style={styles.sectionDescription}>
+                 #3 Activated
+                </Text> */}
+                <Button
+                  type="outline"
+                  // title="Add new postions"
+                //  titleStyle={{color: Colors.darkScheme.primary}}
+                  buttonStyle={styles.buttonSuccess}
+                  containerStyle={styles.btnContainerSuccess}
+                  icon={
+                    <Icon
+                    name="notebook-multiple"
                     size={30}
-                    color={Colors.darkScheme.gold}
+                    color={Colors.darkScheme.secondary}
                   />
+                  }
+                  // onPress={() => getPosition(item.key)}
+                  onPress={() =>
+                    navigation.navigate('HomeScreenDetails', {
+                      data: positions,
+                      btc$: btc$,
+                    })
+                  }
+                />
                 </View>
-              }
-              type="outline"
-              onPress={() =>
-                navigation.navigate('HomeScreenDetails', {
-                  data: positions,
-                  btc$: btc$,
-                })
-              }
-            />
+            </View>
+            ) : ( 
+            <View>
+                <View>
+                {/* <Text style={styles.sectionDescription}>
+                 Deactivated
+                </Text> */}
+             
+           
+                <Button
+                type="outline"
+                // title="Add new postions"
+                
+               // titleStyle={{color: Colors.darkScheme.primary}}
+                buttonStyle={styles.buttonFail}
+                containerStyle={styles.btnContainerFail}
+                icon={
+                  <Icon
+                      name="alert-circle-outline"
+                      size={30}
+                      color={Colors.darkScheme.red}
+                    />
+                }
+                // onPress={() => getPosition(item.key)}
+              
+                onPress={() => Alert.alert("Please add a new position before going to the Ledger")}
+              
+                />
+              </View>
+            </View>
+            )}
           </View>
-        </View>
-      </View>
+          </View>
+      
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   component: {
-    //flex: 1,
+    flex: 1,
+   
     //  width: '100%',
-    alignItems: 'center',
+  //  alignItems: 'center',
 
     //backgroundColor: Colors.darkScheme.light,
     // height: '50%',
@@ -130,45 +190,63 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   sectionDescription: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: '500',
     textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
-  sectionButton: {
-    //  flexDirection: 'row',
+  ledgerBtn: {
+     // flexDirection: 'row',
+   //  margin: 10
   },
+  addPositionBtn: {
+  // justifyContent: 'center'
+  },
+  activated: {},
+  deactivated: {
+   // width: '100%'
+  },
+
   sectionContainer: {
-    flex: 1,
-    //  marginTop: 20,
-    // flexDirection: 'row',
+   // flex: 1,
+     flexDirection: 'row',
     backgroundColor: Colors.darkScheme.light,
     //paddingTop: 5,
-
-    paddingBottom: 10,
+justifyContent: 'center',
+   
   },
-  input: {
-    // width: '80%',
-    // borderColor: '#ccc',
-    // borderWidth: 1,
-    height: 10,
-    //  padding: 8,
-    // fontSize: 13,
+btnContainerSuccess: {
+  
+  padding: 10,
+  shadowColor: 'rgba(238,130,238, 1)',
+  shadowOffset: { height: 4, width: 4 }, // IOS
+  shadowOpacity: 1, // IOS
+  shadowRadius: 5, //IOS
+},
+  buttonSuccess: {
+   
+    width: 150,
+    backgroundColor: Colors.darkScheme.primary,  
+    borderRightWidth: 2, 
+    borderBottomWidth: 2, 
+    borderColor: Colors.darkScheme.secondary
   },
-
-  btn: {
-    flexDirection: 'row',
-    width: '100%',
-    marginHorizontal: 0,
+  btnContainerFail:{
+  
     padding: 10,
-    alignItems: 'center',
-    backgroundColor: Colors.darkScheme.light,
+    shadowColor: Colors.darkScheme.red,
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 3, //IOS
+  
+  
   },
-  btnTxt: {
-    color: Colors.primary,
-    // color: 'darkslateblue',
-    fontSize: 12,
-  },
+  buttonFail: {  
+    width: 150,   
+    borderRightWidth: 2, 
+    borderBottomWidth: 2, 
+    borderColor: Colors.darkScheme.red,
+    backgroundColor: Colors.darkScheme.lighter}
 });
 
 export default WelcomeMsg;

@@ -1,5 +1,6 @@
+'use strict';
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList, Alert} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -9,45 +10,40 @@ import usePositions from '../hooks/usePositions';
 import {Colors} from './';
 import PositionItem from './PositionItem';
 
-const ListPosition = ({positions, setPosition, navigation, btc$}) => {
-  // const [apiResults] = usePositions([]); // Bug inside usePositions & positions
+const ListPosition = ({  navigation, btc$}) => {
+ const [apiResults,  positions, setPosition, setRequestData, requestData] = usePositions([]);
 
-  const [sortedList, setList] = useState([]);
+  const [sortedList, setList] = useState( []);
   // const currPrice = apiResults.map(i => i.price);
 
   useEffect(() => {
     // console.log('8787&&&&&^^&^&&^^', sortedList);
-    sortPositions();
-    return () => {
-      console.log('Cleaning up sorted positions');
-    };
+      sortPositions();
+    // return () => {
+    //   console.log('Cleaning up sorted positions inside LISTPOSITION');
+    // };
   }, [positions]);
 
-  sortPositions = () => {
+  const sortPositions = () => {
     const sortedPositions = positions.map((pos, i) => {
-      const position = {
+      let position = {
         key: pos.key,
         price: pos.price,
         cost: pos.cost,
         qty: pos.qty,
-        buyDate: new Date(pos.buyDate),
-
+        buyDate: pos.buyDate,
         currDate: pos.currDate,
       };
 
-      return position;
+      return  position;
     });
-
-    const list = sortedPositions.sort((a, b) => {
-      return b.buyDate - a.buyDate;
+      
+    setList(() => {
+      return  sortedPositions.sort((a, b) => {
+        return b.buyDate - a.buyDate;
+      });
     });
-    // const list = sortedPositions.sort((a, b) =>
-    //   a.buyDate.localeCompare(b.buyDate),
-    // );
-
-    console.log('LOOOOOOOOOKHERER', list);
-
-    setList(list);
+  
   };
   // { if item.price > apiPrice (green) : (red)}
 
@@ -69,25 +65,7 @@ const ListPosition = ({positions, setPosition, navigation, btc$}) => {
   //   //((currPrice - sumInvest) / sumInvest) * 100; = %change
   // };
 
-  // const getAllPositions = async () => {
-  //   try {
-  //     await AsyncStorage.getAllKeys((err, keys) => {
-  //       AsyncStorage.multiGet(keys, (error, stores) => {
-  //         stores.map((result, i, store) => {
-  //           console.log({[store[i][0]]: store[i][1]});
-  //           let parsedData = JSON.parse(store[i][1]);
-  //           // console.log(parsedData);
-  //           setPosition(prevState => {
-  //             return [parsedData, ...prevState];
-  //           });
-  //           return true;
-  //         });
-  //       });
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+
 
   // const removePosition = async key => {
   //   try {
@@ -103,6 +81,7 @@ const ListPosition = ({positions, setPosition, navigation, btc$}) => {
 
   return (
     <View style={styles.viewContainer}>
+      
       <View
         style={{
           flexDirection: 'row',
@@ -110,8 +89,9 @@ const ListPosition = ({positions, setPosition, navigation, btc$}) => {
           alignItems: 'center',
           justifyContent: 'space-evenly',
         }}>
-        <Text style={styles.text}>Dollar gain</Text>
+          
         <Text style={styles.text}>Purchase Date</Text>
+        <Text style={styles.text}>Dollar gain</Text>
         <Text style={styles.text}>Dollar Cost</Text>
         <Text style={styles.text}>Btc Price</Text>
       </View>
@@ -120,6 +100,7 @@ const ListPosition = ({positions, setPosition, navigation, btc$}) => {
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
+          // <Text> Things will render here. {item.key}</Text>
             <PositionItem
               key={item.key}
               positions={item}

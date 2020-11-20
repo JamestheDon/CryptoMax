@@ -1,11 +1,10 @@
+'use strict';
 import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
+ ImageBackground
 } from 'react-native';
 import {Header, Colors} from '../Components/';
 import {Button, Input} from 'react-native-elements';
@@ -22,7 +21,7 @@ import {Alert} from 'react-native';
  *  route: position key } param0
  *
  * @todo add Equity detail
- *       @todo editPosition hook
+ *      
  *            @todo style component
  *                @todo if pos === 0 ? "open new positions" : ListPositions
  *            @todo sumPos currState === newState ? dont update : update state
@@ -30,7 +29,7 @@ import {Alert} from 'react-native';
 
 const PositionsScreenDetails = ({route, navigation}) => {
   // Positions state
-  const [apiResults, positions, setPosition] = usePositions();
+  const [apiResults, positions, setPosition] = usePositions([]);
   // Single Position details
   const {position, btc$} = route.params;
   const {price, cost, qty, buyDate, currDate} = position;
@@ -40,7 +39,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
   const [newCost, setCost] = useState(position.cost);
   const [newQty, setQty] = useState(position.qty);
   const [newBuyDate, setBuyDate] = useState(
-    position.buyDate.toLocaleDateString(),
+    new Date(buyDate).toLocaleDateString()
   );
 
   useEffect(() => {
@@ -54,8 +53,8 @@ const PositionsScreenDetails = ({route, navigation}) => {
         price: newPrice,
         cost: newCost,
         qty: newQty,
-        buyDate: newBuyDate,
-        currDate: position.currDate,
+        buyDate: new Date(newBuyDate),
+        currDate: Date.now()
       };
       await AsyncStorage.setItem(position.key, JSON.stringify(pos));
 
@@ -63,6 +62,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
       setPosition(prevState => {
         return [pos, ...prevState];
       });
+    // navigation.navigate('Home')
       Alert.alert(`Position edited on: ${pos.buyDate}`);
     } catch (err) {
       console.log('An ERROR has occured', err);
@@ -77,105 +77,120 @@ const PositionsScreenDetails = ({route, navigation}) => {
 
   const rateOfReturn = (((btc$ - price) / price) * 100).toFixed(2);
 
-  const removePosition = async key => {
-    try {
-      await AsyncStorage.removeItem(key);
-      setPosition(prevState => {
-        return prevState.filter(i => i.key != key);
-      });
-      console.log('Position deleted.');
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const removePosition = async key => {
+  //   try {
+  //     await AsyncStorage.removeItem(key);
+  //     setPosition(prevState => {
+  //       return [prevState.filter(i => i.key != key)]; // remove item from state/list on same screen.
+  //     });
+  //    // setRequestData(new Date());
+  // // navigation.navigate('Home')
+  //     console.log('Position deleted.');
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <View style={styles.screen}>
       <Header
-        title="Position Screen Details"
+        title="Position Details"
         isHome={false}
         navigation={navigation}
       />
-      <View style={styles.background}>
-        <View style={styles.detailsStyle}>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}> Full position details</Text>
+      <ImageBackground
+        accessibilityRole={'image'}
+        source={require('../images/Icon-trans.png')}
+        style={styles.background}
+        imageStyle={styles.logo}>
+          <View >
+            <View style={styles.detailsStyle}>
+              <View style={styles.sectionContainer}>
+                {/* <Text style={styles.sectionTitle}> Position details</Text> */}
 
-            {/* <Text>{rOr[0]}</Text> */}
-          </View>
-          <View style={styles.sectionContainer}>
-            <Icon
-              name="scale-balance"
-              color={Colors.darkScheme.gold}
-              size={40}
-            />
+                {/* <Text>{rOr[0]}</Text> */}
+              </View>
+              <View style={styles.sectionContainer}>
+              <Icon
+                name="scale-balance"
+                color={Colors.darkScheme.gold}
+                size={40}
+                style={{marginRight: 6, marginTop: 20}}
+              />
 
-            {/* <Text>{rOr[0]}</Text> */}
-          </View>
+              {/* <Text>{rOr[0]}</Text> */}
+              </View>
 
-          <View style={styles.detailLines}>
-            <Text style={styles.text}>Dollar gain:</Text>
-            <Text>${dollarGain}</Text>
-          </View>
-          <View style={styles.detailLines}>
-            <Text style={styles.text}>Satoshies:</Text>
-            <Text> ${qty}</Text>
-          </View>
-          <View style={styles.detailLines}>
-            <Text style={styles.text}>Dollar cost: </Text>
-            <Text>${cost}</Text>
-          </View>
-          <View style={styles.detailLines}>
-            <Text style={styles.text}>Btc purchase price:</Text>
-            <Text> ${price}</Text>
-          </View>
-          <View style={styles.detailLines}>
-            <Text style={styles.text}>Rate of Return</Text>
-            <Text> {rateOfReturn}</Text>
+              <View style={styles.detailLines}>
+              <Text style={styles.text}>Dollar gain:</Text>
+              <Text>${dollarGain}</Text>
+              </View>
+              <View style={styles.detailLines}>
+              <Text style={styles.text}>Satoshies:</Text>
+              <Text> {qty}</Text>
+              </View>
+              <View style={styles.detailLines}>
+              <Text style={styles.text}>Dollar cost: </Text>
+              <Text>${cost}</Text>
+              </View>
+              <View style={styles.detailLines}>
+              <Text style={styles.text}>Btc purchase price:</Text>
+              <Text> ${price}</Text>
+              </View>
+              <View style={styles.detailLines}>
+              <Text style={styles.text}>Rate of Return</Text>
+              <Text> {rateOfReturn}</Text>
+            </View>
           </View>
         </View>
-      </View>
+      </ImageBackground>
+ 
       <View style={styles.body}>
         <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Icon
-              name="currency-btc"
-              size={24}
-              color={Colors.darkScheme.primary}
-            />
-            <Input
-              clearButtonMode="always"
-              placeholder={position.price}
-              label="BTC Purchase Price"
-              labelStyle={styles.inputLabel}
-              placeholderTextColor={Colors.darkScheme.light}
-              //  containerStyle={styles.containerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
-              // style={styles.input}
-              // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
-              value={newPrice}
-              onChangeText={data => setPrice(data)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Icon
-              name="currency-usd"
-              size={24}
-              color={Colors.darkScheme.primary}
-            />
-            <Input
-              clearButtonMode="always"
-              placeholder={position.cost}
-              label="Amount Invested"
-              labelStyle={styles.inputLabel}
-              placeholderTextColor={Colors.darkScheme.light}
-              //  containerStyle={styles.containerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
-              //  style={styles.input}
-              // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
-              value={newCost}
-              onChangeText={data => setCost(data)}
-            />
+            <View style={styles.sectionDivider}>
+              <Text style={styles.sectionDescription}>
+                Edit details & update changes.
+              </Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <Icon
+                name="currency-btc"
+                size={24}
+                color={Colors.darkScheme.primary}
+              />
+              <Input
+                clearButtonMode="always"
+                placeholder={position.price}
+                label="BTC Purchase Price"
+                labelStyle={styles.inputLabel}
+                placeholderTextColor={Colors.darkScheme.light}
+                //  containerStyle={styles.containerStyle}
+                inputContainerStyle={styles.inputContainerStyle}
+                // style={styles.input}
+                // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
+                value={newPrice}
+                onChangeText={data => setPrice(data)}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <Icon
+                name="currency-usd"
+                size={24}
+                color={Colors.darkScheme.primary}
+              />
+              <Input
+                clearButtonMode="always"
+                placeholder={position.cost}
+                label="Amount Invested"
+                labelStyle={styles.inputLabel}
+                placeholderTextColor={Colors.darkScheme.light}
+                //  containerStyle={styles.containerStyle}
+                inputContainerStyle={styles.inputContainerStyle}
+                //  style={styles.input}
+                // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
+                value={newCost}
+                onChangeText={data => setCost(data)}
+              />
           </View>
 
           <View style={styles.inputContainer}>
@@ -205,38 +220,33 @@ const PositionsScreenDetails = ({route, navigation}) => {
               size={24}
               color={Colors.darkScheme.primary}
             />
-
+              {/* .toDateString().replace(/^\S+\s/,'') */}
             <Input
               clearButtonMode="always"
-              placeholder={position.buyDate.toLocaleDateString()}
+              placeholder={new Date(buyDate).toLocaleDateString()}
               label="Date purchased"
               labelStyle={styles.inputLabel}
               placeholderTextColor={Colors.darkScheme.light}
               //  containerStyle={styles.containerStyle}
               inputContainerStyle={styles.inputContainerStyle}
               //style={styles.input}
-              leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
+             // leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
               value={newBuyDate}
               onChangeText={data => setBuyDate(data)}
             />
           </View>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <View style={styles.buttonRow}>
           <View style={styles.btn}>
             <Text style={{color: '#C0392B', padding: 5}}> Update changes</Text>
             <Button
               // title="add new!"
               type="outline"
               titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
-              buttonStyle={{
-                // backgroundColor: '#596469',
-                borderColor: Colors.darkScheme.secondary,
-                borderRightWidth: 2,
-                borderBottomWidth: 3,
-              }}
+              buttonStyle={styles.buttonSuccess}
+              containerStyle={styles.btnContainerSuccess}
               icon={
                 <Icon
-                  name="bank-plus"
+                  name="check-outline"
                   size={30}
                   color={Colors.darkScheme.gold}
                 />
@@ -255,6 +265,8 @@ const PositionsScreenDetails = ({route, navigation}) => {
             onPress={() => removePosition(position.key)}
           />
         </View>
+        </View>
+    
       </View>
     </View>
   );
@@ -265,12 +277,50 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   background: {
-    flex: 1,
+    flex: 1.3,
     alignItems: 'center',
     justifyContent: 'center',
-    // height: 300,
+  //  marginTop: 50,
+  //  paddingTop: 10,
+   //  height: '75%'
 
-    backgroundColor: Colors.darkScheme.lighter,
+   // backgroundColor: Colors.darkScheme.lighter,
+  },
+  logo: {
+   // opacity: 0.9,
+    overflow: 'visible',
+    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
+    
+    /*
+     * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
+     *
+     * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
+     * source image's size.
+     */
+
+    marginTop: 15,
+    //  marginBottom: -75,
+  },
+  detailsStyle: {
+    width: '75%',
+    
+  },
+  sectionContainer: {
+    //  marginTop: 32,
+    padding: 1,
+    // paddingHorizontal: 24,
+   // backgroundColor: Colors.darkScheme.lighter,
+    flexDirection: 'row',
+    justifyContent: 'center',
+ 
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.darkScheme.primary,
+    marginBottom: 10
   },
   /////////////////////////////
   body: {
@@ -285,6 +335,9 @@ const styles = StyleSheet.create({
     //  justifyContent: 'space-evenly',
     backgroundColor: Colors.darkScheme.light,
   },
+  buttonRow: {
+    flexDirection: 'row', 
+    justifyContent: 'center'},
   inputContainer: {
     flexDirection: 'row',
     //flex: 1,
@@ -301,27 +354,42 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkScheme.lighter,
     height: 30,
   },
-  sectionContainer: {
-    //  marginTop: 32,
-    padding: 1,
-    // paddingHorizontal: 24,
+  btnContainerSuccess: {
+    padding: 10,
+    // shadowColor: 'rgba(238,130,238, 1)',
+    shadowColor: Colors.darkScheme.gold,
+    shadowOffset: { height: 4, width: 4 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 5, //IOS
+  },  
+  buttonSuccess: {
+    width: 150,
+    backgroundColor: Colors.darkScheme.primary,  
+    borderRightWidth: 2, 
+    borderBottomWidth: 2, 
+    borderColor: Colors.darkScheme.gold
+  },
+  sectionDivider: {
     backgroundColor: Colors.darkScheme.lighter,
-    flexDirection: 'row',
-    justifyContent: 'center',
+   
+    width: '100%',
+ alignItems: 'center',
+ marginBottom: 10
+ 
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 15,
+    fontWeight: '500',
+    color: Colors.darkScheme.primary,
   },
   ////////////////////
   detailLines: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  detailsStyle: {
-    width: '75%',
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.darkScheme.primary,
-  },
+  
+
   ////////////////////////////////
 
   containerStyle: {

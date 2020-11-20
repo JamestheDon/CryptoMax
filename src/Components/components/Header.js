@@ -1,3 +1,4 @@
+'use strict';
 import Colors from './Colors';
 // import type {Node} from 'react';
 import {
@@ -14,34 +15,41 @@ import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 const Header = ({title, isHome, navigation}) => {
-  const {background, logo, text, headline} = homeHeader;
+  const {background, logo, text, headline, headlineView} = homeHeader;
 
   return (
-    <SafeAreaView style={{flex: 0.5}}>
+  <>
       {isHome ? (
-        <View style={{flex: 0}}>
+        <SafeAreaView style={{flex: 1, 
+          justifyContent: 'center'}}>
           <ImageBackground
             accessibilityRole={'image'}
             source={require('../../images/Icon-trans.png')}
             style={background}
             imageStyle={logo}>
-            <View>
+        <View style={headlineView}>
               <Text style={headline}>{title}</Text>
+              <Text style={text}>
+          Welcome to Ledger Max, a "bare bones" Crypto ledger. The FIRST thing to do is set a Bitcoin price to make calculations from.
+        </Text>
             </View>
           </ImageBackground>
-        </View>
+     </SafeAreaView>
       ) : (
-        <View style={styles.background}>
+        <SafeAreaView style={styles.background}>
           <View
             style={{
               flexDirection: 'row',
-              //   padding: 1,
+              // marginTop: 30,
+              // marginBottom: 10,
+              //    paddingTop: 10,
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity
               style={{marginLeft: 10}}
               onPress={() => navigation.goBack()}>
               <Icon
+                style={styles.icon}
                 name="arrow-left-bold-circle-outline"
                 size={30}
                 color="white"
@@ -50,19 +58,16 @@ const Header = ({title, isHome, navigation}) => {
 
             <Text style={styles.text}>{title}</Text>
           </View>
-        </View>
+        </SafeAreaView>
       )}
-    </SafeAreaView>
+    </>
   );
 };
 
 const homeHeader = StyleSheet.create({
   background: {
     flex: 1,
-    // height: '50%',
-    // paddingBottom: 5,
-    // paddingTop: 10,
-    // paddingHorizontal: 32,
+
     backgroundColor: Colors.darkScheme.lighter,
   },
   logo: {
@@ -72,28 +77,33 @@ const homeHeader = StyleSheet.create({
     resizeMode: 'cover',
     width: '100%',
     height: '100%',
-
+  
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-
-    // marginTop: 50,
-    // marginBottom: -75,
+  
+    marginTop: 100,
+    
+  
+  },
+  headlineView: {
+    marginTop: 50,
   },
   headline: {
-    marginTop: 50,
+    marginTop: 60,
+    paddingBottom: 0,
     fontSize: 30,
     fontWeight: '400',
     textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
   text: {
-    marginTop: 10,
+    marginTop: 15,
     fontSize: 15,
-    fontWeight: '100',
+    fontWeight: '300',
     textAlign: 'center',
     color: Colors.darkScheme.darkest,
   },
@@ -102,16 +112,24 @@ const homeHeader = StyleSheet.create({
 const styles = StyleSheet.create({
   background: {
     alignContent: 'space-between',
-    padding: 10,
-    height: '80%',
-    // flex: 0.9,
+   // marginBottom: 50,
+   // padding: 10,
+    height: '11%',
+  
+    // flex: 0.4,
     backgroundColor: Colors.darkScheme.dark,
   },
   header: {
     backgroundColor: '#596469',
   },
+  icon: {
+  //  margin: 10,
+padding: 5
+  },
   text: {
     color: 'white',
+    marginRight: 10,
+    marginTop: 10,
     fontSize: 15,
     textAlign: 'center',
   },

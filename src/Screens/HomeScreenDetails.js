@@ -1,3 +1,5 @@
+'use strict';
+
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -31,24 +33,32 @@ import {Alert} from 'react-native';
 const HomeScreenDetails = ({route, navigation}) => {
   const {data, btc$} = route.params;
 
-  const [apiResults, positions, setPosition] = usePositions();
+  const [apiResults, positions, setPosition, setRequestData, requestData] = usePositions();
+
+  // const {price, cost, qty, key, currDate } = positions
 
   // const currPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
   const currPrice = btc$;
 
-  const [calculations, setCalculations] = useState({
-    sumInvest: null,
-    sumSats: null,
-  });
-  const {sumInvest, sumSats} = calculations;
-
-  const [gains, setGains] = useState();
-
-  const [equity, setEquity] = useState();
-
-  // useEffect(() => {
-  //   console.log(' OVER HERE', btc);
+  // const [calculations, setCalculations] = useState({
+  //   sumInvest: null,
+  //   sumSats: null,
   // });
+
+  
+ // const {sumInvest, sumSats} = calculations;
+
+  const [sumInvest, setSumInvest] = useState(0);
+
+  const [sumSats, setSumSats] = useState(0)
+
+  const [gains, setGains] = useState(0);
+
+  const [equity, setEquity] = useState(0);
+
+  useEffect(() => {
+    console.log('POSITIONS::::', positions, 'DATA#####', data);
+  });
 
   useEffect(() => {
     getPerformance();
@@ -57,37 +67,37 @@ const HomeScreenDetails = ({route, navigation}) => {
     };
   });
   useEffect(() => {
+   // console.log('getCostSum() function results:', getCostSum())
     getCostSum();
 
     return () => {
       console.log('Cleaning up Cost Sum');
     };
-  }, []);
+  });
   useEffect(() => {
+   // console.log('getQtySum() function results:', getQtySum())
     getQtySum();
 
     return () => {
       console.log('Cleaning up QTY SUm');
     };
-  }, []);
+  });
   useEffect(() => {
-    // console.log('WEIRD', getEquity());
+   
     getEquity();
     return () => {
       console.log('cleaning up equity');
     };
   });
 
-  // console.log(calculations);
+  
 
-  getPerformance = () => {
-    // const price = data.map(i => i.price);
-
-    // const cost = data.map(i => i.cost);
-
-    // const rateOfReturn = parseFloat(
-    //   ((currPrice - price) / price) * 100,
-    // ).toFixed(2);
+   /**
+   *
+   * Sum gains
+   *
+   */
+ const  getPerformance = () => {
 
     const $perf = positions.map((i, index) => {
       const $gain = parseFloat(
@@ -103,18 +113,7 @@ const HomeScreenDetails = ({route, navigation}) => {
 
     setGains(result);
 
-    // results = calculations;
-    // setPerformance({$perf: $perf});
-
-    console.log('OVErherer#####: ', result);
-
-    // setPerformance(prevState => {
-    //   return {calculations};
-    // });
-    // setPerformance(prevState => {
-    //   return {...prevState, rateOfReturn: rateOfReturn, singleGain: singleGain};
-    // });
-
+    console.log('getPerfomance() ', result);
     //  const rOr = parseFloat(((currPrice - pos.price) / pos.price) * 100);
     // const singleGain = (rOr / 100) * pos.cost;
   };
@@ -133,72 +132,49 @@ const HomeScreenDetails = ({route, navigation}) => {
   //        + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
   //     </Text>)
   // } else {}
-  /**
-   *
-   * Sum gains
-   *
-   */
-
-  // getSumGains = () => {
-  //   // const gainVals = performance.map(val => parseFloat(val.$gain));
-  //   // const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
-  //   // values = [];
-  //   Object.keys(performance).forEach(i => {
-  //     console.log('testing ===>>', i, performance[i]);
-  //     const {$gain, rateOfReturn} = performance[i];
-  //     // const gain = performance[key];
-  //     // values.push($gain);
-  //     console.log('testing =++====>>', $gain);
-  //   });
-
-  //   console.log('testing ===###++##==>>', performance);
-
-  //   //  const sumGain = gainVals.reduce((acc, item) => (acc += item), 0).toFixed(2);
-
-  //   // setCalculations(prevState => {
-  //   //   return {...prevState, totalGains: sumGain};
-  //   // });
-  // };
+ 
 
   /**
    *
    * Sum Satoshies held
    *
    */
-  getQtySum = () => {
-    const qtyVals = data.map(pos => parseFloat(pos.qty));
+ const getQtySum = () => {
+
+    const qtyVals = positions.map(pos => parseFloat(pos.qty));
     const qtySum = qtyVals.reduce((acc, item) => (acc += item), 0).toFixed(8);
 
-    setCalculations(prevState => {
-      // Object.assign would also work
-      return {...prevState, sumSats: qtySum};
-    });
+    setSumSats(qtySum)
+
+    // setCalculations(prevState => {
+    //   console.log('qtyVals TEST:', qtyVals)
+    //   return {...prevState, sumSats: qtySum};
+    // });
   };
 
   /**
    *
    * Sum money invested
-   *
+   * 
    */
-  getCostSum = () => {
-    try {
-      const costVals = data.map(pos => parseFloat(pos.cost));
+ const getCostSum = () => {
+   
+      const costVals = positions.map(pos => parseFloat(pos.cost));
       const costSum = costVals
         .reduce((acc, item) => (acc += item), 0)
         .toFixed(2);
 
-      setCalculations(prevState => {
-        return {...prevState, sumInvest: costSum};
-      });
-    } catch (err) {
-      console.log(err);
-    }
+      // setCalculations(prevState => {
+      //   return {...prevState, sumInvest: costSum};
+      // });
+      setSumInvest(costSum)
+ 
   };
 
   // useEffect(() => {
   //   // AsyncStorage.clear();
   // }, []);
-  getEquity = () => {
+ const getEquity = () => {
     setEquity(() => {
       return (parseFloat(gains) + parseFloat(sumInvest)).toFixed(2);
     });
@@ -218,20 +194,16 @@ const HomeScreenDetails = ({route, navigation}) => {
          *
          *
          */}
-        {gains == 0 || gains === null ? (
+        { positions.length === 0 ? (
           <View style={{flexDirection: 'row'}}>
             <ActivityIndicator size="large" color={Colors.darkScheme.primary} />
-            <Text>Loading...</Text>
+            {/* <Text>Loading...</Text> */}
           </View>
         ) : (
           <View style={styles.detailsStyle}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}> Open positions</Text>
-
-              {/* <Text>{rOr[0]}</Text> */}
-            </View>
-            <View style={styles.sectionContainer}>
+                 <View style={styles.sectionContainer}>
               <Icon
+              style={styles.icon}
                 name="scale-balance"
                 color={Colors.darkScheme.gold}
                 size={40}
@@ -239,6 +211,12 @@ const HomeScreenDetails = ({route, navigation}) => {
 
               {/* <Text>{rOr[0]}</Text> */}
             </View>
+            {/* <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}> Open Positions</Text>
+
+           
+            </View> */}
+       
 
             <View style={styles.detailLines}>
               <Text style={styles.text}>BTC Price:</Text>
@@ -271,7 +249,7 @@ const HomeScreenDetails = ({route, navigation}) => {
           </Text>
         </View>
 
-        {gains == 0 || gains === null ? (
+        {positions.length === 0 ? (
           <View>
             <ActivityIndicator size="large" color={Colors.darkScheme.primary} />
           </View>
@@ -280,6 +258,7 @@ const HomeScreenDetails = ({route, navigation}) => {
             positions={positions}
             navigation={navigation}
             setPosition={setPosition}
+            requestData={requestData}
             btc$={btc$}
           />
         )}
@@ -295,16 +274,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkScheme.lighter,
   },
   background: {
-    flex: 2,
+    flex:2,
     alignItems: 'center',
     justifyContent: 'center',
     // height: 300,
 
     backgroundColor: Colors.darkScheme.ligher,
   },
-
+  icon: {
+    marginTop: 20,
+    marginRight: 6
+  },
   logo: {
-    opacity: 0.5,
+    //opacity: 0.5,
     overflow: 'visible',
     resizeMode: 'cover',
     width: '100%',
@@ -320,7 +302,7 @@ const styles = StyleSheet.create({
     //  marginBottom: -75,
   },
   body: {
-    flex: 4,
+    flex: 3.5,
     backgroundColor: Colors.darkScheme.lighter,
     //  height: 450,
   },
@@ -331,7 +313,7 @@ const styles = StyleSheet.create({
   },
 
   detailsStyle: {
-    width: '75%',
+    width: '55%',
   },
   detailHighlight: {flexDirection: 'row', justifyContent: 'center'},
   detailLines: {
@@ -346,15 +328,18 @@ const styles = StyleSheet.create({
   },
 
   sectionContainer: {
-    //  marginTop: 32,
+    marginTop: 10,
+      marginBottom: 7,
     padding: 1,
     // paddingHorizontal: 24,
-    backgroundColor: Colors.darkScheme.lighter,
+    //backgroundColor: Colors.darkScheme.lighter,
     flexDirection: 'row',
     justifyContent: 'center',
   },
   sectionTitle: {
-    fontSize: 24,
+   
+    marginTop: 5,
+    fontSize: 20,
     fontWeight: '600',
     color: Colors.darkScheme.primary,
   },

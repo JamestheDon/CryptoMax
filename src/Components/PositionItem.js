@@ -10,7 +10,7 @@ import {Colors} from './';
 
 const PositionItem = ({positions, navigation, setPosition, btc$}) => {
   // console.log('right here biah', positions);
-
+const {} = positions
   const removePosition = async key => {
     try {
       await AsyncStorage.removeItem(key);
@@ -23,6 +23,17 @@ const PositionItem = ({positions, navigation, setPosition, btc$}) => {
     }
   };
 
+//   dateTimeReviver = function (key, value) {
+//     var a;
+//     if (typeof value === 'string') {
+//         a = /\/Date\((\d*)\)\//.exec(value);
+//         if (a) {
+//             return new Date(+a[1]);
+//         }
+//     }
+//     return value;
+// }
+
   return (
     <View style={styles.listPosition} key={positions.key}>
       <TouchableOpacity
@@ -33,6 +44,29 @@ const PositionItem = ({positions, navigation, setPosition, btc$}) => {
           })
         }>
         <View style={styles.containerStyle}>
+          <View style={styles.listPositionView}>
+              {/* <Button
+                    type="clear"
+                    buttonStyle={{padding: 0}}
+                    icon={<Icon name="menu-right" size={30} color="green" />}
+                    // onPress={() => getPosition(positions.key)}
+                    onPress={() =>
+                      navigation.navigate('PositionsScreenDetails', {
+                        position: positions,
+                      })
+                    }
+                    
+                  /> */}
+{/* .toDateString().replace(/^\S+\s/,'') */}
+              <Text style={styles.listPositionText}>
+                {/* <Icon
+                  name="calendar-star"
+                  size={20}
+                  color={Colors.darkScheme.primary}
+                /> */}
+                {new Date(positions.buyDate).toLocaleDateString()}
+              </Text>
+            </View>
           <View style={styles.listPositionView}>
             <Text style={styles.listPositionText}>
               {/**(cost) x (1 + ror) */}
@@ -76,29 +110,7 @@ const PositionItem = ({positions, navigation, setPosition, btc$}) => {
             </Text>
           </View>
 
-          <View style={styles.listPositionView}>
-            {/* <Button
-                  type="clear"
-                  buttonStyle={{padding: 0}}
-                  icon={<Icon name="menu-right" size={30} color="green" />}
-                  // onPress={() => getPosition(positions.key)}
-                  onPress={() =>
-                    navigation.navigate('PositionsScreenDetails', {
-                      position: positions,
-                    })
-                  }
-                  
-                /> */}
-
-            <Text style={styles.listPositionText}>
-              <Icon
-                name="calendar-star"
-                size={20}
-                color={Colors.darkScheme.primary}
-              />
-              {positions.buyDate.toLocaleDateString()}
-            </Text>
-          </View>
+    
 
           <View style={styles.listPositionView}>
             <Text style={styles.listPositionText}>

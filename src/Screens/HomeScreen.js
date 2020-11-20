@@ -1,3 +1,4 @@
+'use strict';
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -14,7 +15,7 @@ import WelcomeMsg from '../Components/WelcomeMsg';
 import AddPosition from '../Components/AddPosition';
 import {Header, Colors} from '../Components/';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+
 import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import usePositions from '../hooks/usePositions';
@@ -37,7 +38,7 @@ import Spinner from '../Components/components/Spinner';
 const HomeScreen = ({navigation}) => {
   // const [apiResults, positions, addPosition] = usePositions();
   const [state, addPosition] = useAddPosition();
-  const [apiResults, positions] = usePositions([]);
+  const [apiResults, positions, getAllPositions] = usePositions([]);
   // const [positions] = usePositions();
   const [view, setView] = useState(false);
   const [btc$, setBtcPrice] = useState();
@@ -45,7 +46,9 @@ const HomeScreen = ({navigation}) => {
   //const btcPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
 
   useEffect(() => {
-    console.log('START#', testNums());
+   // getAllPositions()
+  //  getAllPositions();
+    console.log('START#', positions )
     //  AsyncStorage.clear();
   });
 
@@ -56,7 +59,7 @@ const HomeScreen = ({navigation}) => {
     return regex.test(nums);
   };
 
-  switchView = () => {
+ const switchView = () => {
     if (view === true) {
       setView(false);
     } else {
@@ -91,7 +94,7 @@ const HomeScreen = ({navigation}) => {
 
   // removeValue = async () => {
   //   try {
-  //     await AsyncStorage.removeItem('17056520');
+  //     await AsyncStorage.removeItem('49827598');
   //   } catch (e) {
   //     // remove error
   //   }
@@ -105,30 +108,14 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.screen}>
-      <Header isHome={true} navigation={navigation} />
+      <Header title="Ledger Max" isHome={true} navigation={navigation} />
       <View style={styles.introBody}>
-        <Text style={styles.introDescription}>
-          Welcome to Ledger Max, a Bitcoin portfolio analyzer.
-        </Text>
-        <Text style={styles.text}>Bare bones crypto ledger.</Text>
-        <Text style={styles.introDescription}>
+      
+        
+        {/* <Text style={styles.introDescription}>
           The FIRST thing to do is set the current Bitcoin price.
-        </Text>
-        <View style={styles.introButton}>
-          <Input
-            placeholder="10,000.00"
-            label="Bitcoin price?"
-            labelStyle={
-              testNums() === true
-                ? styles.inputLabelSuccess
-                : styles.inputLabelError
-            }
-            containerStyle={styles.inputContainerStyle}
-            style={styles.input}
-            value={btc$}
-            onChangeText={data => setBtcPrice(data)}
-          />
-        </View>
+        </Text> */}
+       
       </View>
 
       {view == true ? (
@@ -142,11 +129,29 @@ const HomeScreen = ({navigation}) => {
         </View>
       ) : (
         <View style={styles.body}>
+           <View style={styles.inputSection}>
+             <Text>#1</Text>
+            <Input
+              placeholder="10,000.00"
+              label="Bitcoin price?"
+              labelStyle={
+              styles.inputLabel
+              }
+              containerStyle={styles.inputContainerStyle}
+              style={     testNums() === true
+                ? styles.inputSuccess
+                : styles.inputError}
+              value={btc$}
+              onChangeText={(data) => setBtcPrice(data)}
+            />
+        </View>
           <WelcomeMsg
             view={view}
             switchView={switchView}
             navigation={navigation}
             btc$={btc$}
+            testNums={testNums}
+            positions={state}
           />
         </View>
       )}
@@ -165,32 +170,55 @@ const styles = StyleSheet.create({
   },
 
   body: {
-    flex: 2,
-    marginTop: '10%',
+    flex: 3,
+   // marginTop: '5%',
     alignItems: 'center',
     backgroundColor: Colors.darkScheme.light,
   },
   introBody: {
     flex: 1,
-    marginTop: 30,
+  //  marginTop: 30,
     // height: '20%',
   },
   introDescription: {
-    margin: 10,
+    margin: 15,
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
-  introButton: {
-    marginBottom: 10,
+  inputSection: {
+    width: '100%',
+  //  marginBottom: 10,
+  //  marginTop: 15,
+    padding: 10
+  }, 
+  inputContainerStyle: {
+   // backgroundColor: Colors.darkScheme.lighter
   },
-  inputLabelError: {
-    color: Colors.darkScheme.red,
+  inputSuccess: {
+  
+    backgroundColor: Colors.darkScheme.lighter,
+    borderColor: Colors.darkScheme.secondary,
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
   },
-  inputLabelSuccess: {
-    color: Colors.darkScheme.secondary,
+  inputError: {
+  
+    backgroundColor: Colors.darkScheme.lighter,
+    borderColor: Colors.darkScheme.red,
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+   
   },
+  inputLabel: {
+    color: Colors.darkScheme.primary,
+  },
+
 
   text: {
     marginTop: 10,

@@ -1,9 +1,9 @@
+'use strict';
 import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
+  Alert,
   Text,
 } from 'react-native';
 
@@ -48,15 +48,37 @@ const AddPosition = ({addPosition, switchView}) => {
    *
    */
 
+  
+
   // const dateRegex = /\d{1,2}[/]\d{1,2}[/]\d{2,4}/;
   // const currencyRegex = /^[0-9]\d*(((,\d{3}){1})?((\.\d{0,2})?(\.\d{8})?))$/;
 
-  onSubmit = (price, cost, qty, buyDate) => {
-    if (dateRegex.test(buyDate) == true) {
-      return <View>green</View>;
+  const testAllNums = () => {
+    if (testNums(price) && testNums(cost) && testNums(qty) === true) {
+      return true
     } else {
-      return <View>red</View>;
+      return false
     }
+    
+  }
+
+  const testNums = (num) => {
+    
+    const priceRegex = /^[0-9]\d*(((,\d{3}){1})?((\.\d{0,8})?(\.\d{8})?))$/;
+
+    return priceRegex.test(num);
+  };
+  const testDate = date => {
+    // const num = cost;
+    const dateRegex = /\d{1,2}[/]\d{1,2}[/]\d{4}/;
+
+    return dateRegex.test(date);
+  };
+
+  // validateNums = data => {};
+
+  const onSubmit = () => {
+   
 
     console.log('Buy Date', dateRegex.test(buyDate));
     console.log('Price', currencyRegex.test(price));
@@ -64,24 +86,10 @@ const AddPosition = ({addPosition, switchView}) => {
     console.log('Qty', currencyRegex.test(qty));
   };
 
-  const testNums = num => {
-    // const num = cost;
-    const priceRegex = /^[0-9]\d*(((,\d{3}){1})?((\.\d{0,8})?(\.\d{8})?))$/;
-
-    return priceRegex.test(num);
-  };
-  const testDate = date => {
-    // const num = cost;
-    const dateRegex = /\d{1,2}[/]\d{1,2}[/]\d{2,4}/;
-
-    return dateRegex.test(date);
-  };
-
-  validateNums = data => {};
-
   return (
     <View stlye={styles.body}>
       <View style={styles.container}>
+        <Text>This is where you enter new Bitcoin Position details.</Text>
         <View style={styles.inputContainer}>
           <Icon
             name="currency-btc"
@@ -107,6 +115,7 @@ const AddPosition = ({addPosition, switchView}) => {
           />
         </View>
         <View style={styles.inputContainer}>
+          {}
           <Icon
             name="currency-usd"
             size={24}
@@ -180,18 +189,14 @@ const AddPosition = ({addPosition, switchView}) => {
           />
         </View>
         <View style={{flexDirection: 'row'}}>
-          <View style={styles.btn}>
-            <Text style={{color: '#C0392B', padding: 5}}> add new!</Text>
+          {testAllNums() === true && testDate(buyDate) === true ? (
+          <View>   
             <Button
               // title="add new!"
               type="outline"
               titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
-              buttonStyle={{
-                backgroundColor: Colors.darkScheme.lighter,
-                borderColor: Colors.darkScheme.secondary,
-                borderRightWidth: 2,
-                borderBottomWidth: 3,
-              }}
+              buttonStyle={styles.buttonSuccess}
+              containerStyle={styles.btnContainerSuccess}
               icon={
                 <Icon
                   name="bank-plus"
@@ -202,55 +207,42 @@ const AddPosition = ({addPosition, switchView}) => {
               onPress={() => addPosition(price, cost, qty, buyDate)}
               //  onPress={() => onSubmit(price, cost, qty, buyDate)}
             />
-          </View>
+            </View>
+            ) : (
+            <View>
+              <Button
+                // title="add new!"
+                type="outline"
+                titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
+                buttonStyle={styles.buttonFail}
+                containerStyle={styles.btnContainerFail}
+                icon={
+                  <Icon
+                  name="alert-circle-outline"
+                    size={30}
+                    color={Colors.darkScheme.red}
+                  />
+                }
+                onPress={() => Alert.alert('Please correct data entries.')}
+                //  onPress={() => onSubmit(price, cost, qty, buyDate)}
+              />
+            </View>)}
 
-          {/* <View style={styles.btn}>
-          <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
-            {' '}
-            details:
-          </Text>
-          <Button
-            //  title="Account Details"
-            buttonStyle={{
-              borderColor: Colors.darkScheme.darkest,
-              // backgroundColor: Colors.darkScheme.secondary,
-              borderBottomWidth: 4,
-              borderRightWidth: 3,
-            }}
-            type="outline"
-            icon={
-              <View style={{flexDirection: 'row'}}>
-                <Icon
-                  name="bitcoin"
-                  size={30}
-                  color={Colors.darkScheme.primary}
-                />
-              </View>
-            }
-            // onPress={() => getPosition(item.key)}
-            onPress={() =>
-              navigation.navigate('HomeScreenDetails', {data: positions})
-            }
-          />
-        </View> */}
-          <View style={styles.btn}>
-            <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
+              
+            <View >
+            {/* <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
               {' '}
               back ->{' '}
-            </Text>
+            </Text> */}
             <Button
               type="outline"
               // title="Add new postions"
               titleStyle={{color: Colors.darkScheme.primary}}
-              buttonStyle={{
-                backgroundColor: Colors.darkScheme.lighter,
-                borderColor: Colors.darkScheme.secondary,
-                borderRightWidth: 3,
-                borderBottomWidth: 4,
-              }}
+              buttonStyle={styles.buttonSuccess}
+              containerStyle={styles.btnContainerSuccess}
               icon={
                 <Icon
-                  name="space-invaders"
+                  name="bank"
                   size={30}
                   color={Colors.darkScheme.gold}
                 />
@@ -279,7 +271,35 @@ const styles = StyleSheet.create({
     //height: '100%',
     backgroundColor: Colors.darkScheme.light,
   },
-
+  btnContainerSuccess: {
+    padding: 10,
+    // shadowColor: 'rgba(238,130,238, 1)',
+    shadowColor: Colors.darkScheme.gold,
+    shadowOffset: { height: 4, width: 4 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 5, //IOS
+  },
+  buttonSuccess: {
+    width: 150,
+    backgroundColor: Colors.darkScheme.primary,  
+    borderRightWidth: 2, 
+    borderBottomWidth: 2, 
+    borderColor: Colors.darkScheme.gold
+  },
+  btnContainerFail: {
+    padding: 10,
+    shadowColor: Colors.darkScheme.red,
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 3, //IOS
+  },
+  buttonFail: {
+    width: 150,   
+    borderRightWidth: 2, 
+    borderBottomWidth: 2, 
+    borderColor: Colors.darkScheme.red,
+    backgroundColor: Colors.darkScheme.light
+  },
   inputContainerStyleSuccess: {
     borderWidth: 1,
     borderColor: Colors.darkScheme.secondary,
