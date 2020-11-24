@@ -34,7 +34,7 @@ const HomeScreenDetails = ({route, navigation}) => {
   const {data, btc$} = route.params;
 
   const [apiResults, positions, setPosition, setRequestData, requestData] = usePositions();
-
+  const {cost, price, qty, buyDate} = positions
   // const {price, cost, qty, key, currDate } = positions
 
   // const currPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
@@ -56,8 +56,13 @@ const HomeScreenDetails = ({route, navigation}) => {
 
   const [equity, setEquity] = useState(0);
 
+  const [avgRor, setAvgRor] = useState(0)
+
   useEffect(() => {
-    console.log('POSITIONS::::', positions, 'DATA#####', data);
+     getAvgRor();
+     return () => {
+       console.log('cleaning up rate of return')
+     }
   });
 
   useEffect(() => {
@@ -125,13 +130,12 @@ const HomeScreenDetails = ({route, navigation}) => {
    *
    */
 
-  // console.log('THis is what i want', performance);
-  // if (ror > 0 ) {
-  //   return (
-  //     <Text key={index}>
-  //        + % {((`${currPrice}` - `${item.price}`) / `${item.price}`) * 100}
-  //     </Text>)
-  // } else {}
+  const getAvgRor = () => {
+    const $ror = positions.map((p) => parseFloat((currPrice - p.price) / p.price * 100 ))
+   const $avgRor = $ror.reduce((acc, item) => (acc += item), 0) / positions.length
+  // return $avgRor.toFixed(2)
+   setAvgRor($avgRor.toFixed(2))
+  }
  
 
   /**
@@ -235,7 +239,10 @@ const HomeScreenDetails = ({route, navigation}) => {
               <Text style={styles.text}>Equity:</Text>
               <Text> ${equity}</Text>
             </View>
-         
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>Rate of Return:</Text>
+              <Text> {avgRor}%</Text>
+            </View>
             
             <View style={styles.detailLines}>
               <Text style={styles.text}>Satoshies:</Text>
@@ -321,7 +328,10 @@ const styles = StyleSheet.create({
   },
 
   detailsStyle: {
+    paddingTop: 10,
     width: '65%',
+    // backgroundColor: Colors.darkScheme.light,
+    // opacity: 0.5,
   },
   detailHighlight: {
     flexDirection: 'row', 
