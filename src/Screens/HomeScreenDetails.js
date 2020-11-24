@@ -202,14 +202,14 @@ const HomeScreenDetails = ({route, navigation}) => {
         ) : (
           <View style={styles.detailsStyle}>
                  <View style={styles.sectionContainer}>
-              <Icon
+              {/* <Icon
               style={styles.icon}
                 name="scale-balance"
                 color={Colors.darkScheme.gold}
                 size={40}
-              />
+              /> */}
 
-              {/* <Text>{rOr[0]}</Text> */}
+            
             </View>
             {/* <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}> Open Positions</Text>
@@ -218,13 +218,10 @@ const HomeScreenDetails = ({route, navigation}) => {
             </View> */}
        
 
-            <View style={styles.detailLines}>
-              <Text style={styles.text}>BTC Price:</Text>
-              <Text>${currPrice}</Text>
-            </View>
-            <View style={styles.detailLines}>
-              <Text style={styles.text}>Equity:</Text>
-              <Text> ${equity}</Text>
+            <View style={styles.headlineContainer}>
+              <Text style={styles.headline}>BTC Price: </Text>
+              <Text style={styles.headline}>${currPrice}</Text>
+            
             </View>
             <View style={styles.detailLines}>
               <Text style={styles.text}>Gains: </Text>
@@ -234,6 +231,12 @@ const HomeScreenDetails = ({route, navigation}) => {
               <Text style={styles.text}>Invested:</Text>
               <Text> ${sumInvest}</Text>
             </View>
+            <View style={styles.detailLines}>
+              <Text style={styles.text}>Equity:</Text>
+              <Text> ${equity}</Text>
+            </View>
+         
+            
             <View style={styles.detailLines}>
               <Text style={styles.text}>Satoshies:</Text>
               <Text> {sumSats}</Text>
@@ -245,7 +248,7 @@ const HomeScreenDetails = ({route, navigation}) => {
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionDescription}>
-            Click Position for full details
+            Tap Position to edit
           </Text>
         </View>
 
@@ -255,7 +258,7 @@ const HomeScreenDetails = ({route, navigation}) => {
           </View>
         ) : (
           <ListPosition
-            positions={positions}
+          
             navigation={navigation}
             setPosition={setPosition}
             requestData={requestData}
@@ -306,16 +309,24 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkScheme.lighter,
     //  height: 450,
   },
-  highlight: {
-    fontWeight: '700',
-    fontSize: 40,
+  headlineContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+    
+  },
+  headline: {
+    fontWeight: '600',
+    fontSize: 20,
     color: Colors.darkScheme.primary,
   },
 
   detailsStyle: {
-    width: '55%',
+    width: '65%',
   },
-  detailHighlight: {flexDirection: 'row', justifyContent: 'center'},
+  detailHighlight: {
+    flexDirection: 'row', 
+    justifyContent: 'center'
+  },
   detailLines: {
     flexDirection: 'row',
     justifyContent: 'space-between',

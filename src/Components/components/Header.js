@@ -30,7 +30,7 @@ const Header = ({title, isHome, navigation}) => {
         <View style={headlineView}>
               <Text style={headline}>{title}</Text>
               <Text style={text}>
-          Welcome to Ledger Max, a "bare bones" Crypto ledger. The FIRST thing to do is set a Bitcoin price to make calculations from.
+          Welcome to Ledger Max, a Bitcoin ledger. 
         </Text>
             </View>
           </ImageBackground>
@@ -90,18 +90,19 @@ const homeHeader = StyleSheet.create({
   
   },
   headlineView: {
-    marginTop: 50,
+    marginTop: 120,
   },
   headline: {
-    marginTop: 60,
-    paddingBottom: 0,
+    height: 50,
+   
     fontSize: 30,
     fontWeight: '400',
     textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
   text: {
-    marginTop: 15,
+   
+    
     fontSize: 15,
     fontWeight: '300',
     textAlign: 'center',

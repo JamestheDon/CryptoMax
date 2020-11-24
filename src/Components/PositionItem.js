@@ -44,7 +44,7 @@ const {} = positions
           })
         }>
         <View style={styles.containerStyle}>
-          <View style={styles.listPositionView}>
+          <View style={{flex: .9, borderLeftWidth: 1,  alignItems: 'center'}}>
               {/* <Button
                     type="clear"
                     buttonStyle={{padding: 0}}
@@ -57,7 +57,7 @@ const {} = positions
                     }
                     
                   /> */}
-{/* .toDateString().replace(/^\S+\s/,'') */}
+              {/* .toDateString().replace(/^\S+\s/,'') */}
               <Text style={styles.listPositionText}>
                 {/* <Icon
                   name="calendar-star"
@@ -67,7 +67,7 @@ const {} = positions
                 {new Date(positions.buyDate).toLocaleDateString()}
               </Text>
             </View>
-          <View style={styles.listPositionView}>
+          <View style={{flex: .8, borderLeftWidth: 1,  alignItems: 'flex-end'}}>
             <Text style={styles.listPositionText}>
               {/**(cost) x (1 + ror) */}
               {(
@@ -75,13 +75,13 @@ const {} = positions
                 `${positions.cost}`
               ).toFixed(2) > 0 ? (
                 <>
-                  <Icon
+                  {/* <Icon
                     name="scale-balance"
                     color={Colors.darkScheme.primary}
                     size={20}
-                  />{' '}
+                  /> */}
                   <Text style={styles.gainText}>
-                    $+
+                    +
                     {(
                       ((`${btc$}` - `${positions.price}`) /
                         `${positions.price}`) *
@@ -91,14 +91,14 @@ const {} = positions
                 </>
               ) : (
                 <>
-                  <Icon
+                  {/* <Icon
                     name="scale-balance"
                     color={Colors.darkScheme.primary}
                     size={20}
-                  />
-                  {'  '}
+                  /> */}
+                
                   <Text style={styles.lossText}>
-                    ${''}
+                    
                     {(
                       ((`${btc$}` - `${positions.price}`) /
                         `${positions.price}`) *
@@ -112,27 +112,38 @@ const {} = positions
 
     
 
-          <View style={styles.listPositionView}>
+          <View style={{flex: .8, borderLeftWidth: 1,  alignItems: 'flex-end'}}>
             <Text style={styles.listPositionText}>
-              {' '}
-              <Icon
+         
+              {/* <Icon
                 name="currency-usd"
                 size={20}
                 color={Colors.darkScheme.primary}
-              />
+              /> */}$
               {positions.cost}
             </Text>
           </View>
 
-          <View style={styles.listPositionView}>
+          <View style={{flex: .9, borderLeftWidth: 1,  alignItems: 'flex-end'}}>
             <Text style={styles.listPositionText}>
-              {' '}
-              <Icon
+            
+              {/* <Icon
                 name="currency-btc"
                 size={20}
                 color={Colors.darkScheme.primary}
-              />
+              /> */}$
               {positions.price}
+            </Text>
+          </View>
+          <View style={styles.listPositionView}>
+            <Text style={{fontSize: 13}}>
+            
+              {/* <Icon
+                name="currency-btc"
+                size={20}
+                color={Colors.darkScheme.primary}
+              /> */}
+           {positions.qty}
             </Text>
           </View>
         </View>
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
     //  borderColor: Colors.darkScheme.light,
   },
   containerStyle: {
-    flex: 1,
+   // flex: 1,
     alignSelf: 'stretch',
     flexDirection: 'row',
 
@@ -170,8 +181,14 @@ const styles = StyleSheet.create({
   },
 
   listPositionView: {
+   //height: '100%',
+  
     flex: 1,
-    alignSelf: 'stretch',
+  // alignSelf: 'stretch',
+    borderLeftWidth: 1,
+    
+   alignItems: 'flex-end'
+   
   },
 
   btn: {
@@ -179,9 +196,9 @@ const styles = StyleSheet.create({
   },
 
   listPositionText: {
-    margin: 2,
-    fontSize: 12,
-    //padding: ,
+ 
+    fontSize: 13,
+    padding: 1,
     color: Colors.darkScheme.dark,
   },
   gainText: {

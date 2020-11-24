@@ -12,6 +12,7 @@ import {Button, Input} from 'react-native-elements';
 import {useAddPosition} from '../hooks/positions';
 
 import {Colors} from './index';
+import { parse } from 'react-native-svg';
 
 const AddPosition = ({addPosition, switchView}) => {
   // const [positions, addPosition] = useAddPosition();
@@ -89,7 +90,7 @@ const AddPosition = ({addPosition, switchView}) => {
   return (
     <View stlye={styles.body}>
       <View style={styles.container}>
-        <Text>This is where you enter new Bitcoin Position details.</Text>
+       
         <View style={styles.inputContainer}>
           <Icon
             name="currency-btc"
@@ -111,7 +112,10 @@ const AddPosition = ({addPosition, switchView}) => {
             style={styles.input}
             // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
             value={price}
-            onChangeText={data => setPrice(data)}
+            onChangeText={data => {
+              // let numbers = parseFloat(data).toFixed(2)
+              setPrice(data)
+            }}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -139,7 +143,6 @@ const AddPosition = ({addPosition, switchView}) => {
             onChangeText={data => setCost(data)}
           />
         </View>
-
         <View style={styles.inputContainer}>
           <Icon
             name="chevron-triple-down"
@@ -188,9 +191,11 @@ const AddPosition = ({addPosition, switchView}) => {
             onChangeText={data => setBuyDate(data)}
           />
         </View>
-        <View style={{flexDirection: 'row'}}>
+        
+      </View>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           {testAllNums() === true && testDate(buyDate) === true ? (
-          <View>   
+          
             <Button
               // title="add new!"
               type="outline"
@@ -199,7 +204,7 @@ const AddPosition = ({addPosition, switchView}) => {
               containerStyle={styles.btnContainerSuccess}
               icon={
                 <Icon
-                  name="bank-plus"
+                  name="text-box-plus-outline"
                   size={30}
                   color={Colors.darkScheme.gold}
                 />
@@ -207,9 +212,9 @@ const AddPosition = ({addPosition, switchView}) => {
               onPress={() => addPosition(price, cost, qty, buyDate)}
               //  onPress={() => onSubmit(price, cost, qty, buyDate)}
             />
-            </View>
+          
             ) : (
-            <View>
+          
               <Button
                 // title="add new!"
                 type="outline"
@@ -226,7 +231,7 @@ const AddPosition = ({addPosition, switchView}) => {
                 onPress={() => Alert.alert('Please correct data entries.')}
                 //  onPress={() => onSubmit(price, cost, qty, buyDate)}
               />
-            </View>)}
+            )}
 
               
             <View >
@@ -252,7 +257,6 @@ const AddPosition = ({addPosition, switchView}) => {
             />
           </View>
         </View>
-      </View>
     </View>
   );
 };
@@ -265,25 +269,29 @@ const styles = StyleSheet.create({
     //width: '75%',
   },
   container: {
-    flex: 0.9,
+   // flex: 8.5,
     padding: 10,
+  //  paddingTop: 50,
     alignItems: 'flex-start',
+    justifyContent: 'center',
     //height: '100%',
     backgroundColor: Colors.darkScheme.light,
   },
   btnContainerSuccess: {
     padding: 10,
     // shadowColor: 'rgba(238,130,238, 1)',
-    shadowColor: Colors.darkScheme.gold,
-    shadowOffset: { height: 4, width: 4 }, // IOS
-    shadowOpacity: 1, // IOS
-    shadowRadius: 5, //IOS
+    shadowColor: Colors.darkScheme.grey,
+  shadowOffset: { height: 4, width: 4 }, // IOS
+  shadowOpacity: 1, // IOS
+  shadowRadius: 1, //IOS
   },
   buttonSuccess: {
     width: 150,
     backgroundColor: Colors.darkScheme.primary,  
     borderRightWidth: 2, 
-    borderBottomWidth: 2, 
+    borderBottomWidth: 2,
+    borderTopWidth: 2, 
+    borderLeftWidth: 2,  
     borderColor: Colors.darkScheme.gold
   },
   btnContainerFail: {

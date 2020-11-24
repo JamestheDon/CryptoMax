@@ -46,9 +46,9 @@ export const useAddPosition = () => {
     try {
       const pos = {
         key: generateID(),
-        price: price,
-        cost: cost,
-        qty: qty,
+        price: parseFloat(price).toFixed(2),
+        cost: parseFloat(cost).toFixed(2),
+        qty: parseFloat(qty).toFixed(8),
         buyDate: new Date(buyDate),
         currDate: Date.now(),
       };
@@ -57,7 +57,7 @@ export const useAddPosition = () => {
         return [pos, ...prevState]
       })
       Alert.alert(
-        `Position created at: ${pos.currDate}. The Ledger has now been activated.`,
+        `Position created: ${pos.currDate}. The Ledger has now been activated.`,
       );
     } catch (err) {
       console.log('An ERROR has occured', err);

@@ -130,7 +130,7 @@ const HomeScreen = ({navigation}) => {
       ) : (
         <View style={styles.body}>
            <View style={styles.inputSection}>
-             <Text>#1</Text>
+            
             <Input
               placeholder="10,000.00"
               label="Bitcoin price?"

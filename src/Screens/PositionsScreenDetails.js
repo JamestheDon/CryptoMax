@@ -50,9 +50,9 @@ const PositionsScreenDetails = ({route, navigation}) => {
     try {
       const pos = {
         key: position.key,
-        price: newPrice,
-        cost: newCost,
-        qty: newQty,
+        price: parseFloat(newPrice).toFixed(2),
+        cost: parseFloat(newCost).toFixed(2),
+        qty: parseFloat(newQty).toFixed(8),
         buyDate: new Date(newBuyDate),
         currDate: Date.now()
       };
@@ -62,7 +62,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
       setPosition(prevState => {
         return [pos, ...prevState];
       });
-    // navigation.navigate('Home')
+     navigation.navigate('Home')
       Alert.alert(`Position edited on: ${pos.buyDate}`);
     } catch (err) {
       console.log('An ERROR has occured', err);
@@ -77,19 +77,19 @@ const PositionsScreenDetails = ({route, navigation}) => {
 
   const rateOfReturn = (((btc$ - price) / price) * 100).toFixed(2);
 
-  // const removePosition = async key => {
-  //   try {
-  //     await AsyncStorage.removeItem(key);
-  //     setPosition(prevState => {
-  //       return [prevState.filter(i => i.key != key)]; // remove item from state/list on same screen.
-  //     });
-  //    // setRequestData(new Date());
-  // // navigation.navigate('Home')
-  //     console.log('Position deleted.');
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const removePosition = async key => {
+    try {
+      await AsyncStorage.removeItem(key);
+      setPosition(prevState => {
+        return [prevState.filter(i => i.key != key)]; // remove item from state/list on same screen.
+      });
+     // setRequestData(new Date());
+   navigation.navigate('Home')
+      console.log('Position deleted.');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <View style={styles.screen}>
@@ -105,41 +105,37 @@ const PositionsScreenDetails = ({route, navigation}) => {
         imageStyle={styles.logo}>
           <View >
             <View style={styles.detailsStyle}>
+            
               <View style={styles.sectionContainer}>
-                {/* <Text style={styles.sectionTitle}> Position details</Text> */}
+                  <Icon
+                    name="scale-balance"
+                    color={Colors.darkScheme.gold}
+                    size={40}
+                    style={{marginRight: 6, marginTop: 20}}
+                  />
 
-                {/* <Text>{rOr[0]}</Text> */}
-              </View>
-              <View style={styles.sectionContainer}>
-              <Icon
-                name="scale-balance"
-                color={Colors.darkScheme.gold}
-                size={40}
-                style={{marginRight: 6, marginTop: 20}}
-              />
-
-              {/* <Text>{rOr[0]}</Text> */}
+                  {/* <Text>{rOr[0]}</Text> */}
               </View>
 
               <View style={styles.detailLines}>
               <Text style={styles.text}>Dollar gain:</Text>
-              <Text>${dollarGain}</Text>
+              <Text>+${dollarGain}</Text>
               </View>
-              <View style={styles.detailLines}>
+              {/* <View style={styles.detailLines}>
               <Text style={styles.text}>Satoshies:</Text>
               <Text> {qty}</Text>
-              </View>
-              <View style={styles.detailLines}>
+              </View> */}
+              {/* <View style={styles.detailLines}>
               <Text style={styles.text}>Dollar cost: </Text>
               <Text>${cost}</Text>
-              </View>
-              <View style={styles.detailLines}>
+              </View> */}
+              {/* <View style={styles.detailLines}>
               <Text style={styles.text}>Btc purchase price:</Text>
               <Text> ${price}</Text>
-              </View>
+              </View> */}
               <View style={styles.detailLines}>
               <Text style={styles.text}>Rate of Return</Text>
-              <Text> {rateOfReturn}</Text>
+              <Text> {rateOfReturn}%</Text>
             </View>
           </View>
         </View>
@@ -149,7 +145,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
         <View style={styles.container}>
             <View style={styles.sectionDivider}>
               <Text style={styles.sectionDescription}>
-                Edit details & update changes.
+                Edit or delete details.
               </Text>
             </View>
             <View style={styles.inputContainer}>
@@ -236,35 +232,37 @@ const PositionsScreenDetails = ({route, navigation}) => {
             />
           </View>
           <View style={styles.buttonRow}>
-          <View style={styles.btn}>
-            <Text style={{color: '#C0392B', padding: 5}}> Update changes</Text>
-            <Button
-              // title="add new!"
-              type="outline"
-              titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
-              buttonStyle={styles.buttonSuccess}
-              containerStyle={styles.btnContainerSuccess}
-              icon={
-                <Icon
-                  name="check-outline"
-                  size={30}
-                  color={Colors.darkScheme.gold}
-                />
-              }
-              onPress={() =>
-                editPosition(newPrice, newCost, newQty, newBuyDate)
-              }
-            />
-          </View>
-          <Button
-            buttonStyle={{padding: 0, margin: 0}}
-            titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
-            title="delete"
-            type="clear"
-            // icon={<Icon name="delete" size={30} color="red" />}
-            onPress={() => removePosition(position.key)}
-          />
-        </View>
+            {/* <Text style={{color: '#C0392B', padding: 5}}> Update changes</Text> */}
+              <Button
+                // title="add new!"
+                type="outline"
+               // titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
+                buttonStyle={styles.buttonSuccess}
+                containerStyle={styles.btnContainerSuccess}
+                icon={
+                  <Icon
+                    name="text-box-plus-outline"
+                    size={30}
+                    color={Colors.darkScheme.gold}
+                  />
+                }
+                onPress={() =>
+                  editPosition(newPrice, newCost, newQty, newBuyDate)
+                }
+              />
+              <Button
+                buttonStyle={styles.buttonFail}
+                containerStyle={styles.btnContainerFail}
+              // titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
+              // title="delete"
+                type="clear"
+                icon={<Icon name="text-box-remove-outline" size={30} color="red" />}
+                onPress={() => 
+                  removePosition(position.key)
+                
+                }
+              />
+            </View>
         </View>
     
       </View>
@@ -303,10 +301,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     //  marginBottom: -75,
   },
-  detailsStyle: {
-    width: '75%',
-    
-  },
+ 
   sectionContainer: {
     //  marginTop: 32,
     padding: 1,
@@ -331,13 +326,16 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 0.9,
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+   // padding: 10,
     //  justifyContent: 'space-evenly',
     backgroundColor: Colors.darkScheme.light,
   },
   buttonRow: {
     flexDirection: 'row', 
-    justifyContent: 'center'},
+   justifyContent: 'center'
+  },
   inputContainer: {
     flexDirection: 'row',
     //flex: 1,
@@ -357,38 +355,64 @@ const styles = StyleSheet.create({
   btnContainerSuccess: {
     padding: 10,
     // shadowColor: 'rgba(238,130,238, 1)',
-    shadowColor: Colors.darkScheme.gold,
+    shadowColor: Colors.darkScheme.grey,
     shadowOffset: { height: 4, width: 4 }, // IOS
     shadowOpacity: 1, // IOS
-    shadowRadius: 5, //IOS
+    shadowRadius: 1, //IOS
   },  
   buttonSuccess: {
     width: 150,
     backgroundColor: Colors.darkScheme.primary,  
     borderRightWidth: 2, 
-    borderBottomWidth: 2, 
+    borderBottomWidth: 2,
+    borderTopWidth: 2, 
+    borderLeftWidth: 2,  
     borderColor: Colors.darkScheme.gold
   },
+  btnContainerFail:{
+  
+    padding: 10,
+    shadowColor: Colors.darkScheme.grey,
+    shadowOffset: { height: 4, width: 4 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+  
+  
+  },
+  buttonFail: {  
+    width: 150,   
+    borderRightWidth: 2, 
+    borderBottomWidth: 2, 
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: Colors.darkScheme.red,
+    backgroundColor: Colors.darkScheme.primary
+  },
+
   sectionDivider: {
-    backgroundColor: Colors.darkScheme.lighter,
-   
-    width: '100%',
+    backgroundColor: Colors.darkScheme.primary,
+ height: 25,
+   // width: '100%',
  alignItems: 'center',
- marginBottom: 10
+ margin: 10
  
   },
   sectionDescription: {
-    marginTop: 8,
+    paddingTop: 3,
     fontSize: 15,
     fontWeight: '500',
-    color: Colors.darkScheme.primary,
+    color: Colors.white,
   },
   ////////////////////
   detailLines: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+ 
   },
+  detailsStyle: {
+  width: 200
   
+  },
 
   ////////////////////////////////
 

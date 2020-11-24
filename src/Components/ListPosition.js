@@ -78,29 +78,26 @@ const ListPosition = ({  navigation, btc$}) => {
   //     console.log(e);
   //   }
   // };
-
+  
   return (
     <View style={styles.viewContainer}>
       
       <View
-        style={{
-          flexDirection: 'row',
-          //  alignSelf: 'stretch',
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-        }}>
+        style={styles.column}>
           
-        <Text style={styles.text}>Purchase Date</Text>
-        <Text style={styles.text}>Dollar gain</Text>
-        <Text style={styles.text}>Dollar Cost</Text>
-        <Text style={styles.text}>Btc Price</Text>
+        <Text style={styles.text}>Date</Text>
+        <Text style={styles.text}>Gain</Text>
+        <Text style={styles.text}>Cost</Text>
+        <Text style={styles.text}>Price</Text>
+        <Text style={styles.text}>Sats</Text>
       </View>
       <FlatList
         data={sortedList}
         keyExtractor={position => position.key}
         renderItem={({item}) => {
           return (
-          // <Text> Things will render here. {item.key}</Text>
+         <View>
+     
             <PositionItem
               key={item.key}
               positions={item}
@@ -108,6 +105,7 @@ const ListPosition = ({  navigation, btc$}) => {
               setPosition={setPosition}
               btc$={btc$}
             />
+            </View>
           );
         }}
       />
@@ -132,12 +130,18 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     // borderColor: Colors.darkScheme.darker,
   },
+  column: {
+    flexDirection: 'row',
+
+   //  alignSelf: 'stretch',
+ //   alignItems: 'flex-start',
+    justifyContent: 'space-around',
+    backgroundColor: Colors.darkScheme.primary
+  },
   text: {
-    padding: 10,
-    paddingLeft: 5,
-    paddingRight: 5,
-    // margin: 2,
-    fontWeight: '200',
+    textAlign: 'left',
+  color: Colors.white,
+     fontWeight: '400',
   },
 });
 

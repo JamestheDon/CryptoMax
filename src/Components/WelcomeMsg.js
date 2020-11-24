@@ -65,9 +65,9 @@ console.log('ALWAYS ANOTHER CONSOLE LOg', positions)
                   containerStyle={styles.btnContainerSuccess}
                   icon={
                     <Icon
-                      name="bank-plus"
+                      name="text-box-plus-outline"
                       size={30}
-                      color={Colors.darkScheme.secondary}
+                      color={Colors.darkScheme.gold}
                     />
                   }
                   // onPress={() => getPosition(item.key)}
@@ -122,9 +122,9 @@ console.log('ALWAYS ANOTHER CONSOLE LOg', positions)
                   containerStyle={styles.btnContainerSuccess}
                   icon={
                     <Icon
-                    name="notebook-multiple"
+                    name="text-box-search-outline"
                     size={30}
-                    color={Colors.darkScheme.secondary}
+                    color={Colors.darkScheme.gold}
                   />
                   }
                   // onPress={() => getPosition(item.key)}
@@ -218,18 +218,20 @@ justifyContent: 'center',
 btnContainerSuccess: {
   
   padding: 10,
-  shadowColor: 'rgba(238,130,238, 1)',
+  shadowColor: Colors.darkScheme.grey,
   shadowOffset: { height: 4, width: 4 }, // IOS
   shadowOpacity: 1, // IOS
-  shadowRadius: 5, //IOS
+  shadowRadius: 1, //IOS
 },
   buttonSuccess: {
    
     width: 150,
     backgroundColor: Colors.darkScheme.primary,  
     borderRightWidth: 2, 
-    borderBottomWidth: 2, 
-    borderColor: Colors.darkScheme.secondary
+    borderBottomWidth: 2,
+    borderTopWidth: 2, 
+    borderLeftWidth: 2,  
+    borderColor: Colors.darkScheme.gold
   },
   btnContainerFail:{
   
@@ -246,7 +248,8 @@ btnContainerSuccess: {
     borderRightWidth: 2, 
     borderBottomWidth: 2, 
     borderColor: Colors.darkScheme.red,
-    backgroundColor: Colors.darkScheme.lighter}
+    backgroundColor: Colors.darkScheme.light
+  }
 });
 
 export default WelcomeMsg;
