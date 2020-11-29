@@ -18,23 +18,20 @@ const Header = ({title, isHome, navigation}) => {
   const {background, logo, text, headline, headlineView} = homeHeader;
 
   return (
-  <>
+    <>
       {isHome ? (
-        <SafeAreaView style={{flex: 1, 
-          justifyContent: 'center'}}>
+        <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
           <ImageBackground
             accessibilityRole={'image'}
             source={require('../../images/Icon-trans.png')}
             style={background}
             imageStyle={logo}>
-        <View style={headlineView}>
+            <View style={headlineView}>
               <Text style={headline}>{title}</Text>
-              <Text style={text}>
-          Welcome to Ledger Max, a Bitcoin ledger. 
-        </Text>
+              <Text style={text}>Welcome to Ledger Max, a Bitcoin ledger.</Text>
             </View>
           </ImageBackground>
-     </SafeAreaView>
+        </SafeAreaView>
       ) : (
         <SafeAreaView style={styles.background}>
           <View
@@ -77,32 +74,28 @@ const homeHeader = StyleSheet.create({
     resizeMode: 'cover',
     width: '100%',
     height: '100%',
-  
+    marginLeft: 6,
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-  
+
     marginTop: 100,
-    
-  
   },
   headlineView: {
     marginTop: 120,
   },
   headline: {
     height: 50,
-   
+
     fontSize: 30,
     fontWeight: '400',
     textAlign: 'center',
     color: Colors.darkScheme.primary,
   },
   text: {
-   
-    
     fontSize: 15,
     fontWeight: '300',
     textAlign: 'center',
@@ -113,10 +106,10 @@ const homeHeader = StyleSheet.create({
 const styles = StyleSheet.create({
   background: {
     alignContent: 'space-between',
-   // marginBottom: 50,
-   // padding: 10,
+    // marginBottom: 50,
+    // padding: 10,
     height: '11%',
-  
+
     // flex: 0.4,
     backgroundColor: Colors.darkScheme.dark,
   },
@@ -124,8 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#596469',
   },
   icon: {
-  //  margin: 10,
-padding: 5
+    //  margin: 10,
+    padding: 5,
   },
   text: {
     color: 'white',

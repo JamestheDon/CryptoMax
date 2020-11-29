@@ -188,7 +188,7 @@ const HomeScreenDetails = ({route, navigation}) => {
 
   return (
     <View style={styles.screen}>
-      <Header title="Details" isHome={false} navigation={navigation} />
+      <Header title="Portfolio Details" isHome={false} navigation={navigation} />
       <ImageBackground
         accessibilityRole={'image'}
         source={require('../images/Icon-trans.png')}
@@ -206,12 +206,12 @@ const HomeScreenDetails = ({route, navigation}) => {
         ) : (
           <View style={styles.detailsStyle}>
                  <View style={styles.sectionContainer}>
-              {/* <Icon
+              <Icon
               style={styles.icon}
                 name="scale-balance"
                 color={Colors.darkScheme.gold}
                 size={40}
-              /> */}
+              />
 
             
             </View>
@@ -254,7 +254,9 @@ const HomeScreenDetails = ({route, navigation}) => {
 
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
+          
           <Text style={styles.sectionDescription}>
+            
             Tap Position to edit
           </Text>
         </View>
@@ -292,8 +294,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkScheme.ligher,
   },
   icon: {
-    marginTop: 20,
-    marginRight: 6
+    marginTop: 30,
+    marginLeft: 4
   },
   logo: {
     //opacity: 0.5,
@@ -307,7 +309,7 @@ const styles = StyleSheet.create({
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-
+    marginLeft: 6,
     marginTop: 20,
     //  marginBottom: -75,
   },

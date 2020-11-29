@@ -50,14 +50,14 @@ export const useAddPosition = () => {
         cost: parseFloat(cost).toFixed(2),
         qty: parseFloat(qty).toFixed(8),
         buyDate: new Date(buyDate),
-        currDate: Date.now(),
+        currDate: new Date(),
       };
       await AsyncStorage.setItem(pos.key, JSON.stringify(pos));
       setPosition(prevState => {
         return [pos, ...prevState]
       })
       Alert.alert(
-        `Position created: ${pos.currDate}. The Ledger has now been activated.`,
+        `Position created at: ${pos.currDate.toGMTString()} The Ledger has now been activated.`,
       );
     } catch (err) {
       console.log('An ERROR has occured', err);

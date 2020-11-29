@@ -1,18 +1,13 @@
 'use strict';
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Alert,
-  Text,
-} from 'react-native';
+import {View, StyleSheet, Alert, Text} from 'react-native';
 
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {Button, Input} from 'react-native-elements';
 import {useAddPosition} from '../hooks/positions';
 
 import {Colors} from './index';
-import { parse } from 'react-native-svg';
+import {parse} from 'react-native-svg';
 
 const AddPosition = ({addPosition, switchView}) => {
   // const [positions, addPosition] = useAddPosition();
@@ -49,27 +44,23 @@ const AddPosition = ({addPosition, switchView}) => {
    *
    */
 
-  
-
   // const dateRegex = /\d{1,2}[/]\d{1,2}[/]\d{2,4}/;
   // const currencyRegex = /^[0-9]\d*(((,\d{3}){1})?((\.\d{0,2})?(\.\d{8})?))$/;
 
   const testAllNums = () => {
     if (testNums(price) && testNums(cost) && testNums(qty) === true) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
-    
-  }
+  };
 
   const testNums = (num) => {
-    
     const priceRegex = /^[0-9]\d*(((,\d{3}){1})?((\.\d{0,8})?(\.\d{8})?))$/;
 
     return priceRegex.test(num);
   };
-  const testDate = date => {
+  const testDate = (date) => {
     // const num = cost;
     const dateRegex = /\d{1,2}[/]\d{1,2}[/]\d{4}/;
 
@@ -79,8 +70,6 @@ const AddPosition = ({addPosition, switchView}) => {
   // validateNums = data => {};
 
   const onSubmit = () => {
-   
-
     console.log('Buy Date', dateRegex.test(buyDate));
     console.log('Price', currencyRegex.test(price));
     console.log('Cost', currencyRegex.test(cost));
@@ -90,7 +79,6 @@ const AddPosition = ({addPosition, switchView}) => {
   return (
     <View stlye={styles.body}>
       <View style={styles.container}>
-       
         <View style={styles.inputContainer}>
           <Icon
             name="currency-btc"
@@ -112,9 +100,9 @@ const AddPosition = ({addPosition, switchView}) => {
             style={styles.input}
             // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
             value={price}
-            onChangeText={data => {
+            onChangeText={(data) => {
               // let numbers = parseFloat(data).toFixed(2)
-              setPrice(data)
+              setPrice(data);
             }}
           />
         </View>
@@ -140,7 +128,7 @@ const AddPosition = ({addPosition, switchView}) => {
             //  style={styles.input}
             // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
             value={cost}
-            onChangeText={data => setCost(data)}
+            onChangeText={(data) => setCost(data)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -164,7 +152,7 @@ const AddPosition = ({addPosition, switchView}) => {
             //  style={styles.input}
             // leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
             value={qty}
-            onChangeText={data => setQty(data)}
+            onChangeText={(data) => setQty(data)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -188,75 +176,64 @@ const AddPosition = ({addPosition, switchView}) => {
             //style={styles.input}
             // leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
             value={buyDate}
-            onChangeText={data => setBuyDate(data)}
+            onChangeText={(data) => setBuyDate(data)}
           />
         </View>
-        
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          {testAllNums() === true && testDate(buyDate) === true ? (
-          
-            <Button
-              // title="add new!"
-              type="outline"
-              titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
-              buttonStyle={styles.buttonSuccess}
-              containerStyle={styles.btnContainerSuccess}
-              icon={
-                <Icon
-                  name="text-box-plus-outline"
-                  size={30}
-                  color={Colors.darkScheme.gold}
-                />
-              }
-              onPress={() => addPosition(price, cost, qty, buyDate)}
-              //  onPress={() => onSubmit(price, cost, qty, buyDate)}
-            />
-          
-            ) : (
-          
-              <Button
-                // title="add new!"
-                type="outline"
-                titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
-                buttonStyle={styles.buttonFail}
-                containerStyle={styles.btnContainerFail}
-                icon={
-                  <Icon
-                  name="alert-circle-outline"
-                    size={30}
-                    color={Colors.darkScheme.red}
-                  />
-                }
-                onPress={() => Alert.alert('Please correct data entries.')}
-                //  onPress={() => onSubmit(price, cost, qty, buyDate)}
+        {testAllNums() === true && testDate(buyDate) === true ? (
+          <Button
+            title="Add New"
+            type="outline"
+            titleStyle={{color: Colors.darkScheme.gold, marginLeft: 5}}
+            buttonStyle={styles.buttonSuccess}
+            containerStyle={styles.btnContainerSuccess}
+            icon={
+              <Icon
+                name="text-box-plus-outline"
+                size={30}
+                color={Colors.darkScheme.gold}
               />
-            )}
+            }
+            onPress={() => addPosition(price, cost, qty, buyDate)}
+            //  onPress={() => onSubmit(price, cost, qty, buyDate)}
+          />
+        ) : (
+          <Button
+            title="Inactive"
+            type="outline"
+            titleStyle={{color: Colors.darkScheme.red, marginLeft: 5}}
+            buttonStyle={styles.buttonFail}
+            containerStyle={styles.btnContainerFail}
+            icon={
+              <Icon
+                name="alert-circle-outline"
+                size={30}
+                color={Colors.darkScheme.red}
+              />
+            }
+            onPress={() => Alert.alert('Please correct data entries.')}
+            //  onPress={() => onSubmit(price, cost, qty, buyDate)}
+          />
+        )}
 
-              
-            <View >
-            {/* <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
+        <View>
+          {/* <Text style={{color: Colors.darkScheme.primary, padding: 5}}>
               {' '}
               back ->{' '}
             </Text> */}
-            <Button
-              type="outline"
-              // title="Add new postions"
-              titleStyle={{color: Colors.darkScheme.primary}}
-              buttonStyle={styles.buttonSuccess}
-              containerStyle={styles.btnContainerSuccess}
-              icon={
-                <Icon
-                  name="bank"
-                  size={30}
-                  color={Colors.darkScheme.gold}
-                />
-              }
-              // onPress={() => getPosition(item.key)}
-              onPress={() => switchView()}
-            />
-          </View>
+          <Button
+            type="outline"
+            title="Home"
+            titleStyle={{color: Colors.darkScheme.gold, marginLeft: 5}}
+            buttonStyle={styles.buttonSuccess}
+            containerStyle={styles.btnContainerSuccess}
+            icon={<Icon name="bank" size={30} color={Colors.darkScheme.gold} />}
+            // onPress={() => getPosition(item.key)}
+            onPress={() => switchView()}
+          />
         </View>
+      </View>
     </View>
   );
 };
@@ -269,9 +246,9 @@ const styles = StyleSheet.create({
     //width: '75%',
   },
   container: {
-   // flex: 8.5,
+    // flex: 8.5,
     padding: 10,
-  //  paddingTop: 50,
+    //  paddingTop: 50,
     alignItems: 'flex-start',
     justifyContent: 'center',
     //height: '100%',
@@ -281,32 +258,32 @@ const styles = StyleSheet.create({
     padding: 10,
     // shadowColor: 'rgba(238,130,238, 1)',
     shadowColor: Colors.darkScheme.grey,
-  shadowOffset: { height: 4, width: 4 }, // IOS
-  shadowOpacity: 1, // IOS
-  shadowRadius: 1, //IOS
+    shadowOffset: {height: 4, width: 4}, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
   },
   buttonSuccess: {
     width: 150,
-    backgroundColor: Colors.darkScheme.primary,  
-    borderRightWidth: 2, 
+    backgroundColor: Colors.darkScheme.primary,
+    borderRightWidth: 2,
     borderBottomWidth: 2,
-    borderTopWidth: 2, 
-    borderLeftWidth: 2,  
-    borderColor: Colors.darkScheme.gold
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: Colors.darkScheme.gold,
   },
   btnContainerFail: {
     padding: 10,
     shadowColor: Colors.darkScheme.red,
-    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOffset: {height: 1, width: 1}, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 3, //IOS
   },
   buttonFail: {
-    width: 150,   
-    borderRightWidth: 2, 
-    borderBottomWidth: 2, 
+    width: 150,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
     borderColor: Colors.darkScheme.red,
-    backgroundColor: Colors.darkScheme.light
+    backgroundColor: Colors.darkScheme.light,
   },
   inputContainerStyleSuccess: {
     borderWidth: 1,

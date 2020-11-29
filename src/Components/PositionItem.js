@@ -10,12 +10,12 @@ import {Colors} from './';
 
 const PositionItem = ({positions, navigation, setPosition, btc$}) => {
   // console.log('right here biah', positions);
-const {} = positions
-  const removePosition = async key => {
+  const {} = positions;
+  const removePosition = async (key) => {
     try {
       await AsyncStorage.removeItem(key);
-      setPosition(prevState => {
-        return prevState.filter(i => i.key != key);
+      setPosition((prevState) => {
+        return prevState.filter((i) => i.key != key);
       });
       console.log('Position deleted.');
     } catch (e) {
@@ -23,16 +23,16 @@ const {} = positions
     }
   };
 
-//   dateTimeReviver = function (key, value) {
-//     var a;
-//     if (typeof value === 'string') {
-//         a = /\/Date\((\d*)\)\//.exec(value);
-//         if (a) {
-//             return new Date(+a[1]);
-//         }
-//     }
-//     return value;
-// }
+  //   dateTimeReviver = function (key, value) {
+  //     var a;
+  //     if (typeof value === 'string') {
+  //         a = /\/Date\((\d*)\)\//.exec(value);
+  //         if (a) {
+  //             return new Date(+a[1]);
+  //         }
+  //     }
+  //     return value;
+  // }
 
   return (
     <View style={styles.listPosition} key={positions.key}>
@@ -44,8 +44,8 @@ const {} = positions
           })
         }>
         <View style={styles.containerStyle}>
-          <View style={{flex: .9, borderLeftWidth: 1,  alignItems: 'center'}}>
-              {/* <Button
+          <View style={{flex: 0.9, borderLeftWidth: 1, alignItems: 'center'}}>
+            {/* <Button
                     type="clear"
                     buttonStyle={{padding: 0}}
                     icon={<Icon name="menu-right" size={30} color="green" />}
@@ -57,17 +57,17 @@ const {} = positions
                     }
                     
                   /> */}
-              {/* .toDateString().replace(/^\S+\s/,'') */}
-              <Text style={styles.listPositionText}>
-                {/* <Icon
+            {/* .toDateString().replace(/^\S+\s/,'') */}
+            <Text style={styles.listPositionText}>
+              {/* <Icon
                   name="calendar-star"
                   size={20}
                   color={Colors.darkScheme.primary}
                 /> */}
-                {new Date(positions.buyDate).toLocaleDateString()}
-              </Text>
-            </View>
-          <View style={{flex: .8, borderLeftWidth: 1,  alignItems: 'flex-end'}}>
+              {new Date(positions.buyDate).toLocaleDateString()}
+            </Text>
+          </View>
+          <View style={{flex: 0.8, borderLeftWidth: 1, alignItems: 'flex-end'}}>
             <Text style={styles.listPositionText}>
               {/**(cost) x (1 + ror) */}
               {(
@@ -96,9 +96,8 @@ const {} = positions
                     color={Colors.darkScheme.primary}
                     size={20}
                   /> */}
-                
+
                   <Text style={styles.lossText}>
-                    
                     {(
                       ((`${btc$}` - `${positions.price}`) /
                         `${positions.price}`) *
@@ -110,40 +109,35 @@ const {} = positions
             </Text>
           </View>
 
-    
-
-          <View style={{flex: .8, borderLeftWidth: 1,  alignItems: 'flex-end'}}>
+          <View style={{flex: 0.8, borderLeftWidth: 1, alignItems: 'flex-end'}}>
             <Text style={styles.listPositionText}>
-         
               {/* <Icon
                 name="currency-usd"
                 size={20}
                 color={Colors.darkScheme.primary}
-              /> */}$
-              {positions.cost}
+              /> */}
+              ${positions.cost}
             </Text>
           </View>
 
-          <View style={{flex: .9, borderLeftWidth: 1,  alignItems: 'flex-end'}}>
+          <View style={{flex: 0.9, borderLeftWidth: 1, alignItems: 'flex-end'}}>
             <Text style={styles.listPositionText}>
-            
-              {/* <Icon
-                name="currency-btc"
-                size={20}
-                color={Colors.darkScheme.primary}
-              /> */}$
-              {positions.price}
-            </Text>
-          </View>
-          <View style={styles.listPositionView}>
-            <Text style={{fontSize: 13}}>
-            
               {/* <Icon
                 name="currency-btc"
                 size={20}
                 color={Colors.darkScheme.primary}
               /> */}
-           {positions.qty}
+              ${positions.price}
+            </Text>
+          </View>
+          <View style={styles.listPositionView}>
+            <Text style={{fontSize: 13}}>
+              {/* <Icon
+                name="currency-btc"
+                size={20}
+                color={Colors.darkScheme.primary}
+              /> */}
+              {positions.qty}
             </Text>
           </View>
         </View>
@@ -163,7 +157,7 @@ const styles = StyleSheet.create({
     //  borderColor: Colors.darkScheme.light,
   },
   containerStyle: {
-   // flex: 1,
+    // flex: 1,
     alignSelf: 'stretch',
     flexDirection: 'row',
 
@@ -181,14 +175,13 @@ const styles = StyleSheet.create({
   },
 
   listPositionView: {
-   //height: '100%',
-  
+    //height: '100%',
+
     flex: 1,
-  // alignSelf: 'stretch',
+    // alignSelf: 'stretch',
     borderLeftWidth: 1,
-    
-   alignItems: 'flex-end'
-   
+
+    alignItems: 'flex-end',
   },
 
   btn: {
@@ -196,7 +189,6 @@ const styles = StyleSheet.create({
   },
 
   listPositionText: {
- 
     fontSize: 13,
     padding: 1,
     color: Colors.darkScheme.dark,

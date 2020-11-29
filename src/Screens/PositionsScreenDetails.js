@@ -1,11 +1,6 @@
 'use strict';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
- ImageBackground
-} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {Header, Colors} from '../Components/';
 import {Button, Input} from 'react-native-elements';
 import {useAddPosition} from '../hooks/positions';
@@ -21,7 +16,7 @@ import {Alert} from 'react-native';
  *  route: position key } param0
  *
  * @todo add Equity detail
- *      
+ *
  *            @todo style component
  *                @todo if pos === 0 ? "open new positions" : ListPositions
  *            @todo sumPos currState === newState ? dont update : update state
@@ -39,7 +34,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
   const [newCost, setCost] = useState(position.cost);
   const [newQty, setQty] = useState(position.qty);
   const [newBuyDate, setBuyDate] = useState(
-    new Date(buyDate).toLocaleDateString()
+    new Date(buyDate).toLocaleDateString(),
   );
 
   useEffect(() => {
@@ -54,15 +49,15 @@ const PositionsScreenDetails = ({route, navigation}) => {
         cost: parseFloat(newCost).toFixed(2),
         qty: parseFloat(newQty).toFixed(8),
         buyDate: new Date(newBuyDate),
-        currDate: Date.now()
+        currDate: Date.now(),
       };
       await AsyncStorage.setItem(position.key, JSON.stringify(pos));
 
       //  console.log('what is wrong here??=>>', JSON.stringify(pos));
-      setPosition(prevState => {
+      setPosition((prevState) => {
         return [pos, ...prevState];
       });
-     navigation.navigate('Home')
+      navigation.navigate('Home');
       Alert.alert(`Position edited on: ${pos.buyDate}`);
     } catch (err) {
       console.log('An ERROR has occured', err);
@@ -77,14 +72,14 @@ const PositionsScreenDetails = ({route, navigation}) => {
 
   const rateOfReturn = (((btc$ - price) / price) * 100).toFixed(2);
 
-  const removePosition = async key => {
+  const removePosition = async (key) => {
     try {
       await AsyncStorage.removeItem(key);
-      setPosition(prevState => {
-        return [prevState.filter(i => i.key != key)]; // remove item from state/list on same screen.
+      setPosition((prevState) => {
+        return [prevState.filter((i) => i.key != key)]; // remove item from state/list on same screen.
       });
-     // setRequestData(new Date());
-   navigation.navigate('Home')
+      // setRequestData(new Date());
+      navigation.navigate('Home');
       console.log('Position deleted.');
     } catch (e) {
       console.log(e);
@@ -93,100 +88,115 @@ const PositionsScreenDetails = ({route, navigation}) => {
 
   return (
     <View style={styles.screen}>
-      <Header
-        title="Position Details"
-        isHome={false}
-        navigation={navigation}
-      />
+      <Header title="Position Details" isHome={false} navigation={navigation} />
       <ImageBackground
         accessibilityRole={'image'}
         source={require('../images/Icon-trans.png')}
         style={styles.background}
         imageStyle={styles.logo}>
-          <View >
-            <View style={styles.detailsStyle}>
-            
-              <View style={styles.sectionContainer}>
-                  <Icon
-                    name="scale-balance"
-                    color={Colors.darkScheme.gold}
-                    size={40}
-                    style={{marginRight: 6, marginTop: 20}}
-                  />
+        <View>
+          <View style={styles.detailsStyle}>
+            <View style={styles.sectionContainer}>
+              <Icon
+                name="scale-balance"
+                color={Colors.darkScheme.gold}
+                size={40}
+                style={{marginLeft: 4, marginTop: 20}}
+              />
 
-                  {/* <Text>{rOr[0]}</Text> */}
-              </View>
-
-              <View style={styles.detailLines}>
-              <Text style={styles.text}>Dollar gain:</Text>
-              <Text>+${dollarGain}</Text>
-              </View>
-              {/* <View style={styles.detailLines}>
+              {/* <Text>{rOr[0]}</Text> */}
+            </View>
+            <>
+              {dollarGain > 0 ? (
+                <View style={styles.detailLines}>
+                  <Text style={styles.text}>Dollar gain:</Text>
+                  <Text>+${dollarGain}</Text>
+                </View>
+              ) : (
+                <View style={styles.detailLines}>
+                  <Text style={styles.text}>Dollar gain:</Text>
+                  {/** REGEX replace dash with blank space if negative yeild */}
+                  <Text>-${dollarGain.replace(/-/g, '')}</Text>
+                </View>
+              )}
+            </>
+            <>
+              {rateOfReturn > 0 ? (
+                <View style={styles.detailLines}>
+                  <Text style={styles.text}>Rate of return:</Text>
+                  <Text>+{rateOfReturn}%</Text>
+                </View>
+              ) : (
+                <View style={styles.detailLines}>
+                  <Text style={styles.text}>Dollar gain:</Text>
+                  {/** REGEX replace dash with blank space if negative yeild */}
+                  <Text>-{rateOfReturn.replace(/-/g, '')}%</Text>
+                </View>
+              )}
+            </>
+            {/* <View style={styles.detailLines}>
               <Text style={styles.text}>Satoshies:</Text>
               <Text> {qty}</Text>
               </View> */}
-              {/* <View style={styles.detailLines}>
+            {/* <View style={styles.detailLines}>
               <Text style={styles.text}>Dollar cost: </Text>
               <Text>${cost}</Text>
               </View> */}
-              {/* <View style={styles.detailLines}>
+            {/* <View style={styles.detailLines}>
               <Text style={styles.text}>Btc purchase price:</Text>
               <Text> ${price}</Text>
               </View> */}
-              <View style={styles.detailLines}>
-              <Text style={styles.text}>Rate of Return</Text>
-              <Text> {rateOfReturn}%</Text>
-            </View>
+           
           </View>
         </View>
       </ImageBackground>
- 
+
       <View style={styles.body}>
         <View style={styles.container}>
-            <View style={styles.sectionDivider}>
-              <Text style={styles.sectionDescription}>
-                Edit or delete details.
-              </Text>
-            </View>
-            <View style={styles.inputContainer}>
-              <Icon
-                name="currency-btc"
-                size={24}
-                color={Colors.darkScheme.primary}
-              />
-              <Input
-                clearButtonMode="always"
-                placeholder={position.price}
-                label="BTC Purchase Price"
-                labelStyle={styles.inputLabel}
-                placeholderTextColor={Colors.darkScheme.light}
-                //  containerStyle={styles.containerStyle}
-                inputContainerStyle={styles.inputContainerStyle}
-                // style={styles.input}
-                // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
-                value={newPrice}
-                onChangeText={data => setPrice(data)}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Icon
-                name="currency-usd"
-                size={24}
-                color={Colors.darkScheme.primary}
-              />
-              <Input
-                clearButtonMode="always"
-                placeholder={position.cost}
-                label="Amount Invested"
-                labelStyle={styles.inputLabel}
-                placeholderTextColor={Colors.darkScheme.light}
-                //  containerStyle={styles.containerStyle}
-                inputContainerStyle={styles.inputContainerStyle}
-                //  style={styles.input}
-                // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
-                value={newCost}
-                onChangeText={data => setCost(data)}
-              />
+          <View style={styles.sectionDivider}>
+            <Text style={styles.sectionDescription}>
+              Edit or delete details.
+            </Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon
+              name="currency-btc"
+              size={24}
+              color={Colors.darkScheme.primary}
+            />
+            <Input
+              clearButtonMode="always"
+              placeholder={position.price}
+              label="BTC Purchase Price"
+              labelStyle={styles.inputLabel}
+              placeholderTextColor={Colors.darkScheme.light}
+              //  containerStyle={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              // style={styles.input}
+              // leftIcon={<Icon name="currency-btc" size={24} color="black" />}
+              value={newPrice}
+              onChangeText={(data) => setPrice(data)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon
+              name="currency-usd"
+              size={24}
+              color={Colors.darkScheme.primary}
+            />
+            <Input
+              clearButtonMode="always"
+              placeholder={position.cost}
+              label="Amount Invested"
+              labelStyle={styles.inputLabel}
+              placeholderTextColor={Colors.darkScheme.light}
+              //  containerStyle={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              //  style={styles.input}
+              // leftIcon={<Icon name="currency-usd" size={24} color="black" />}
+              value={newCost}
+              onChangeText={(data) => setCost(data)}
+            />
           </View>
 
           <View style={styles.inputContainer}>
@@ -206,7 +216,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
               //  style={styles.input}
               // leftIcon={<Icon name="chevron-triple-down" size={24} color="black" />}
               value={newQty}
-              onChangeText={data => setQty(data)}
+              onChangeText={(data) => setQty(data)}
             />
           </View>
 
@@ -216,7 +226,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
               size={24}
               color={Colors.darkScheme.primary}
             />
-              {/* .toDateString().replace(/^\S+\s/,'') */}
+            {/* .toDateString().replace(/^\S+\s/,'') */}
             <Input
               clearButtonMode="always"
               placeholder={new Date(buyDate).toLocaleDateString()}
@@ -226,45 +236,47 @@ const PositionsScreenDetails = ({route, navigation}) => {
               //  containerStyle={styles.containerStyle}
               inputContainerStyle={styles.inputContainerStyle}
               //style={styles.input}
-             // leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
+              // leftIcon={<Icon name="calendar-clock" size={24} color="black" />}
               value={newBuyDate}
-              onChangeText={data => setBuyDate(data)}
+              onChangeText={(data) => setBuyDate(data)}
             />
           </View>
           <View style={styles.buttonRow}>
             {/* <Text style={{color: '#C0392B', padding: 5}}> Update changes</Text> */}
-              <Button
-                // title="add new!"
-                type="outline"
-               // titleStyle={{color: Colors.darkScheme.primary, fontSize: 15}}
-                buttonStyle={styles.buttonSuccess}
-                containerStyle={styles.btnContainerSuccess}
-                icon={
-                  <Icon
-                    name="text-box-plus-outline"
-                    size={30}
-                    color={Colors.darkScheme.gold}
-                  />
-                }
-                onPress={() =>
-                  editPosition(newPrice, newCost, newQty, newBuyDate)
-                }
-              />
-              <Button
-                buttonStyle={styles.buttonFail}
-                containerStyle={styles.btnContainerFail}
-              // titleStyle={{color: Colors.darkScheme.red, fontSize: 10}}
-              // title="delete"
-                type="clear"
-                icon={<Icon name="text-box-remove-outline" size={30} color="red" />}
-                onPress={() => 
-                  removePosition(position.key)
-                
-                }
-              />
-            </View>
+            <Button
+              title="Save"
+              type="outline"
+              titleStyle={{color: Colors.darkScheme.gold, marginLeft: 5}}
+              buttonStyle={styles.buttonSuccess}
+              containerStyle={styles.btnContainerSuccess}
+              icon={
+                <Icon
+                  name="text-box-check-outline"
+                  size={30}
+                  color={Colors.darkScheme.gold}
+                />
+              }
+              onPress={() =>
+                editPosition(newPrice, newCost, newQty, newBuyDate)
+              }
+            />
+            <Button
+              buttonStyle={styles.buttonFail}
+              containerStyle={styles.btnContainerFail}
+              titleStyle={{color: Colors.darkScheme.red, marginLeft: 5}}
+              title="Delete"
+              type="clear"
+              icon={
+                <Icon
+                  name="text-box-remove-outline"
+                  size={30}
+                  color={Colors.darkScheme.red}
+                />
+              }
+              onPress={() => removePosition(position.key)}
+            />
+          </View>
         </View>
-    
       </View>
     </View>
   );
@@ -278,44 +290,43 @@ const styles = StyleSheet.create({
     flex: 1.3,
     alignItems: 'center',
     justifyContent: 'center',
-  //  marginTop: 50,
-  //  paddingTop: 10,
-   //  height: '75%'
+    //  marginTop: 50,
+    //  paddingTop: 10,
+    //  height: '75%'
 
-   // backgroundColor: Colors.darkScheme.lighter,
+    // backgroundColor: Colors.darkScheme.lighter,
   },
   logo: {
-   // opacity: 0.9,
+    // opacity: 0.9,
     overflow: 'visible',
     resizeMode: 'cover',
     width: '100%',
     height: '100%',
-    
+
     /*
      * These negative margins allow the image to be offset similarly across screen sizes and component sizes.
      *
      * The source logo.png image is 512x512px, so as such, these margins attempt to be relative to the
      * source image's size.
      */
-
+    marginLeft: 6,
     marginTop: 15,
     //  marginBottom: -75,
   },
- 
+
   sectionContainer: {
     //  marginTop: 32,
     padding: 1,
     // paddingHorizontal: 24,
-   // backgroundColor: Colors.darkScheme.lighter,
+    // backgroundColor: Colors.darkScheme.lighter,
     flexDirection: 'row',
     justifyContent: 'center',
- 
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
     color: Colors.darkScheme.primary,
-    marginBottom: 10
+    marginBottom: 10,
   },
   /////////////////////////////
   body: {
@@ -328,13 +339,13 @@ const styles = StyleSheet.create({
     flex: 0.9,
     paddingLeft: 10,
     paddingRight: 10,
-   // padding: 10,
+    // padding: 10,
     //  justifyContent: 'space-evenly',
     backgroundColor: Colors.darkScheme.light,
   },
   buttonRow: {
-    flexDirection: 'row', 
-   justifyContent: 'center'
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -356,46 +367,42 @@ const styles = StyleSheet.create({
     padding: 10,
     // shadowColor: 'rgba(238,130,238, 1)',
     shadowColor: Colors.darkScheme.grey,
-    shadowOffset: { height: 4, width: 4 }, // IOS
+    shadowOffset: {height: 4, width: 4}, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
-  },  
+  },
   buttonSuccess: {
     width: 150,
-    backgroundColor: Colors.darkScheme.primary,  
-    borderRightWidth: 2, 
+    backgroundColor: Colors.darkScheme.primary,
+    borderRightWidth: 2,
     borderBottomWidth: 2,
-    borderTopWidth: 2, 
-    borderLeftWidth: 2,  
-    borderColor: Colors.darkScheme.gold
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: Colors.darkScheme.gold,
   },
-  btnContainerFail:{
-  
+  btnContainerFail: {
     padding: 10,
     shadowColor: Colors.darkScheme.grey,
-    shadowOffset: { height: 4, width: 4 }, // IOS
+    shadowOffset: {height: 4, width: 4}, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
-  
-  
   },
-  buttonFail: {  
-    width: 150,   
-    borderRightWidth: 2, 
-    borderBottomWidth: 2, 
+  buttonFail: {
+    width: 150,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderColor: Colors.darkScheme.red,
-    backgroundColor: Colors.darkScheme.primary
+    backgroundColor: Colors.darkScheme.primary,
   },
 
   sectionDivider: {
     backgroundColor: Colors.darkScheme.primary,
- height: 25,
-   // width: '100%',
- alignItems: 'center',
- margin: 10
- 
+    height: 25,
+    // width: '100%',
+    alignItems: 'center',
+    margin: 10,
   },
   sectionDescription: {
     paddingTop: 3,
@@ -407,11 +414,9 @@ const styles = StyleSheet.create({
   detailLines: {
     flexDirection: 'row',
     justifyContent: 'space-between',
- 
   },
   detailsStyle: {
-  width: 200
-  
+    width: 200,
   },
 
   ////////////////////////////////
