@@ -1,0 +1,8 @@
+app_identifier("com.pixelandprocessor.ledgermax-v1") # The bundle identifier of your app
+apple_id("jamesdonhawkins@gmail.com") # Your Apple email address
+
+itc_team_id("122186355") # App Store Connect Team ID
+team_id("XFZS57WQYH") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
