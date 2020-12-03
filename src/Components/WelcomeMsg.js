@@ -10,9 +10,9 @@ import {Colors} from './index';
 const WelcomeMsg = ({switchView, navigation, btc$, testNums}) => {
   const [apiResults, positions, setPosition] = usePositions([]);
 
-  useEffect(() => {
-    console.log('ALWAYS ANOTHER CONSOLE LOg', positions);
-  });
+  // useEffect(() => {
+  //   console.log('ALWAYS ANOTHER CONSOLE LOg', positions);
+  // });
 
   // useEffect(() => {
   //   console.log('BUILD SLow and steady=>', typeof btc, btc);

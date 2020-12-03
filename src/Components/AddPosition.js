@@ -19,9 +19,9 @@ const AddPosition = ({addPosition, switchView}) => {
 
   const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    console.log('REGEX', testNums(cost));
-  });
+  // useEffect(() => {
+  //   console.log('REGEX', testNums(cost));
+  // });
   // store in Async Storage
   //   const AccountIndex = () => {
   // const acct = {count: index[i]}
@@ -69,12 +69,12 @@ const AddPosition = ({addPosition, switchView}) => {
 
   // validateNums = data => {};
 
-  const onSubmit = () => {
-    console.log('Buy Date', dateRegex.test(buyDate));
-    console.log('Price', currencyRegex.test(price));
-    console.log('Cost', currencyRegex.test(cost));
-    console.log('Qty', currencyRegex.test(qty));
-  };
+  // const onSubmit = () => {
+  //   console.log('Buy Date', dateRegex.test(buyDate));
+  //   console.log('Price', currencyRegex.test(price));
+  //   console.log('Cost', currencyRegex.test(cost));
+  //   console.log('Qty', currencyRegex.test(qty));
+  // };
 
   return (
     <View stlye={styles.body}>
@@ -195,7 +195,7 @@ const AddPosition = ({addPosition, switchView}) => {
                 color={Colors.darkScheme.gold}
               />
             }
-            onPress={() => addPosition(price, cost, qty, buyDate)}
+            onPress={() => addPosition(price.replace(/,/g, ''), cost.replace(/,/g, ''), qty, buyDate)}
             //  onPress={() => onSubmit(price, cost, qty, buyDate)}
           />
         ) : (

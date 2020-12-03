@@ -30,7 +30,7 @@ export default () => {
           stores.map((result, i, store) => {
             // console.log({[store[i][0]]: store[i][1]});
             let parsedData = JSON.parse(store[i][1]);
-            console.log('usePositions hook: Async Storage:==>', parsedData);
+            // console.log('usePositions hook: Async Storage:==>', parsedData);
           //  setPosition([parsedData]);
             setPosition((prevState) => {
               return [parsedData, ...prevState];
@@ -46,9 +46,9 @@ export default () => {
 
   useEffect( () => {
     getAllPositions();
-    return () => {
-      console.log('Cleaning up all positions...');
-    };
+    // return () => {
+    //   console.log('Cleaning up all positions...');
+    // };
   }, []);
 
   /**

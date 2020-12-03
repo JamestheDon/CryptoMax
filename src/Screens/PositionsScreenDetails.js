@@ -28,7 +28,7 @@ const PositionsScreenDetails = ({route, navigation}) => {
   // Single Position details
   const {position, btc$} = route.params;
   const {price, cost, qty, buyDate, currDate} = position;
-
+  const btc = btc$.replace(/,/g, '')
   // Form fields
   const [newPrice, setPrice] = useState(position.price);
   const [newCost, setCost] = useState(position.cost);
@@ -37,9 +37,9 @@ const PositionsScreenDetails = ({route, navigation}) => {
     new Date(buyDate).toLocaleDateString(),
   );
 
-  useEffect(() => {
-    console.log('THESE ARE ADDINF UP', btc$);
-  });
+  // useEffect(() => {
+  //   console.log('THESE ARE ADDINF UP', btc$);
+  // });
 
   const editPosition = async (newPrice, newCost, newQty, newBuyDate) => {
     try {
@@ -66,11 +66,11 @@ const PositionsScreenDetails = ({route, navigation}) => {
 
   // Portfolio calculations
   const dollarGain = (
-    ((`${btc$}` - `${price}`) / `${price}`) *
+    ((`${btc}` - `${price}`) / `${price}`) *
     `${cost}`
   ).toFixed(2);
 
-  const rateOfReturn = (((btc$ - price) / price) * 100).toFixed(2);
+  const rateOfReturn = (((btc - price) / price) * 100).toFixed(2);
 
   const removePosition = async (key) => {
     try {

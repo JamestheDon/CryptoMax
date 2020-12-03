@@ -37,9 +37,10 @@ const HomeScreenDetails = ({route, navigation}) => {
   const {cost, price, qty, buyDate} = positions
   // const {price, cost, qty, key, currDate } = positions
 
-  // const currPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
-  const currPrice = btc$;
-
+  // const calculationsPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
+  const headlinePrice = btc$;
+  const calculationsPrice = btc$.replace(/,/g, '')
+const btc = btc$.replace(/,/g, '')
   // const [calculations, setCalculations] = useState({
   //   sumInvest: null,
   //   sumSats: null,
@@ -60,39 +61,39 @@ const HomeScreenDetails = ({route, navigation}) => {
 
   useEffect(() => {
      getAvgRor();
-     return () => {
-       console.log('cleaning up rate of return')
-     }
+    //  return () => {
+    //    console.log('cleaning up rate of return')
+    //  }
   });
 
   useEffect(() => {
     getPerformance();
-    return () => {
-      console.log('Cleaning up performance');
-    };
+    // return () => {
+    //   console.log('Cleaning up performance');
+    // };
   });
   useEffect(() => {
    // console.log('getCostSum() function results:', getCostSum())
     getCostSum();
 
-    return () => {
-      console.log('Cleaning up Cost Sum');
-    };
+    // return () => {
+    //   console.log('Cleaning up Cost Sum');
+    // };
   });
   useEffect(() => {
    // console.log('getQtySum() function results:', getQtySum())
     getQtySum();
 
-    return () => {
-      console.log('Cleaning up QTY SUm');
-    };
+    // return () => {
+    //   console.log('Cleaning up QTY SUm');
+    // };
   });
   useEffect(() => {
    
     getEquity();
-    return () => {
-      console.log('cleaning up equity');
-    };
+    // return () => {
+    //   console.log('cleaning up equity');
+    // };
   });
 
   
@@ -106,7 +107,7 @@ const HomeScreenDetails = ({route, navigation}) => {
 
     const $perf = positions.map((i, index) => {
       const $gain = parseFloat(
-        ((currPrice - i.price) / i.price) * i.cost,
+        ((calculationsPrice - i.price) / i.price) * i.cost,
       ).toFixed(2);
 
       return {$gain};
@@ -118,8 +119,8 @@ const HomeScreenDetails = ({route, navigation}) => {
 
     setGains(result);
 
-    console.log('getPerfomance() ', result);
-    //  const rOr = parseFloat(((currPrice - pos.price) / pos.price) * 100);
+    // console.log('getPerfomance() ', result);
+    //  const rOr = parseFloat(((calculationsPrice - pos.price) / pos.price) * 100);
     // const singleGain = (rOr / 100) * pos.cost;
   };
 
@@ -131,7 +132,7 @@ const HomeScreenDetails = ({route, navigation}) => {
    */
 
   const getAvgRor = () => {
-    const $ror = positions.map((p) => parseFloat((currPrice - p.price) / p.price * 100 ))
+    const $ror = positions.map((p) => parseFloat((calculationsPrice - p.price) / p.price * 100 ))
    const $avgRor = $ror.reduce((acc, item) => (acc += item), 0) / positions.length
   // return $avgRor.toFixed(2)
    setAvgRor($avgRor.toFixed(2))
@@ -224,7 +225,7 @@ const HomeScreenDetails = ({route, navigation}) => {
 
             <View style={styles.headlineContainer}>
               <Text style={styles.headline}>BTC Price: </Text>
-              <Text style={styles.headline}>${currPrice}</Text>
+              <Text style={styles.headline}>${headlinePrice}</Text>
             
             </View>
             <View style={styles.detailLines}>
@@ -271,7 +272,7 @@ const HomeScreenDetails = ({route, navigation}) => {
             navigation={navigation}
             setPosition={setPosition}
             requestData={requestData}
-            btc$={btc$}
+            btc$={btc}
           />
         )}
       </View>

@@ -45,12 +45,12 @@ const HomeScreen = ({navigation}) => {
 
   //const btcPrice = apiResults.map(i => parseFloat(i.price).toFixed(2));
 
-  useEffect(() => {
-   // getAllPositions()
-  //  getAllPositions();
-    console.log('START#', positions )
-    //  AsyncStorage.clear();
-  });
+  // useEffect(() => {
+  //  // getAllPositions()
+  // //  getAllPositions();
+  //   console.log('START#', btc$ )
+  //   //  AsyncStorage.clear();
+  // });
 
   const testNums = () => {
     const nums = btc$;
@@ -66,6 +66,8 @@ const HomeScreen = ({navigation}) => {
       setView(true);
     }
   };
+
+
 
   // removeFew = async () => {
   //   const keys = ['17056520', '85145104', '52846882'];
@@ -103,7 +105,7 @@ const HomeScreen = ({navigation}) => {
   // };
 
   useEffect(() => {
-    console.log(process.env.NODE_ENV);
+    // console.log(process.env.NODE_ENV);
   }, [positions]);
 
   return (
@@ -132,7 +134,7 @@ const HomeScreen = ({navigation}) => {
            <View style={styles.inputSection}>
             
             <Input
-              placeholder="10,000.00"
+              placeholder="100,000.00"
               label="Bitcoin price?"
               labelStyle={
               styles.inputLabel

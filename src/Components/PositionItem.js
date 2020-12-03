@@ -17,7 +17,7 @@ const PositionItem = ({positions, navigation, setPosition, btc$}) => {
       setPosition((prevState) => {
         return prevState.filter((i) => i.key != key);
       });
-      console.log('Position deleted.');
+    //  console.log('Position deleted.');
     } catch (e) {
       console.log(e);
     }
