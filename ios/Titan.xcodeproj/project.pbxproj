@@ -717,6 +717,7 @@
 				DEVELOPMENT_TEAM = XFZS57WQYH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Titan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -747,6 +748,7 @@
 				DEVELOPMENT_TEAM = XFZS57WQYH;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Titan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
